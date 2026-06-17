@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\title{Subword Tokenizer Project Reference}
+\author{Project Documentation}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Project Summary}
+This repository is a compact Rust + C++ proof-of-concept for a Byte Pair Encoding (BPE) tokenizer training workflow. It currently demonstrates:
+\begin{itemize}[leftmargin=1.2em]
+  \item a Rust entry point,
+  \item Rust-to-C++ FFI integration,
+  \item native C++ compilation from Cargo build scripts,
+  \item a placeholder location where the real BPE training algorithm will be added.
+\end{itemize}
+
+\section{Repository Layout}
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{Cargo.toml}: package metadata and dependencies.
+  \item \texttt{build.rs}: C++ compilation and linker settings.
+  \item \texttt{src/main.rs}: Rust main flow and FFI call.
+  \item \texttt{src/cpp/bpe.cpp}: exported C++ function implementation.
+  \item \texttt{Cargo.lock}: pinned crate versions.
+\end{itemize}
+
+\section{Execution Flow}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Rust \texttt{main()} sets a sample corpus and a target vocab size.
+  \item Corpus text is converted to \texttt{CString} for C compatibility.
+  \item Rust invokes \texttt{train\_bpe(...)} through an \texttt{unsafe extern "C"} declaration.
+  \item C++ receives and prints corpus size and vocab target.
+\end{enumerate}
+
+\section{FFI Boundary}
+Rust declaration:
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{unsafe extern "C" \{ fn train\_bpe(text: *const c\_char, vocab\_size: i32); \}}
+\end{itemize}
+C++ definition:
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{extern "C" void train\_bpe(const char* text, int vocab\_size)}
+\end{itemize}
+Using \texttt{extern "C"} on both sides prevents symbol mangling issues.
+
+\section{Build and Dependencies}
+\subsection{Rust Crates}
+\begin{itemize}[leftmargin=1.2em]
+  \item Runtime dependencies: none currently declared.
+  \item Build dependency: \texttt{cc} crate to compile \texttt{bpe.cpp}.
+\end{itemize}
+
+\subsection{Platform-specific Linking}
+The build script links:
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{c++} on macOS,
+  \item \texttt{stdc++} on non-macOS.
+\end{itemize}
+This avoids macOS linker failures for \texttt{stdc++}.
+
+\section{How to Run}
+From repository root:
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{cargo run}
+\end{itemize}
+Expected output includes Rust startup logs plus C++ status lines.
+
+\section{Current State}
+\begin{itemize}[leftmargin=1.2em]
+  \item The project builds and runs successfully on macOS.
+  \item FFI wiring is functional.
+  \item The BPE algorithm itself is still a stub.
+\end{itemize}
+
+\section{Known Gaps}
+\begin{itemize}[leftmargin=1.2em]
+  \item No full BPE merge/pair counting implementation yet.
+  \item No test suite yet.
+  \item No CLI arguments (inputs are hard-coded).
+  \item Minimal validation and error handling.
+\end{itemize}
+
+\section{Suggested Roadmap}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Implement BPE pair statistics and iterative merge logic.
+  \item Return trained vocabulary/merges to Rust.
+  \item Add model serialization format.
+  \item Add deterministic unit and integration tests.
+  \item Add CLI options for corpus path and vocab size.
+\end{enumerate}
+
+\section{Troubleshooting Notes}
+\begin{itemize}[leftmargin=1.2em]
+  \item If \texttt{cargo} is missing, install Rust toolchain and verify \texttt{PATH}.
+  \item If linker fails on macOS, confirm \texttt{build.rs} links \texttt{c++}.
+  \item For FFI errors, validate string lifetimes and types across boundary.
+\end{itemize}
+
+\section{Reference Snapshot}
+This document records the project baseline as of June 2026 for future development reference.
+
+\end{document}
