@@ -16,8 +16,46 @@ struct PairHash {
     }
 };
 
+// Global variables to store vocab and merges for C++ -> Rust serialization
+std::vector<std::string> g_vocabulary;
+std::vector<StringPair> g_merges;
+
 extern "C" {
-    void train_bpe(const char* text, int vocab_size) {
+    // Get vocabulary size (number of merges + initial 256 ASCII chars)
+    int get_vocab_count() {
+        return g_vocabulary.size();
+    }
+    
+    // Get merge pair count
+    int get_merge_count() {
+        return g_merges.size();
+    }
+    
+    // Get vocabulary item at index (caller must free returned string)
+    const char* get_vocab_item(int index) {
+        if (index >= 0 && index < static_cast<int>(g_vocabulary.size())) {
+            static std::string result;
+            result = g_vocabulary[index];
+            return result.c_str();
+        }
+        return "";
+    }
+    
+    // Get merge pair at index
+    void get_merge_pair(int index, const char** first, const char** second) {
+        if (index >= 0 && index < static_cast<int>(g_merges.size())) {
+            static std::string f, s;
+            f = g_merges[index].first;
+            s = g_merges[index].second;
+            *first = f.c_str();
+            *second = s.c_str();
+        } else {
+            *first = "";
+            *second = "";
+        }
+    }
+
+    void train_bpe_ffi(const char* text, int vocab_size) {
         std::string corpus(text);
         
         // Initialize: split corpus into characters
@@ -26,10 +64,16 @@ extern "C" {
             tokens.push_back(std::string(1, c));
         }
         
-        int initial_vocab = 256; // Assuming ASCII
+        // Build initial vocabulary (ASCII characters)
+        g_vocabulary.clear();
+        for (int i = 0; i < 256; ++i) {
+            g_vocabulary.push_back(std::string(1, static_cast<char>(i)));
+        }
+        
+        int initial_vocab = 256;
         int current_vocab = initial_vocab;
         int merge_count = 0;
-        std::set<StringPair> merged_pairs; // Track which pairs have been merged
+        std::set<StringPair> merged_pairs;
         
         std::cout << "\n=== BPE Training Start ===" << std::endl;
         std::cout << "Corpus size: " << corpus.size() << " chars" << std::endl;
@@ -98,6 +142,10 @@ extern "C" {
             }
             
             tokens = new_tokens;
+            
+            // Record this merge
+            g_merges.push_back(most_frequent);
+            g_vocabulary.push_back(merged_token);
             merged_pairs.insert(most_frequent);
             current_vocab++;
             merge_count++;
