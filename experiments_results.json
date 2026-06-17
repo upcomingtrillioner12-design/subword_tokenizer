@@ -1,0 +1,137 @@
+{
+  "timestamp": "2026-06-17 16:48:46",
+  "total_experiments": 12,
+  "datasets": [
+    "wikipedia_snippet",
+    "code_snippet",
+    "mixed_content"
+  ],
+  "vocab_sizes": [
+    256,
+    512,
+    1024,
+    2048
+  ],
+  "experiments": [
+    {
+      "dataset": "wikipedia_snippet",
+      "vocab_size": 256,
+      "corpus_chars": 918,
+      "tokens": 128,
+      "merges": 0,
+      "model_size_bytes": 1344,
+      "compression_ratio": 7.17,
+      "inference_time_ms": 3.6688
+    },
+    {
+      "dataset": "wikipedia_snippet",
+      "vocab_size": 512,
+      "corpus_chars": 918,
+      "tokens": 384,
+      "merges": 256,
+      "model_size_bytes": 18752,
+      "compression_ratio": 2.39,
+      "inference_time_ms": 3.9017
+    },
+    {
+      "dataset": "wikipedia_snippet",
+      "vocab_size": 1024,
+      "corpus_chars": 918,
+      "tokens": 581,
+      "merges": 453,
+      "model_size_bytes": 49225,
+      "compression_ratio": 1.58,
+      "inference_time_ms": 4.149
+    },
+    {
+      "dataset": "wikipedia_snippet",
+      "vocab_size": 2048,
+      "corpus_chars": 918,
+      "tokens": 581,
+      "merges": 453,
+      "model_size_bytes": 49225,
+      "compression_ratio": 1.58,
+      "inference_time_ms": 4.0636
+    },
+    {
+      "dataset": "code_snippet",
+      "vocab_size": 256,
+      "corpus_chars": 818,
+      "tokens": 128,
+      "merges": 0,
+      "model_size_bytes": 1344,
+      "compression_ratio": 6.39,
+      "inference_time_ms": 3.6483
+    },
+    {
+      "dataset": "code_snippet",
+      "vocab_size": 512,
+      "corpus_chars": 818,
+      "tokens": 369,
+      "merges": 241,
+      "model_size_bytes": 37680,
+      "compression_ratio": 2.22,
+      "inference_time_ms": 3.9323
+    },
+    {
+      "dataset": "code_snippet",
+      "vocab_size": 1024,
+      "corpus_chars": 818,
+      "tokens": 369,
+      "merges": 241,
+      "model_size_bytes": 37681,
+      "compression_ratio": 2.22,
+      "inference_time_ms": 3.8673
+    },
+    {
+      "dataset": "code_snippet",
+      "vocab_size": 2048,
+      "corpus_chars": 818,
+      "tokens": 369,
+      "merges": 241,
+      "model_size_bytes": 37681,
+      "compression_ratio": 2.22,
+      "inference_time_ms": 3.9069
+    },
+    {
+      "dataset": "mixed_content",
+      "vocab_size": 256,
+      "corpus_chars": 1245,
+      "tokens": 128,
+      "merges": 0,
+      "model_size_bytes": 1344,
+      "compression_ratio": 9.73,
+      "inference_time_ms": 3.6954
+    },
+    {
+      "dataset": "mixed_content",
+      "vocab_size": 512,
+      "corpus_chars": 1245,
+      "tokens": 384,
+      "merges": 256,
+      "model_size_bytes": 18612,
+      "compression_ratio": 3.24,
+      "inference_time_ms": 3.8139
+    },
+    {
+      "dataset": "mixed_content",
+      "vocab_size": 1024,
+      "corpus_chars": 1245,
+      "tokens": 743,
+      "merges": 615,
+      "model_size_bytes": 85021,
+      "compression_ratio": 1.68,
+      "inference_time_ms": 4.114
+    },
+    {
+      "dataset": "mixed_content",
+      "vocab_size": 2048,
+      "corpus_chars": 1245,
+      "tokens": 743,
+      "merges": 615,
+      "model_size_bytes": 85021,
+      "compression_ratio": 1.68,
+      "inference_time_ms": 4.1316
+    }
+  ]
+}
