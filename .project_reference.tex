@@ -5,6 +5,8 @@
 \usepackage{lmodern}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
 
 \title{Subword Tokenizer Project Reference}
 \author{Project Documentation}
@@ -13,6 +15,30 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\newpage
+
+\section{System Architecture Diagram}
+
+The following diagram illustrates the complete architecture and data flow of the Subword Tokenizer project:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{doc/architecture.png}
+\caption{Subword Tokenizer System Architecture - showing input processing, BPE training, model persistence, inference mode, and testing framework}
+\label{fig:architecture}
+\end{figure}
+
+The architecture consists of:
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Input Layer}: CLI argument parsing and corpus file loading.
+  \item \textbf{Processing Layer}: Corpus preprocessing and character initialization.
+  \item \textbf{BPE Training Engine}: Core algorithm with pair counting and iterative merging.
+  \item \textbf{Output \& Persistence}: Vocabulary collection and JSON serialization.
+  \item \textbf{Inference Mode}: Model loading and tokenization of new text.
+  \item \textbf{Testing Framework}: Comprehensive unit tests ensuring correctness.
+  \item \textbf{System Components}: Rust/C++ integration with JSON serialization.
+\end{itemize}
+
 \newpage
 
 \section{Project Summary}
