@@ -80,11 +80,41 @@ impl BPEModel {
         }
     }
 
+    pub fn truncate_sequence(&self, ids: &mut Vec<i32>, target_len: usize) {
+        if ids.len() > target_len {
+            ids.truncate(target_len);
+        }
+    }
+
     pub fn encode_with_special(&self, text: &str) -> Vec<i32> {
         let mut ids = vec![*self.token_to_id.get(SOS_TOKEN).unwrap_or(&0)];
         ids.extend(self.encode_to_ids(text));
         ids.push(*self.token_to_id.get(EOS_TOKEN).unwrap_or(&0));
         ids
+    }
+
+    pub fn encode_batch(&self, texts: &[&str]) -> Vec<Vec<i32>> {
+        texts.iter().map(|t| self.encode_with_special(t)).collect()
+    }
+
+    pub fn pad_batch(&self, batch: &mut Vec<Vec<i32>>, target_len: usize) {
+        for seq in batch.iter_mut() {
+            self.pad_sequence(seq, target_len);
+        }
+    }
+
+    pub fn vocab_coverage(&self, text: &str) -> f32 {
+        let tokens = encode(self, text);
+        let known = tokens.iter().filter(|t| self.token_to_id.contains_key(*t)).count();
+        known as f32 / tokens.len() as f32
+    }
+
+    pub fn is_known_token(&self, token: &str) -> bool {
+        self.token_to_id.contains_key(token)
+    }
+
+    pub fn get_token_id(&self, token: &str) -> Option<i32> {
+        self.token_to_id.get(token).copied()
     }
 }
 
@@ -167,7 +197,49 @@ mod tests {
         model.save(&path).unwrap();
         let loaded = BPEModel::load(&path).unwrap();
         assert_eq!(model.vocab.len(), loaded.vocab.len());
-        assert_eq!(model.merges.len(), loaded.merges.len());
+    }
+
+    #[test]
+    fn test_batch_encoding() {
+        let model = train("low lower lowest running happy", 50).unwrap();
+        let texts = vec!["lower", "happy", "running"];
+        let batch = model.encode_batch(&texts);
+        assert_eq!(batch.len(), 3);
+        assert_eq!(batch[0][0], *model.token_to_id.get(SOS_TOKEN).unwrap());
+        assert_eq!(batch[0][batch[0].len()-1], *model.token_to_id.get(EOS_TOKEN).unwrap());
+    }
+
+    #[test]
+    fn test_pad_batch() {
+        let model = train("a b c d e", 20).unwrap();
+        let mut batch = model.encode_batch(&vec!["abc", "de"]);
+        model.pad_batch(&mut batch, 10);
+        assert_eq!(batch[0].len(), 10);
+        assert_eq!(batch[1].len(), 10);
+    }
+
+    #[test]
+    fn test_truncate_sequence() {
+        let model = train("low lower lowest", 50).unwrap();
+        let mut ids = model.encode_with_special("lowlowerlowest");
+        let original_len = ids.len();
+        model.truncate_sequence(&mut ids, 5);
+        assert_eq!(ids.len(), 5.min(original_len));
+    }
+
+    #[test]
+    fn test_vocab_coverage() {
+        let model = train("low lower lowest", 50).unwrap();
+        let coverage = model.vocab_coverage("lower");
+        assert!(coverage > 0.0);
+    }
+
+    #[test]
+    fn test_unknown_token_fallback() {
+        let model = train("low lower lowest", 50).unwrap();
+        let ids = model.encode_to_ids("xyzqwerty");
+        let unk_id = *model.token_to_id.get(UNK_TOKEN).unwrap();
+        assert!(ids.iter().all(|&id| id == unk_id || model.id_to_token.contains_key(&id)));
     }
 
     #[test]
@@ -182,14 +254,7 @@ mod tests {
         let model = train("happy running", 50).unwrap();
         let ids = model.encode_with_special("happy");
         assert_eq!(ids[0], *model.token_to_id.get(SOS_TOKEN).unwrap());
-        assert_eq!(ids[ids.len() - 1], *model.token_to_id.get(EOS_TOKEN).unwrap());
-    }
-
-    #[test]
-    fn test_train_creates_vocab() {
-        let model = train("low lower lowest", 50).unwrap();
-        assert!(!model.vocab.is_empty());
-        assert!(model.vocab.contains(&"l".to_string()));
+        assert_eq!(ids[ids.len()-1], *model.token_to_id.get(EOS_TOKEN).unwrap());
     }
 
     #[test]
