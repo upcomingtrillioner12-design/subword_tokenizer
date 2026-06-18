@@ -1,20 +1,17 @@
 [package]
 name = "subword-tokenizer"
 version = "0.1.0"
-edition = "2024"
-
-[lib]
-name = "subword_tokenizer"
-path = "src/lib.rs"
+edition = "2021"
 
 [[bin]]
 name = "subword-tokenizer"
 path = "src/main.rs"
 
+[lib]
+name = "subword_tokenizer"
+path = "src/lib.rs"
+
 [dependencies]
-clap = { version = "4.4", features = ["derive"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
 
 [build-dependencies]
 cc = "1.0"
