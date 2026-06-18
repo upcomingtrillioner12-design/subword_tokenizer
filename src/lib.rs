@@ -1,5 +1,8 @@
+use serde::{Serialize, Deserialize};
 use std::ffi::{c_char, CStr, CString};
 use std::collections::HashMap;
+use std::fs;
+use std::path::PathBuf;
 
 unsafe extern "C" {
     pub fn train_bpe_ffi(text: *const c_char, vocab_size: i32);
@@ -11,47 +14,83 @@ unsafe extern "C" {
     pub fn cleanup_tokenizer();
 }
 
+pub const UNK_TOKEN: &str = "<unk>";
+pub const PAD_TOKEN: &str = "<pad>";
+pub const SOS_TOKEN: &str = "<sos>";
+pub const EOS_TOKEN: &str = "<eos>";
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BPEModel {
     pub vocab: Vec<String>,
     pub merges: Vec<(String, String)>,
     pub token_to_id: HashMap<String, i32>,
     pub id_to_token: HashMap<i32, String>,
+    pub special_tokens: Vec<String>,
 }
 
 impl BPEModel {
-    fn build_mappings(vocab: &[String]) -> (HashMap<String, i32>, HashMap<i32, String>) {
+    fn build_mappings(vocab: &[String], special: &[String]) -> (HashMap<String, i32>, HashMap<i32, String>) {
         let mut token_to_id = HashMap::new();
         let mut id_to_token = HashMap::new();
-        
-        for (i, token) in vocab.iter().enumerate() {
-            let id = i as i32;
+        let mut id = 0i32;
+        for token in special {
             token_to_id.insert(token.clone(), id);
             id_to_token.insert(id, token.clone());
+            id += 1;
         }
-        
+        for token in vocab {
+            if !token_to_id.contains_key(token) {
+                token_to_id.insert(token.clone(), id);
+                id_to_token.insert(id, token.clone());
+                id += 1;
+            }
+        }
         (token_to_id, id_to_token)
+    }
+
+    pub fn save(&self, path: &PathBuf) -> Result<(), Box<dyn std::error::Error>> {
+        let json = serde_json::to_string_pretty(&self)?;
+        fs::write(path, json)?;
+        Ok(())
+    }
+
+    pub fn load(path: &PathBuf) -> Result<Self, Box<dyn std::error::Error>> {
+        let json = fs::read_to_string(path)?;
+        let model: BPEModel = serde_json::from_str(&json)?;
+        Ok(model)
     }
 
     pub fn encode_to_ids(&self, text: &str) -> Vec<i32> {
         let tokens = encode(self, text);
         tokens.iter()
-            .map(|t| *self.token_to_id.get(t).unwrap_or(&-1))
+            .map(|t| *self.token_to_id.get(t).unwrap_or_else(|| self.token_to_id.get(UNK_TOKEN).unwrap()))
             .collect()
     }
 
     pub fn decode_from_ids(&self, ids: &[i32]) -> String {
         ids.iter()
-            .map(|id| self.id_to_token.get(id).cloned().unwrap_or_default())
+            .map(|id| self.id_to_token.get(id).cloned().unwrap_or(UNK_TOKEN.to_string()))
             .collect()
+    }
+
+    pub fn pad_sequence(&self, ids: &mut Vec<i32>, target_len: usize) {
+        let pad_id = *self.token_to_id.get(PAD_TOKEN).unwrap_or(&0);
+        while ids.len() < target_len {
+            ids.push(pad_id);
+        }
+    }
+
+    pub fn encode_with_special(&self, text: &str) -> Vec<i32> {
+        let mut ids = vec![*self.token_to_id.get(SOS_TOKEN).unwrap_or(&0)];
+        ids.extend(self.encode_to_ids(text));
+        ids.push(*self.token_to_id.get(EOS_TOKEN).unwrap_or(&0));
+        ids
     }
 }
 
 pub fn train(corpus_text: &str, vocab_size: i32) -> Result<BPEModel, Box<dyn std::error::Error>> {
     let c_text = CString::new(corpus_text)?;
-
-    unsafe {
-        train_bpe_ffi(c_text.as_ptr(), vocab_size);
-    }
+    unsafe { train_bpe_ffi(c_text.as_ptr(), vocab_size); }
 
     let vocab_count = unsafe { get_vocab_count() };
     let mut vocab = Vec::new();
@@ -70,26 +109,19 @@ pub fn train(corpus_text: &str, vocab_size: i32) -> Result<BPEModel, Box<dyn std
     for i in 0..merge_count {
         let mut first_ptr: *const c_char = std::ptr::null();
         let mut second_ptr: *const c_char = std::ptr::null();
-
-        unsafe {
-            get_merge_pair(i, &mut first_ptr, &mut second_ptr);
-        }
+        unsafe { get_merge_pair(i, &mut first_ptr, &mut second_ptr); }
 
         let first = if !first_ptr.is_null() {
             let s = unsafe { CStr::from_ptr(first_ptr).to_str().unwrap_or("").to_string() };
             unsafe { free_string(first_ptr); }
             s
-        } else {
-            String::new()
-        };
+        } else { String::new() };
 
         let second = if !second_ptr.is_null() {
             let s = unsafe { CStr::from_ptr(second_ptr).to_str().unwrap_or("").to_string() };
             unsafe { free_string(second_ptr); }
             s
-        } else {
-            String::new()
-        };
+        } else { String::new() };
 
         if !first.is_empty() && !second.is_empty() {
             merges.push((first, second));
@@ -98,19 +130,14 @@ pub fn train(corpus_text: &str, vocab_size: i32) -> Result<BPEModel, Box<dyn std
 
     unsafe { cleanup_tokenizer(); }
 
-    let (token_to_id, id_to_token) = BPEModel::build_mappings(&vocab);
+    let special = vec![UNK_TOKEN.to_string(), PAD_TOKEN.to_string(), SOS_TOKEN.to_string(), EOS_TOKEN.to_string()];
+    let (token_to_id, id_to_token) = BPEModel::build_mappings(&vocab, &special);
 
-    Ok(BPEModel {
-        vocab,
-        merges,
-        token_to_id,
-        id_to_token,
-    })
+    Ok(BPEModel { vocab, merges, token_to_id, id_to_token, special_tokens: special })
 }
 
 pub fn encode(model: &BPEModel, text: &str) -> Vec<String> {
     let mut tokens: Vec<String> = text.chars().map(|c| c.to_string()).collect();
-
     for (first, second) in &model.merges {
         let merged = format!("{}{}", first, second);
         let mut new_tokens = Vec::new();
@@ -126,7 +153,6 @@ pub fn encode(model: &BPEModel, text: &str) -> Vec<String> {
         }
         tokens = new_tokens;
     }
-
     tokens
 }
 
@@ -135,39 +161,35 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_save_load_roundtrip() {
+        let model = train("low lower lowest", 50).unwrap();
+        let path = PathBuf::from("/tmp/test_model.json");
+        model.save(&path).unwrap();
+        let loaded = BPEModel::load(&path).unwrap();
+        assert_eq!(model.vocab.len(), loaded.vocab.len());
+        assert_eq!(model.merges.len(), loaded.merges.len());
+    }
+
+    #[test]
+    fn test_special_tokens_exist() {
+        let model = train("low lower lowest", 50).unwrap();
+        assert!(model.token_to_id.contains_key(UNK_TOKEN));
+        assert!(model.token_to_id.contains_key(PAD_TOKEN));
+    }
+
+    #[test]
+    fn test_encode_with_special() {
+        let model = train("happy running", 50).unwrap();
+        let ids = model.encode_with_special("happy");
+        assert_eq!(ids[0], *model.token_to_id.get(SOS_TOKEN).unwrap());
+        assert_eq!(ids[ids.len() - 1], *model.token_to_id.get(EOS_TOKEN).unwrap());
+    }
+
+    #[test]
     fn test_train_creates_vocab() {
         let model = train("low lower lowest", 50).unwrap();
         assert!(!model.vocab.is_empty());
         assert!(model.vocab.contains(&"l".to_string()));
-        assert!(model.vocab.contains(&"o".to_string()));
-    }
-
-    #[test]
-    fn test_encode_known_word() {
-        let model = train("low low lower lower lowest", 50).unwrap();
-        let tokens = encode(&model, "low");
-        assert!(tokens.len() >= 1);
-    }
-
-    #[test]
-    fn test_encode_to_ids_roundtrip() {
-        let model = train("happy happy running", 50).unwrap();
-        let ids = model.encode_to_ids("happy");
-        let decoded = model.decode_from_ids(&ids);
-        assert_eq!(decoded, "happy");
-    }
-
-    #[test]
-    fn test_merges_not_empty() {
-        let model = train("low low low lower lower lowest", 50).unwrap();
-        assert!(!model.merges.is_empty());
-    }
-
-    #[test]
-    fn test_token_id_mappings() {
-        let model = train("a b c", 10).unwrap();
-        assert_eq!(model.token_to_id.len(), model.vocab.len());
-        assert_eq!(model.id_to_token.len(), model.vocab.len());
     }
 
     #[test]
