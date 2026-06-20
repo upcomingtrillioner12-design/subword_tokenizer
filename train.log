@@ -1,0 +1,4 @@
+nohup: ignoring input
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.14s
+     Running `target/debug/bpe-tokenizer --corpus massive_corpus.txt --save model.json --vocab-size 1000 --text test`
+Training on: massive_corpus.txt (5334080 chars)

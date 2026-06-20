@@ -99,7 +99,6 @@ impl BPEModel {
         let mut in_merges = false;
         let mut in_t2i = false;
         let mut in_i2t = false;
-        let mut merge_buf: Vec<String> = Vec::new();
         
         for line in content.lines() {
             let t = line.trim();
@@ -127,18 +126,10 @@ impl BPEModel {
                 }
             }
             
-            // Parse merges: multi-line ["a", "b"],
-            else if in_merges {
-                if t == "[" {
-                    merge_buf.clear();
-                } else if t.starts_with('"') {
-                    let token = extract_quoted(t);
-                    merge_buf.push(token);
-                } else if t.starts_with(']') {
-                    if merge_buf.len() == 2 {
-                        self.merges.push((merge_buf[0].clone(), merge_buf[1].clone()));
-                    }
-                    merge_buf.clear();
+            // Parse merges: ["a", "b"],
+            else if in_merges && t.starts_with("[") {
+                if let Some((a, b)) = parse_merge_pair(t) {
+                    self.merges.push((a, b));
                 }
             }
         }
@@ -259,26 +250,6 @@ impl BPEModel {
         }
         ids.push(self.vocab["<eos>"]);
         ids
-    }
-
-    pub fn decode(&self, ids: &[i32]) -> String {
-        let mut id_to_token: HashMap<i32, String> = HashMap::new();
-        for (token, id) in &self.vocab {
-            id_to_token.insert(*id, token.clone());
-        }
-        let space_id = self.vocab["<space>"];
-        let sos_id = self.vocab["<sos>"];
-        let eos_id = self.vocab["<eos>"];
-        let mut out = String::new();
-        for &id in ids {
-            if id == sos_id || id == eos_id { continue; }
-            if id == space_id { out.push(' '); continue; }
-            match id_to_token.get(&id) {
-                Some(t) => out.push_str(t),
-                None => out.push_str("<unk>"),
-            }
-        }
-        out
     }
 
     pub fn vocab_size(&self) -> usize { self.vocab.len() }
