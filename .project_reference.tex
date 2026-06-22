@@ -8,10 +8,10 @@
 \usepackage{graphicx}
 \usepackage{float}
 
-\title{Subword Tokenizer Project Reference}
+\title{Build a Physics Research Assistant using a 3B--7B parameter SLM, fine-tuned with LoRA on physics papers, combined with RAG and tool-using agents}
 \author{
 Jaydip Singh \\
-\texttt{jaydip,singh@gmail.com}
+\texttt{jaydip.singh@gmail.com}
 \and
 Linkan Kumbhar \\
 \texttt{upcomingtrillioner12@gmail.com}
@@ -416,5 +416,250 @@ R. Eldan, Y. Li.
 \textit{NeurIPS}, 2023.
 
 \end{thebibliography}
+
+\appendix
+
+\section{Project Roadmap: Physics Research Assistant SLM}
+
+\subsection{Final Goal}
+Build a Physics Research Assistant using a 3B--7B parameter SLM, fine-tuned with LoRA on physics papers, combined with RAG and tool-using agents.
+
+\subsection{Current Status}
+\textbf{Completed:}
+\begin{itemize}[leftmargin=1.2em]
+  \item Subword tokenizer (32K vocab, BPE)
+  \item CLI for tokenization/detokenization
+  \item Tokenizer validation (32K vs 50K trade-off analysis)
+\end{itemize}
+
+\textbf{Not Started:}
+\begin{itemize}[leftmargin=1.2em]
+  \item SLM model training pipeline
+  \item LoRA fine-tuning setup
+  \item RAG (Retrieval-Augmented Generation) integration
+  \item Tool-using agent framework
+  \item Physics paper dataset preparation
+\end{itemize}
+
+\subsection{Phase 1: Environment \& Data Pipeline (Week 1--2)}
+
+\subsubsection{1.1 Python Environment Setup}
+\textbf{Framework:} Python 3.10+, PyTorch (with MPS), Hugging Face Transformers, Datasets, Accelerate, Pandas, NumPy.
+
+\textbf{Steps:}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Activate venv: \texttt{source /Users/jdsingh/slm\_v0/venv/bin/activate}
+  \item Install packages: \texttt{pip install torch transformers datasets accelerate peft}
+  \item Verify MPS support for Mac
+\end{enumerate}
+
+\subsubsection{1.2 Physics Papers Dataset Acquisition}
+\textbf{Sources:} arXiv API, OpenAlex, local corpus.
+
+\textbf{Steps:}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Download 10K--50K physics papers from arXiv
+  \item Organize into: \texttt{/Users/jdsingh/slm\_v0/data/physics\_papers/raw/}
+  \item Extract abstracts, introductions, methodologies
+\end{enumerate}
+
+\subsubsection{1.3 Data Preprocessing Pipeline}
+\textbf{Framework:} Python (Pandas, NumPy, regex).
+
+\textbf{Steps:}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Remove noise, duplicates, non-English text
+  \item Normalize whitespace
+  \item Split long papers into chunks (max 4K words)
+  \item Output: clean JSONL format
+\end{enumerate}
+
+\textbf{Expected Outcome:} Clean, deduplicated physics corpus.
+
+\subsubsection{1.4 Tokenize Dataset}
+\textbf{Framework:} Rust tokenizer (32K vocab, frozen).
+
+\textbf{Steps:}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Tokenize all documents using existing tokenizer
+  \item Split into train/val/test (98\%/1\%/1\%)
+  \item Pack into fixed 512-token sequences
+  \item Save as binary files
+\end{enumerate}
+
+\textbf{Expected Outcome:} 300M--1B tokens ready for SLM training.
+
+\subsection{Phase 2: Base SLM Training (Week 3--5)}
+
+\textbf{Framework:} PyTorch, Hugging Face Transformers, Accelerate.
+
+\textbf{Recommended Config:}
+\begin{itemize}[leftmargin=1.2em]
+  \item Architecture: GPT2 or LLaMA-style decoder-only
+  \item Hidden size: 2048 (3B) or 3072 (7B)
+  \item Layers: 24 or 32
+  \item Attention heads: 16 or 24
+  \item Max sequence length: 512
+  \item Vocab size: 32,000
+  \item Batch size: 32, gradient accumulation: 4
+  \item Learning rate: 5e-4 with cosine schedule
+  \item Total steps: 100,000
+\end{itemize}
+
+\textbf{Success Criteria:}
+\begin{itemize}[leftmargin=1.2em]
+  \item Training loss decreases smoothly
+  \item Validation perplexity $< 20$
+  \item Generated samples coherent
+  \item Peak memory $< 16$GB (Mac)
+\end{itemize}
+
+\textbf{Expected Outcome:} Production-ready base SLM (3B--7B parameters).
+
+\subsection{Phase 3: LoRA Fine-tuning (Week 6--7)}
+
+\textbf{Framework:} PEFT (Parameter-Efficient Fine-Tuning).
+
+\textbf{LoRA Config:}
+\begin{itemize}[leftmargin=1.2em]
+  \item Rank: 32
+  \item Alpha: 32
+  \item Dropout: 0.05
+  \item Target modules: q\_proj, v\_proj
+  \item Trainable parameters: $\sim 1$--2\% of base model
+\end{itemize}
+
+\textbf{Training:}
+\begin{itemize}[leftmargin=1.2em]
+  \item Batch size: 16
+  \item Learning rate: 2e-4
+  \item Epochs: 3--5
+  \item Output: LoRA weights ($\sim 50$--100MB)
+\end{itemize}
+
+\textbf{Expected Outcome:} Fine-tuned SLM ready for RAG integration.
+
+\subsection{Phase 4: RAG Integration (Week 8--9)}
+
+\textbf{Framework:} FAISS, Sentence-Transformers, LangChain.
+
+\textbf{Steps:}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Generate embeddings for all physics paper chunks
+  \item Build FAISS vector index (384 or 768 dimensions)
+  \item Create retrieval function: query $\rightarrow$ top-k relevant chunks
+  \item Augment prompt with retrieved context
+  \item Generate answer using fine-tuned SLM
+\end{enumerate}
+
+\textbf{Expected Outcome:} RAG system with physics-grounded responses.
+
+\subsection{Phase 5: Tool-Using Agents (Week 10--11)}
+
+\textbf{Framework:} LangChain, LanGraph (ReAct framework).
+
+\textbf{Tools:}
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{search\_arxiv}: Query arXiv for physics papers
+  \item \texttt{solve\_equation}: Solve math equations (SymPy)
+  \item \texttt{execute\_python}: Safe code execution for calculations
+\end{itemize}
+
+\textbf{Agent Loop:}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Generate thought + action
+  \item Execute appropriate tool
+  \item Observe result
+  \item Iterate until final answer
+  \item Max steps: 10--15
+\end{enumerate}
+
+\textbf{Expected Outcome:} Multi-step reasoning with tool integration.
+
+\subsection{Phase 6: Deployment (Week 12+)}
+
+\textbf{Framework:} FastAPI, Docker.
+
+\textbf{REST API Endpoints:}
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{POST /query}: Submit physics question
+  \item \texttt{GET /status}: Model health check
+  \item \texttt{POST /upload\_papers}: Add new physics papers to RAG
+\end{itemize}
+
+\textbf{UI (Optional):} Streamlit web interface.
+
+\textbf{Deployment:} Docker container on cloud (AWS, GCP, Azure, Hugging Face Spaces).
+
+\textbf{Expected Outcome:} Production-ready Physics Research Assistant.
+
+\subsection{Timeline}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Week} & \textbf{Phase} & \textbf{Deliverable} \\
+\hline
+1--2 & Data Pipeline & 300M--1B tokenized tokens \\
+\hline
+3--5 & Base SLM & 3B--7B model checkpoint \\
+\hline
+6--7 & LoRA & 50MB LoRA weights \\
+\hline
+8--9 & RAG & Vector index + retrieval \\
+\hline
+10--11 & Agents & Multi-step reasoning demo \\
+\hline
+12+ & Deployment & API + UI live \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Software Requirements}
+
+\begin{table}[H]
+\centering
+\tiny
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Component} & \textbf{Framework} & \textbf{Purpose} \\
+\hline
+Data Processing & Python, Pandas, NumPy & ETL, cleaning \\
+\hline
+Base SLM Training & PyTorch, Transformers, Accelerate & Model training \\
+\hline
+LoRA Fine-tuning & PEFT & Parameter-efficient tuning \\
+\hline
+RAG & FAISS, Sentence-Transformers & Retrieval + embeddings \\
+\hline
+Agents & LangChain, LanGraph & Tool orchestration \\
+\hline
+API & FastAPI, Uvicorn & REST endpoint \\
+\hline
+UI & Streamlit (optional) & User interface \\
+\hline
+Deployment & Docker & Containerization \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Hardware Requirements}
+
+\textbf{Minimum (M1/M2 Mac):} 16GB RAM, 100GB SSD.
+
+\textbf{Recommended:} GPU with 24GB+ VRAM (or cloud), 32--64GB RAM, 500GB NVMe SSD.
+
+\subsection{Success Criteria}
+
+\begin{itemize}[leftmargin=1.2em]
+  \item Generates coherent physics-grounded answers
+  \item Uses tools appropriately
+  \item Cites retrieved papers
+  \item Handles multi-step reasoning
+  \item API response time $< 5$s
+  \item Deployment-ready
+\end{itemize}
 
 \end{document}
