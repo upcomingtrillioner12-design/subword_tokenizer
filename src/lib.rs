@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::cell::RefCell;
 use std::fs;
 
 fn escape_json(s: &str) -> String {
@@ -18,6 +19,8 @@ pub struct BPEModel {
     pub vocab: HashMap<String, i32>,
     pub merges: Vec<(String, String)>,
     pub special_tokens: Vec<String>,
+    pub id_to_token: HashMap<i32, String>,
+    token_cache: RefCell<HashMap<String, Vec<String>>>,
     next_id: i32,
 }
 
@@ -30,6 +33,8 @@ impl BPEModel {
                 "<unk>".to_string(), "<pad>".to_string(),
                 "<sos>".to_string(), "<eos>".to_string(), "<space>".to_string(),
             ],
+            id_to_token: HashMap::new(),
+            token_cache: RefCell::new(HashMap::new()),
             next_id: 0,
         };
         m.init_special();
@@ -43,6 +48,7 @@ impl BPEModel {
                 self.next_id += 1;
             }
         }
+        self.rebuild_id_to_token();
     }
 
     pub fn save(&self, path: &str) -> std::io::Result<()> {
@@ -147,6 +153,10 @@ impl BPEModel {
         Ok(true)
     }
 
+    fn rebuild_id_to_token(&mut self) {
+        self.id_to_token = self.vocab.iter().map(|(k, v)| (*v, k.clone())).collect();
+    }
+
     pub fn train(&mut self, corpus_path: &str, target_vocab_size: i32) {
         let start = std::time::Instant::now();
         let text = fs::read_to_string(corpus_path).unwrap_or_default();
@@ -220,9 +230,15 @@ impl BPEModel {
         }
         let sec = start.elapsed().as_secs();
         println!("\nDone! Vocab={} | Merges={} | Time={}s", self.vocab.len(), self.merges.len(), sec);
+        self.rebuild_id_to_token();
     }
 
     pub fn tokenize_word(&self, word: &str) -> Vec<String> {
+        // Fast path: check cache first
+        if let Some(cached) = self.token_cache.borrow().get(word) {
+            return cached.clone();
+        }
+        // Slow path: full BPE merge loop
         let mut tokens: Vec<String> = word.chars().map(|c| c.to_string()).collect();
         for (first, second) in &self.merges {
             let merged = format!("{}{}", first, second);
@@ -262,10 +278,7 @@ impl BPEModel {
     }
 
     pub fn decode(&self, ids: &[i32]) -> String {
-        let mut id_to_token: HashMap<i32, String> = HashMap::new();
-        for (token, id) in &self.vocab {
-            id_to_token.insert(*id, token.clone());
-        }
+        let id_to_token = &self.id_to_token;
         let space_id = self.vocab["<space>"];
         let sos_id = self.vocab["<sos>"];
         let eos_id = self.vocab["<eos>"];
@@ -273,7 +286,7 @@ impl BPEModel {
         for &id in ids {
             if id == sos_id || id == eos_id { continue; }
             if id == space_id { out.push(' '); continue; }
-            match id_to_token.get(&id) {
+            match self.id_to_token.get(&id) {
                 Some(t) => out.push_str(t),
                 None => out.push_str("<unk>"),
             }
@@ -379,3 +392,4 @@ fn parse_merge_pair(line: &str) -> Option<(String, String)> {
         None
     }
 }
+pub mod data;
