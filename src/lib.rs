@@ -103,18 +103,16 @@ impl BPEModel {
         // Parse JSON properly using simple state machine
         let mut in_vocab = false;
         let mut in_merges = false;
-        let mut in_t2i = false;
-        let mut in_i2t = false;
         let mut merge_buf: Vec<String> = Vec::new();
         
         for line in content.lines() {
             let t = line.trim();
             
-            if t.starts_with("\"vocab\"") { in_vocab = true; in_merges = false; in_t2i = false; in_i2t = false; continue; }
-            if t.starts_with("\"merges\"") { in_vocab = false; in_merges = true; in_t2i = false; in_i2t = false; continue; }
-            if t.starts_with("\"token_to_id\"") { in_vocab = false; in_merges = false; in_t2i = true; in_i2t = false; continue; }
-            if t.starts_with("\"id_to_token\"") { in_vocab = false; in_merges = false; in_t2i = false; in_i2t = true; continue; }
-            if t.starts_with("\"special_tokens\"") { in_vocab = false; in_merges = false; in_t2i = false; in_i2t = false; continue; }
+            if t.starts_with("\"vocab\"") { in_vocab = true; in_merges = false; continue; }
+            if t.starts_with("\"merges\"") { in_vocab = false; in_merges = true; continue; }
+            if t.starts_with("\"token_to_id\"") { in_vocab = false; in_merges = false; continue; }
+            if t.starts_with("\"id_to_token\"") { in_vocab = false; in_merges = false; continue; }
+            if t.starts_with("\"special_tokens\"") { in_vocab = false; in_merges = false; continue; }
             
             // Parse vocab items: "token",
             if in_vocab && t.starts_with("\"") && t.ends_with("\",") {
@@ -135,7 +133,11 @@ impl BPEModel {
             
             // Parse merges: multi-line ["a", "b"],
             else if in_merges {
-                if t == "[" {
+                if t.starts_with('[') && t.contains('"') {
+                    if let Some((a, b)) = parse_inline_merge_pair(t) {
+                        self.merges.push((a, b));
+                    }
+                } else if t == "[" {
                     merge_buf.clear();
                 } else if t.starts_with('"') {
                     let token = extract_quoted(t);
@@ -334,62 +336,58 @@ fn extract_quoted(s: &str) -> String {
     result
 }
 
-// Helper: parse merge pair ["a", "b"],
-fn parse_merge_pair(line: &str) -> Option<(String, String)> {
-    let trimmed = line.trim();
-    if !trimmed.starts_with('[') { return None; }
-    
-    // Find first quoted string
-    let rest = &trimmed[1..]; // skip [
-    let first_quote = rest.find('"')?;
-    let rest = &rest[first_quote+1..];
-    
-    // Extract first token
-    let mut first = String::new();
-    let mut chars = rest.chars();
-    while let Some(c) = chars.next() {
-        if c == '"' { break; }
-        if c == '\\' {
-            if let Some(next) = chars.next() {
-                match next {
-                    'n' => first.push('\n'),
-                    '\\' => first.push('\\'),
-                    '"' => first.push('"'),
-                    _ => first.push(next),
-                }
+fn parse_inline_merge_pair(line: &str) -> Option<(String, String)> {
+    let mut parts: Vec<String> = Vec::new();
+    let mut in_quote = false;
+    let mut escaped = false;
+    let mut current = String::new();
+
+    for c in line.chars() {
+        if !in_quote {
+            if c == '"' {
+                in_quote = true;
+                current.clear();
             }
-        } else {
-            first.push(c);
+            continue;
         }
-    }
-    
-    // Find second quoted string
-    let rest: String = chars.collect();
-    let second_quote = rest.find('"')?;
-    let rest = &rest[second_quote+1..];
-    
-    let mut second = String::new();
-    let mut chars = rest.chars();
-    while let Some(c) = chars.next() {
-        if c == '"' { break; }
-        if c == '\\' {
-            if let Some(next) = chars.next() {
-                match next {
-                    'n' => second.push('\n'),
-                    '\\' => second.push('\\'),
-                    '"' => second.push('"'),
-                    _ => second.push(next),
-                }
+
+        if escaped {
+            match c {
+                'n' => current.push('\n'),
+                'r' => current.push('\r'),
+                't' => current.push('\t'),
+                '\\' => current.push('\\'),
+                '"' => current.push('"'),
+                _ => current.push(c),
             }
-        } else {
-            second.push(c);
+            escaped = false;
+            continue;
         }
+
+        if c == '\\' {
+            escaped = true;
+            continue;
+        }
+
+        if c == '"' {
+            in_quote = false;
+            parts.push(current.clone());
+            if parts.len() == 2 {
+                break;
+            }
+            continue;
+        }
+
+        current.push(c);
     }
-    
-    if !first.is_empty() && !second.is_empty() {
-        Some((first, second))
+
+    if parts.len() == 2 {
+        Some((parts[0].clone(), parts[1].clone()))
     } else {
         None
     }
 }
 pub mod data;
+
+#[cfg(test)]
+mod tests;
