@@ -1,6 +1,43 @@
-# Subword Tokenizer - BPE in Rust + C++
+# Subword Tokenizer - Rust BPE + Prototype Training
 
 A high-performance Byte Pair Encoding (BPE) tokenizer built with Rust and C++ integration. Train, save, and use subword tokenizers with a simple CLI or import as a library.
+
+## ⚠️ Current Implementation Update (July 2026)
+
+This repository has moved to a **Rust-first tokenizer + Python prototype training** workflow.
+
+### What is current
+
+- Active tokenizer binary: `bpe-tokenizer`
+- Active tokenizer model for prototype path: `model_32k.json`
+- Prototype trainer: `slm_v0/stream_train.py`
+- Automation scripts: `slm_v0/scripts/`
+- Checkpoint ranking/selection: `slm_v0/scripts/evaluate_checkpoints.py`
+- Long-run resilience: arXiv retry/backoff + step checkpoints
+
+### Current CLI command style
+
+```bash
+cargo run --release --bin bpe-tokenizer -- train <corpus.txt> <vocab_size>
+cargo run --release --bin bpe-tokenizer -- expand <corpus.txt> <vocab_size>
+cargo run --release --bin bpe-tokenizer -- tokenize "your text"
+cargo run --release --bin bpe-tokenizer -- decode "1,2,3"
+cargo run --release --bin bpe-tokenizer -- count
+```
+
+### Prototype runs (handoff-ready)
+
+```bash
+cd slm_v0
+./scripts/run_prototype.sh
+./scripts/run_prototype_3x_and_select_best.sh
+./scripts/run_prototype_long_4h.sh
+./scripts/run_evaluation.sh
+```
+
+### Note for readers
+
+Some older sections below still mention legacy Rust/C++/FFI wording. Use this update block plus `doc/project_reference.md` and `doc/architecture.md` as the source of truth.
 
 [![Build Status](https://github.com/upcomingtrillioner12-design/subword_tokenizer/actions/workflows/ci.yml/badge.svg)](https://github.com/upcomingtrillioner12-design/subword_tokenizer/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
