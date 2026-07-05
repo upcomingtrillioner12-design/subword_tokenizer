@@ -1,0 +1,40 @@
+name: Build PDF Report
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'doc/project_reference.md'
+      - 'doc/**'
+      - '.github/workflows/build-pdf.yml'
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-fonts-extra
+
+      - name: Build PDF from Markdown
+        run: |
+          pandoc doc/project_reference.md \
+            -o doc/project_reference.pdf \
+            --pdf-engine=xelatex \
+            -V geometry:margin=1in \
+            -V mainfont="DejaVu Serif" \
+            --toc \
+            --toc-depth=2 \
+            -f markdown+raw_tex
+
+      - name: Commit and push PDF
+        run: |
+          git config user.name "upcomingtrillioner12-design"
+          git config user.email "upcomingtrillioner12@gmail.com"
+          git add doc/project_reference.pdf
+          git diff --cached --quiet || git commit -m "Auto-generate project_reference.pdf"
+          git push
