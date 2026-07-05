@@ -280,7 +280,6 @@ impl BPEModel {
     }
 
     pub fn decode(&self, ids: &[i32]) -> String {
-        let id_to_token = &self.id_to_token;
         let space_id = self.vocab["<space>"];
         let sos_id = self.vocab["<sos>"];
         let eos_id = self.vocab["<eos>"];
@@ -288,9 +287,12 @@ impl BPEModel {
         for &id in ids {
             if id == sos_id || id == eos_id { continue; }
             if id == space_id { out.push(' '); continue; }
-            match self.id_to_token.get(&id) {
-                Some(t) => out.push_str(t),
-                None => out.push_str("<unk>"),
+            if let Some(t) = self.id_to_token.get(&id) {
+                out.push_str(t);
+            } else if let Some((token, _)) = self.vocab.iter().find(|(_, token_id)| **token_id == id) {
+                out.push_str(token);
+            } else {
+                out.push_str("<unk>");
             }
         }
         out

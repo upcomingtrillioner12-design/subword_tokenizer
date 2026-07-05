@@ -1,15 +1,23 @@
-# Subword Tokenizer Architecture
+# Subword Tokenizer + Prototype Training Architecture
 
 ```mermaid
-graph LR
-    A["CLI Input"] --> B["Parse Arguments"]
-    B --> C["Load Corpus"]
-    C --> D["BPE Training<br/>Rust/C++"]
-    D --> E["JSON Model"]
-    E --> F["Save File"]
-    F --> G["Inference<br/>Load Model"]
-    G --> H["Tokenize Text"]
-    H --> I["Output Tokens"]
-    D --> J["Unit Tests"]
-    J --> K["Validation"]
+flowchart LR
+    A[Live arXiv Stream] --> B[stream_train.py]
+    B --> C[Retry/Backoff Network Layer]
+    C --> D[Rust Tokenizer CLI\\nbpe-tokenizer tokenize]
+    D --> E[Token IDs]
+    E --> F[TinyLM Training Loop\\nMPS/CUDA/CPU]
+    F --> G[Step Checkpoints]
+    F --> H[Epoch Checkpoint + Summary]
+    H --> I[evaluate_checkpoints.py]
+    I --> J[best_checkpoint_*.json]
+
+    K[Tokenizer Training CLI\\ntrain / expand / prepare] --> L[model_32k.json]
+    L --> D
 ```
+
+## Notes
+
+- Training tokenization uses the project tokenizer model (`model_32k.json`) via Rust CLI.
+- Long runs include retry/backoff to tolerate transient arXiv read timeouts.
+- Evaluation ranks checkpoints by average eval loss and picks best automatically.
