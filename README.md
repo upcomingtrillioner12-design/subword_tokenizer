@@ -39,6 +39,33 @@ cd slm_v0
 
 Some older sections below still mention legacy Rust/C++/FFI wording. Use this update block plus `doc/project_reference.md` and `doc/architecture.md` as the source of truth.
 
+## 📚 Research Alignment (July 2026)
+
+This project aligns with **cutting-edge SLM (Small Language Model) research trends**:
+
+### Active Research Areas
+- **Efficiency-First Design**: Model compression, parameter reduction, quantization (trend: ~35M-128M param sweet spot)
+- **On-Device Deployment**: Mobile/edge inference with MPS (Apple Silicon), ONNX export
+- **Parameter-Efficient Fine-Tuning (PEFT)**: LoRA, QLoRA, adapter layers for domain specialization
+- **Distillation & Knowledge Transfer**: Teacher-student architectures for rapid adaptation
+- **Continual Learning**: Sequential personalization without catastrophic forgetting
+- **Structured Reasoning**: Integration with symbolic systems for reliability in physics/mathematics
+
+### Recent Papers (June-July 2026)
+- *The Wiola Architecture for Efficient Small Language Models* (2026-07-01) - 32M params, physics domain
+- *CHERRY: Compressed Hierarchical Experts with Recurrent Representational Yield* (2026-06-30)
+- *Little Brains, Big Feats: Exploring Compact Language Models* (2026-06-29)
+- *Continual Learning for Sequential Personalization of Small Language Models* (2026-06-26)
+- *Resource-Aware Neuro-Symbolic Reasoning for Local SLMs* (2026-06-20)
+
+### Project Roadmap Alignment
+- **Phase 1 (Current)**: ✅ Prototype 35M-param TinyLM on arXiv physics corpus (complete)
+- **Phase 2 (Next)**: LoRA fine-tuning on curated physics dataset; offline corpus training
+- **Phase 3**: RAG (Retrieval-Augmented Generation) integration with knowledge base
+- **Phase 4+**: Quantization, distillation, on-device benchmarking, agent framework
+
+**Strategic Position**: We are building a *foundation layer* (efficient tokenizer + prototype trainer) before advancing to *adaptation layers* (PEFT, RAG, agents) aligned with 2026 frontier research.
+
 [![Build Status](https://github.com/upcomingtrillioner12-design/subword_tokenizer/actions/workflows/ci.yml/badge.svg)](https://github.com/upcomingtrillioner12-design/subword_tokenizer/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -470,8 +497,8 @@ If you use this tokenizer in research, please cite:
 
 ---
 
-**Last Updated:** June 17, 2026
+**Last Updated:** July 5, 2026
 
-**Status:** ✅ Production Ready | 17 Tests Passing | 3 Platforms Supported
+**Status:** ✅ Production Ready | 17 Tests Passing | 3 Platforms Supported | Research-Aligned SLM Prototype
 
 Made with ❤️ by the Subword Tokenizer Team
