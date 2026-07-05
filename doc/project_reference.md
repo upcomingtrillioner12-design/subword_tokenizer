@@ -97,7 +97,47 @@ From repository root:
 3. Add CI/doc task to regenerate this PDF from markdown automatically.
 4. Track large artifacts through retention/LFS policy.
 
-## 9) File-Level Reference
+## 
+
+## Architecture Diagram
+
+![System Architecture](architecture.png)
+
+*Figure 1: Live arXiv Stream → Rust Tokenizer → TinyLM Training → Checkpoint Evaluation*
+
+```
+Live arXiv Stream → stream_train.py → Retry/Backoff → Rust Tokenizer CLI → Token IDs → TinyLM Training → Checkpoints → Evaluation → best_checkpoint_*.json
+```
+
+
+
+## References
+
+[1] P. Jhandi, O. Kazi, S. Subramanian, N. Sendas. "Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning." arXiv preprint arXiv:2512.15943, 2025.
+
+[2] Y. Kang, et al. "Fine-tuning Small Language Models as Efficient Enterprise Search Relevance Labelers." arXiv preprint arXiv:2601.03211, 2026.
+
+[3] R. Sharma, M. Mehta. "Small Language Models for Agentic Systems: A Survey of Architectures, Capabilities, and Deployment Trade-offs." arXiv preprint arXiv:2510.03847, 2025.
+
+[4] Z. K. Chong, et al. "Compiling Deterministic Structure into SLM Harnesses." arXiv preprint arXiv:2604.17450, 2026.
+
+[5] ServiceNow, SLB. "Scaling AI Development with DGX Cloud: ServiceNow and SLB Production Deployments." Nvidia DGX Cloud Case Study, ZenML LLMOps Database, 2025.
+
+[6] N. Patience. "Leveraging Small Language Models for Enterprise AI: Benefits, Use Cases, and IBM Approach." The Futurum Group, in partnership with IBM, 2025.
+
+[7] M. Elfeki, R. Liu, C. Voegele. "Return of the Encoder: Maximizing Parameter Efficiency for Small Language Models." arXiv preprint arXiv:2501.16273, 2025.
+
+[8] SACAI R. "Small Language Models for Enterprise Edge Deployment." Southern African Conference on Artificial Intelligence Research, 2025.
+
+[9] "Data-Centric Fine-Tuning of Small Language Models for Industrial Applications." IEEE Transactions on Industrial Informatics, 2025.
+
+[10] LinkedIn Engineering. "Production-Scale SLM Ranking: Optimizations for Inference." arXiv preprint arXiv:2510.22101, 2025.
+
+[11] A. Karpathy. "NanoGPT: The simplest, fastest repository for training medium-sized GPTs." GitHub, 2023.
+
+[12] R. Eldan, Y. Li. "TinyStories: How Small Can Language Models Be and Still Speak Coherently?" arXiv preprint arXiv:2305.07759, 2023.
+
+9) File-Level Reference
 
 - `subword_tokenizer/src/lib.rs`: tokenizer core and model operations
 - `subword_tokenizer/src/main.rs`: CLI dispatch (`bpe-tokenizer`)
@@ -108,7 +148,19 @@ From repository root:
 
 ---
 
-Prepared on July 3, 2026 for end-of-day status handoff.
+
+## Architecture Diagram
+
+![System Architecture](architecture.png)
+
+*Figure 1: Live arXiv Stream → Rust Tokenizer → TinyLM Training → Checkpoint Evaluation*
+
+```
+Live arXiv Stream → stream_train.py → Retry/Backoff → Rust Tokenizer CLI → Token IDs → TinyLM Training → Checkpoints → Evaluation → best_checkpoint_*.json
+```
+
+Prepared on July 3, 2026
+Updated July 5, 2026 — Added references and architecture diagram for IIT Bombay server request for end-of-day status handoff.
 
 
 ## References
