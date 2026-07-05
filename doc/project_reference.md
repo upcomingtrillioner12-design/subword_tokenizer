@@ -1,3 +1,8 @@
+## Architecture Diagram
+
+![System Architecture Flow](architecture.png)
+*Figure 1: Live arXiv Stream → Rust Tokenizer → TinyLM Training → Checkpoint Evaluation*
+
 
 
 ---
