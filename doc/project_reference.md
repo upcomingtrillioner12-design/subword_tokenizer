@@ -316,3 +316,4 @@ Updated July 5, 2026 — Added references and architecture diagram for IIT Bomba
 [11] A. Karpathy. "NanoGPT: The simplest, fastest repository for training medium-sized GPTs." GitHub, 2023.
 
 [12] R. Eldan, Y. Li. "TinyStories: How Small Can Language Models Be and Still Speak Coherently?" arXiv preprint arXiv:2305.07759, 2023.
+
