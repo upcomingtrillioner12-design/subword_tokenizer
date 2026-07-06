@@ -104,13 +104,13 @@ From repository root:
 
 ---
 
-## 16. Project Roadmap: Physics Research Assistant SLM
+## 9. Project Roadmap: Physics Research Assistant SLM
 
-### 16.1 Final Goal
+### 9.1 Final Goal
 
 Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with LoRA on physics papers, combined with RAG and tool-using agents.
 
-### 16.2 Current Status
+### 9.2 Current Status
 
 **Completed:**
 - Subword tokenizer (32K vocab, BPE)
@@ -126,7 +126,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 - Tool-using agent framework
 - Physics paper dataset preparation at scale
 
-### 16.3 Phase 1: Environment & Data Pipeline (Week 1-2)
+### 9.3 Phase 1: Environment & Data Pipeline (Week 1-2)
 
 **Framework:** Python 3.10+, PyTorch (with MPS), Hugging Face Transformers, Datasets, Accelerate, Pandas, NumPy
 
@@ -144,7 +144,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 
 **Expected Outcome:** 300M-1B tokens ready for SLM training.
 
-### 16.4 Phase 2: Base SLM Training (Week 3-5)
+### 9.4 Phase 2: Base SLM Training (Week 3-5)
 
 **Framework:** PyTorch, Hugging Face Transformers, Accelerate
 
@@ -169,7 +169,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 
 **Expected Outcome:** Production-ready base SLM (3B-7B parameters).
 
-### 16.5 Phase 3: LoRA Fine-tuning (Week 6-7)
+### 9.5 Phase 3: LoRA Fine-tuning (Week 6-7)
 
 **Framework:** PEFT (Parameter-Efficient Fine-Tuning)
 
@@ -189,7 +189,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 
 **Expected Outcome:** Fine-tuned SLM ready for RAG integration.
 
-### 16.6 Phase 4: RAG Integration (Week 8-9)
+### 9.6 Phase 4: RAG Integration (Week 8-9)
 
 **Framework:** FAISS, Sentence-Transformers, LangChain
 
@@ -202,7 +202,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 
 **Expected Outcome:** RAG system with physics-grounded responses.
 
-### 16.7 Phase 5: Tool-Using Agents (Week 10-11)
+### 9.7 Phase 5: Tool-Using Agents (Week 10-11)
 
 **Framework:** LangChain, LanGraph (ReAct framework)
 
@@ -221,7 +221,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 
 **Expected Outcome:** Multi-step reasoning with tool integration.
 
-### 16.8 Phase 6: Deployment (Week 12+)
+### 9.8 Phase 6: Deployment (Week 12+)
 
 **Framework:** FastAPI, Docker
 
@@ -237,7 +237,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 
 **Expected Outcome:** Production-ready Physics Research Assistant.
 
-### 16.9 Timeline
+### 9.9 Timeline
 
 | Week | Phase | Deliverable |
 |------|-------|-------------|
@@ -248,7 +248,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 | 10-11 | Agents | Multi-step reasoning demo |
 | 12+ | Deployment | API + UI live |
 
-### 16.10 Hardware Requirements
+### 10 Hardware Requirements
 
 | Level | Specs |
 |-------|-------|
@@ -256,7 +256,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 | Recommended | GPU with 24GB+ VRAM, 32-64GB RAM, 500GB NVMe SSD |
 | Training (AWS p4d.24xlarge) | 8x A100, 320GB total VRAM, spot instances |
 
-### 16.11 Success Criteria
+### 10.1 Success Criteria
 
 - Generates coherent physics-grounded answers
 - Uses tools appropriately
@@ -265,7 +265,7 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 - API response time < 5s
 - Deployment-ready
 
----\n\n## 17. File-Level Reference
+---\n\n## File-Level Reference
 
 - `subword_tokenizer/src/lib.rs`: tokenizer core and model operations
 - `subword_tokenizer/src/main.rs`: CLI dispatch (`bpe-tokenizer`)
