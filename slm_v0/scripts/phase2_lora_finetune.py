@@ -13,6 +13,7 @@ import argparse
 import json
 import math
 import random
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -81,6 +82,11 @@ class LoRALinear(nn.Module):
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Phase 2 LoRA fine-tuning for TinyLM")
     p.add_argument("--config", default=str(ROOT / "config" / "phase2_lora_config.yaml"))
+    p.add_argument(
+        "--resume",
+        default="auto",
+        help="Resume mode: 'auto' (latest step checkpoint), 'none', or explicit checkpoint path.",
+    )
     return p.parse_args()
 
 
@@ -216,6 +222,54 @@ def extract_lora_state(model: nn.Module) -> Dict[str, torch.Tensor]:
     return state
 
 
+def _parse_step_from_name(path: Path) -> int:
+    m = re.search(r"step(\d+)", path.name)
+    return int(m.group(1)) if m else 0
+
+
+def _find_latest_step_checkpoint(out_dir: Path) -> Path | None:
+    candidates = sorted(out_dir.glob("lora_adapter_step*.pt"), key=_parse_step_from_name)
+    if not candidates:
+        return None
+    return candidates[-1]
+
+
+def _load_resume_checkpoint(model: nn.Module, resume_spec: str, out_dir: Path) -> tuple[int, str | None]:
+    if resume_spec.lower() == "none":
+        return 0, None
+
+    if resume_spec.lower() == "auto":
+        ckpt_path = _find_latest_step_checkpoint(out_dir)
+        if ckpt_path is None:
+            return 0, None
+    else:
+        ckpt_path = Path(resume_spec)
+        if not ckpt_path.is_absolute():
+            ckpt_path = ROOT / ckpt_path
+        if not ckpt_path.exists():
+            raise FileNotFoundError(f"Resume checkpoint not found: {ckpt_path}")
+
+    payload = torch.load(ckpt_path, map_location="cpu")
+    lora_state = payload.get("lora_state", {})
+    _, unexpected = model.load_state_dict(lora_state, strict=False)
+    if unexpected:
+        raise RuntimeError(f"Unexpected keys while loading resume checkpoint: {unexpected}")
+
+    step = int(payload.get("step", _parse_step_from_name(ckpt_path)))
+    return step, str(ckpt_path)
+
+
+def _load_existing_best_val(best_path: Path) -> float:
+    if not best_path.exists():
+        return float("inf")
+    payload = torch.load(best_path, map_location="cpu")
+    if "val_loss" in payload:
+        return float(payload["val_loss"])
+    if "best_val_loss" in payload:
+        return float(payload["best_val_loss"])
+    return float("inf")
+
+
 def main() -> None:
     args = parse_args()
     cfg = load_config(Path(args.config))
@@ -256,8 +310,9 @@ def main() -> None:
 
     optimizer = torch.optim.AdamW(list(get_trainable_params(model)), lr=lr, weight_decay=wd)
 
-    best_eval = float("inf")
     best_path = out_dir / "best_lora_adapter.pt"
+    best_eval = _load_existing_best_val(best_path)
+    start_step, resumed_from = _load_resume_checkpoint(model, args.resume, out_dir)
 
     log = {
         "device": device,
@@ -265,16 +320,25 @@ def main() -> None:
         "train_tokens": int(train_tokens.size),
         "val_tokens": int(val_tokens.size),
         "max_steps": max_steps,
+        "resume_mode": args.resume,
+        "start_step": start_step,
+        "resumed_from": resumed_from,
     }
     (out_dir / "run_meta.json").write_text(json.dumps(log, indent=2), encoding="utf-8")
 
     print(f"[phase2] Device: {device}")
     print(f"[phase2] LoRA modules replaced: {len(replaced)}")
+    if resumed_from:
+        print(f"[phase2] Resumed from: {resumed_from} (step={start_step})")
+    else:
+        print("[phase2] Starting fresh run")
+    if start_step >= max_steps:
+        print(f"[phase2] start_step ({start_step}) >= max_steps ({max_steps}), skipping training loop.")
 
     model.train()
     optimizer.zero_grad(set_to_none=True)
 
-    for step in range(1, max_steps + 1):
+    for step in range(start_step + 1, max_steps + 1):
         step_loss = 0.0
         for _ in range(grad_accum):
             x, y = sample_batch(train_tokens, batch_cfg, device)
@@ -334,6 +398,8 @@ def main() -> None:
         "best_adapter": str(best_path),
         "final_adapter": str(final_path),
         "max_steps": max_steps,
+        "start_step": start_step,
+        "resumed_from": resumed_from,
         "output_dir": str(out_dir),
     }
     (out_dir / "phase2_train_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
