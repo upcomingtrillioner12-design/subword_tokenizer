@@ -1,0 +1,25 @@
+{
+  "device": "mps",
+  "category": "physics",
+  "eval_steps": 50,
+  "batch_size": 4,
+  "seq_len": 256,
+  "min_tokens": 12,
+  "tokenizer_model": "/Users/jdsingh/slm_v0/subword_tokenizer/model_32k.json",
+  "best_checkpoint": {
+    "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/prototype_long4h_epoch1.pt",
+    "avg_eval_loss": 0.010688513116911054,
+    "d_model": 384,
+    "n_layers": 6,
+    "n_heads": 6
+  },
+  "ranking": [
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/prototype_long4h_epoch1.pt",
+      "avg_eval_loss": 0.010688513116911054,
+      "d_model": 384,
+      "n_layers": 6,
+      "n_heads": 6
+    }
+  ]
+}
