@@ -1,0 +1,173 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[margin=1cm,top=1.2cm]{geometry}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Sections formatting
+\titleformat{\section}{\vspace{-4pt}\scshape\raggedright\large}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\ifdefined\pdfgentounicode
+\pdfgentounicode=1
+\fi
+
+%-------------------- CV START --------------------
+\begin{document}
+
+\begin{center}
+    {\Huge \scshape Jaydip Singh, Ph.D.} \\ \vspace{5pt}
+  \href{mailto:jaydip.singh@gmail.com}{Jaydip.Singh@gmail.com} $|$ +91-6306311397 $|$ Mumbai, India \\
+    \href{https://www.linkedin.com/in/jaydip-singh-15714546}{LinkedIn} $|$
+  \href{https://github.com/JaydipSingh}{GitHub} $|$
+  \href{https://github.com/JaydipSingh/portfolio}{Portfolio} $|$
+  \href{https://inspirehep.net/authors/1591917}{Research Profile}
+\end{center}
+
+\section{Professional Summary}
+Ph.D.-qualified Machine Learning Scientist with 9+ years of combined academic and industry experience in scientific computing, software engineering, and end-to-end AI/ML systems. Proven expertise in applying advanced machine learning, deep learning (CNNs, GNNs), and Generative AI techniques (LLMs, RAG) to solve complex problems across research and enterprise domains. Lead Engineer (GenAI) at Apexon, leading client-facing, enterprise-scale agentic and GenAI solutions. Experienced in building scalable data pipelines, automating training workflows, and deploying production ML systems on cloud platforms (AWS, Azure, GCP). Strong record of interdisciplinary collaboration, research-driven innovation, and delivery of impactful AI solutions, with a primary focus on agentic AI and multi-agent architectures.
+
+Featured portfolio: \href{https://github.com/JaydipSingh/portfolio}{github.com/JaydipSingh/portfolio} (Rust + Python SLM framework, checkpointed training pipeline, and research-aligned ML engineering projects).
+
+
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.5cm]
+  \item \textbf{Programming:} Python (NumPy, Pandas, PyTorch, Keras, TensorFlow, Scikit-learn, PySpark), C/C++, SQL, Bash/Shell.
+  \item \textbf{Technology:} Machine Learning, Deep Learning, Generative AI, Agentic AI, LLMs, RAG (LangChain, MCP), CNNs, Monte Carlo Simulation, and Statistical Data Modeling.
+  \item \textbf{Tools \& Frameworks:}LangChain, LangGraph, LangSmith, OpenAI Agents SDK, CrewAI, AutoGen, MCP, FastAPI/RestAPI, Docker, Git, PyTest, Matplotlib.
+  
+  \item \textbf{Databases:} PL/SQL, Chroma, Pinecone and Neo4j AuraDB.
+  \item \textbf{Cloud \& DevOps:} MLOps, Kafka, Kubernetes, AWS Sagemaker/Bedrock, Private Cloud, CI/CD, HPC
+  \item \textbf{Simulation/Design:} GEANT4 ( detectors development ), COMSOL ( used for chips and semiconductors simulation ), SolidWorks ( hardware design), LaTeX
+\end{itemize}
+
+\section{Selected Projects}
+\begin{itemize}[leftmargin=0.5cm]
+  \item \textbf{Subword Tokenizer + SLM Prototype} (Rust, Python, PyTorch, MPS) \\
+  \textit{Production-validated, 473× loss improvement (0.0107 eval loss)}
+  \begin{itemize}[leftmargin=0.45cm]
+    \item Built a high-performance Rust BPE tokenizer (32K vocab) and integrated it with a Python PyTorch training pipeline for small language model (SLM) prototyping.
+    \item Trained and validated a 35.2M-parameter TinyLM (d\_model=384, n\_layers=6) on Apple Silicon (M3 Pro MPS) with 6000-step training (3.5 hours) and periodic 500-step checkpointing.
+    \item Achieved \textbf{0.0107 eval loss} on 50-batch physics validation set—\textbf{473× improvement} vs.\ 2-step baseline (5.0738 loss), demonstrating genuine convergence on live arXiv data.
+    \item Implemented exponential backoff retry logic (100-retry, 5s base) for arXiv stream resilience and checkpoint auto-ranking, enabling unattended multi-hour training runs with zero NaN losses or OOM.
+    \item \href{https://github.com/upcomingtrillioner12-design/subword_tokenizer}{GitHub Repo} $|$ \href{https://github.com/JaydipSingh/portfolio}{Portfolio}
+  \end{itemize}
+  \item \textbf{Agentic AI Enterprise Workflow} (LangGraph, CrewAI, OpenAI Agents SDK) \\
+  \textit{Details to be expanded.}
+  \item \textbf{RAG/Monitoring System} (vector DB, retrieval, evaluation) \\
+  \textit{Details to be expanded.}
+\end{itemize}
+
+\section{Professional Experience}
+
+\textbf{Lead Engineer ( GenAI ) – Apexon,} Mumbai, India  \hfill Dec 2025 – Present.
+\begin{itemize}[leftmargin=0.5cm]
+
+\item Developing and leading agentic AI applications focused on autonomous reasoning, planning, and tool orchestration.
+\item  Building multi-agent systems using OpenAI Agents SDK, CrewAI, LangGraph, AutoGen, and MCP.
+\item Designing production-grade agent workflows for enterprise use cases, including decision-making agents, task planners, and AI copilots.
+
+\item Collaborating with cross-functional teams to deploy scalable, secure, and responsible GenAI solutions.
+\end{itemize}
+
+\textbf{Gen AI Technical Lead (IC) – FutureSoft (Client: PwC BSC)}, Mumbai, India \hfill Jul 2025 - Nov 2025
+\begin{itemize}[leftmargin=0.5cm]
+  \item Leading Generative AI projects for PwC, including enterprise-scale chatbot/agent development, RAG-based automation, and client-facing AI solutions.
+  \item Architecting and deploying AI/ML pipelines with focus on LLMs, LangChain, and cloud-based MLOps practices.
+  \item Mentoring cross-functional teams on GenAI adoption, responsible AI practices, and production-grade deployments.
+  \item Collaborating with stakeholders to translate business requirements into scalable AI-driven solutions.
+\end{itemize}
+
+\textbf{Postdoctoral Research Scientist (Data Scientist) – UC Davis}, USA \hfill Jan 2024 – Dec 2024
+\begin{itemize}[leftmargin=0.5cm]
+  \item Developed AI agents for real-time data monitoring and anomaly detection using RAG, BERT, Flan-T5, and GPT.
+  \item Integrated Pinecone vector DB for log ingestion, enabling advanced reasoning and context retention.
+  \item Applied ML algorithms (PCA, DBSCAN, CNNs) for image classification and 3D reconstruction.
+  \item Built Monte Carlo–based models for optimizing detector performance.
+\end{itemize}
+
+\textbf{Senior Software Engineer – Nextgen Clearing Pvt Ltd.}, Mumbai, India \hfill Nov 2021 – May 2023
+\begin{itemize}[leftmargin=0.5cm]
+  \item Engineered telecom billing systems using Python, C++, and PL/SQL.
+  \item Refactored legacy modules, boosting performance and maintainability.
+  \item Coordinated development and debugging with cross-functional teams.
+\end{itemize}
+
+\textbf{AI Research Collaborator – University of Lucknow \& Fermilab}, USA \hfill Mar 2019 – Oct 2021
+\begin{itemize}[leftmargin=0.5cm]
+  \item Developed CNN/GenAI models for particle physics image reconstruction (LArTPC).
+  \item Optimized classification and detector performance using deep learning.
+  \item Performed large-scale data analysis using PyTorch and Scikit-learn.
+\end{itemize}
+
+\textbf{Research Fellow (Scientific Software Developer) – India-based Neutrino Observatory}, Lucknow University \hfill Aug 2014 – Mar 2019
+\begin{itemize}[leftmargin=0.5cm]
+  \item Created GEANT4-based simulation software for experimental physics.
+  \item Integrated ML models to enhance detector signal recognition and efficiency.
+  \item Deployed on Fermi Cloud (AWS/GCP-like) infrastructure for distributed computing.
+\end{itemize}
+
+\section{Education}
+\begin{itemize}[leftmargin=0.5cm]
+  \item \textbf{Ph.D. in Particle Physics}, University of Lucknow, India \hfill 2019 – 2022
+  \item \textbf{M.Sc. in Physics}, Indian Institute of Technology Bombay, India \hfill 2011 – 2013
+  \item \textbf{B.Sc. in Physics, Mathematics \& Computer Science}, Ewing Christian College, Allahabad \hfill 2007 – 2010
+\end{itemize}
+
+
+\section{Research Publications}
+Extensive publication record in high-energy physics and AI/ML research. \\
+Full list available at: \href{https://inspirehep.net/authors/1591917}{inspirehep.net/authors/1591917}
+
+\subsection*{Selected AI/ML-Enhanced Publications (Key Contributions)}
+\begin{itemize}[leftmargin=0.5cm]
+  \item \textbf{Separation of track- and shower-like energy deposits in ProtoDUNE-SP using a convolutional neural network}, Eur. Phys. J. C 82 (2022). \\
+  \textit{Technologies: Convolutional Neural Network (CNN), supervised classification, image-based detector data.} \\
+  Contributed to integration of CNN model into the reconstruction workflow and optimization with real and simulated data. \\
+  \href{https://inspirehep.net/literature/2060793}{inspirehep.net/2060793}
+  
+  \item \textbf{Highly-parallelized simulation of a pixelated LArTPC on a GPU}, JINST 18 (2023). \\
+  \textit{Technologies: GPU parallelization (CUDA), high-performance computing, simulation pipelines.} \\
+  Developed and optimized GPU-accelerated simulation kernels and integrated with experiment frameworks. \\
+  \href{https://inspirehep.net/literature/2620145}{inspirehep.net/2620145}
+  
+  \item \textbf{Neutrino interaction vertex reconstruction in DUNE with integrated U-ResNet neural network} (2025). \\
+  \textit{Technologies: U-ResNet (deep residual U-Net), hit-level classification, hybrid ML pipeline integration.} \\
+  Integrated U-ResNet into vertex reconstruction pipeline, ensuring efficient interfacing and runtime optimization. \\
+  \href{https://inspirehep.net/literature/2878306}{inspirehep.net/2878306}
+\end{itemize}
+
+
+\section{Certifications \& Test Scores}
+\begin{itemize}[leftmargin=0.5cm]
+ \item AI Engineer Agentic Track: The Complete Agent and MCP Course ( Udemy)
+  \item Generative AI with Large Language Models (AWS, DeepLearning.AI)
+  \item IIT-JAM (Physics): All India Rank – 263 (2011)
+  \item NGPE (IAPT): Top 10 percentile (2010)
+\end{itemize}
+
+\section{Awards \& Fellowships}
+\begin{itemize}[leftmargin=0.5cm]
+  \item Rajendra Raja Fellowship – Fermilab, USA
+  \item INO Fellowship – DST, India
+\end{itemize}
+
+\section{Extracurricular Activities}
+\begin{itemize}[leftmargin=0.5cm]
+  \item Winner: 4x100m Relay (IIT-Bombay \& ECC), Basketball/Volleyball tournaments
+  \item Finalist: 400m Sprint, Annual college meets (2008–2010)
+\end{itemize}
+
+\end{document}
