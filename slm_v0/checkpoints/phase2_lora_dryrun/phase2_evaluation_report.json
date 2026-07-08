@@ -1,0 +1,23 @@
+{
+  "device": "mps",
+  "eval_split": "val",
+  "eval_steps": 30,
+  "best": {
+    "checkpoint": "checkpoints/phase2_lora_dryrun/lora_adapter_step120.pt",
+    "eval_loss": 0.009167328445861737
+  },
+  "ranking": [
+    {
+      "checkpoint": "checkpoints/phase2_lora_dryrun/lora_adapter_step120.pt",
+      "eval_loss": 0.009167328445861737
+    },
+    {
+      "checkpoint": "checkpoints/phase2_lora_dryrun/lora_adapter_final.pt",
+      "eval_loss": 0.009933138483514388
+    },
+    {
+      "checkpoint": "checkpoints/phase2_lora_dryrun/lora_adapter_step60.pt",
+      "eval_loss": 0.010504486892993251
+    }
+  ]
+}

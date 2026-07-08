@@ -1,0 +1,45 @@
+experiment:
+  name: phase2_lora_physics_dryrun
+  seed: 42
+
+model:
+  base_checkpoint: checkpoints/production_sml_v1.pt
+  base_summary: checkpoints/prototype_long4h_summary.json
+  tokenizer_model: subword_tokenizer/model_32k.json
+
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules:
+    - self_attn.out_proj
+    - linear1
+    - linear2
+    - head
+
+training:
+  output_dir: checkpoints/phase2_lora_dryrun
+  train_bin: data/offline_physics_dryrun/train.bin
+  val_bin: data/offline_physics_dryrun/val.bin
+  test_bin: data/offline_physics_dryrun/test.bin
+  seq_len: 256
+  batch_size: 4
+  grad_accum_steps: 1
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  max_steps: 120
+  warmup_steps: 10
+  eval_every: 40
+  eval_steps: 20
+  save_every: 60
+  num_workers: 0
+  device: auto
+
+corpus_prep:
+  category: physics
+  max_papers: 300
+  min_tokens: 12
+  delay_seconds: 2
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1

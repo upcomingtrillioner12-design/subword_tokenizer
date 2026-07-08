@@ -79,7 +79,10 @@ This project aligns with **cutting-edge SLM (Small Language Model) research tren
   - Tokenizer: 32K BPE vocab, Rust CLI
   - Training: 6000-step physics curriculum on M3 Pro
   - Evaluation: Multi-run checkpoint ranking, loss-based selection
-- **Phase 2 (Next)**: LoRA fine-tuning on curated physics dataset; offline corpus training
+- **Phase 2 (In Progress)**: ✅ Dry-run validated (300 papers, 120 LoRA steps, best eval loss 0.009167)
+  - New scripts: `slm_v0/scripts/prepare_offline_corpus.py`, `slm_v0/scripts/phase2_lora_finetune.py`, `slm_v0/scripts/evaluate_lora_checkpoints.py`
+  - Configs: `slm_v0/config/phase2_lora_config.yaml`, `slm_v0/config/phase2_lora_config_dryrun.yaml`
+  - Dry-run reports: `slm_v0/checkpoints/phase2_lora_dryrun/phase2_evaluation_report.json`
 - **Phase 3**: RAG (Retrieval-Augmented Generation) integration with knowledge base
 - **Phase 4+**: Quantization, distillation, on-device benchmarking, agent framework
 

@@ -1,0 +1,21 @@
+{
+  "category": "physics",
+  "max_papers": 300,
+  "documents_collected": 300,
+  "seq_len": 256,
+  "tokenizer_model": "subword_tokenizer/model_32k.json",
+  "splits": {
+    "train_docs": 240,
+    "val_docs": 30,
+    "test_docs": 30,
+    "train_tokens": 129792,
+    "val_tokens": 14592,
+    "test_tokens": 16128
+  },
+  "files": {
+    "raw": "data/offline_physics_dryrun/raw_papers.jsonl",
+    "train_bin": "data/offline_physics_dryrun/train.bin",
+    "val_bin": "data/offline_physics_dryrun/val.bin",
+    "test_bin": "data/offline_physics_dryrun/test.bin"
+  }
+}

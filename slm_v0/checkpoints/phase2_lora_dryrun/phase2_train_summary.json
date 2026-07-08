@@ -1,0 +1,7 @@
+{
+  "best_val_loss": 0.00923608085140586,
+  "best_adapter": "checkpoints/phase2_lora_dryrun/best_lora_adapter.pt",
+  "final_adapter": "checkpoints/phase2_lora_dryrun/lora_adapter_final.pt",
+  "max_steps": 120,
+  "output_dir": "checkpoints/phase2_lora_dryrun"
+}
