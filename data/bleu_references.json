@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "name": "phase3_task6_bleu_references",
+    "description": "Reference continuations for BLEU-4 evaluation on physics prompts",
+    "num_items": 12,
+    "date": "2026-07-13"
+  },
+  "items": [
+    {
+      "id": "qm_001",
+      "prompt": "In quantum mechanics, the wave function describes the",
+      "reference": "probability amplitude of a system state and its measurable outcomes."
+    },
+    {
+      "id": "qm_006",
+      "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+      "reference": "conjugate variables like position and momentum can be known simultaneously."
+    },
+    {
+      "id": "qm_009",
+      "prompt": "The Born rule provides a probabilistic interpretation: the square of the wave function amplitude represents",
+      "reference": "the probability density for observing a particle in a given configuration."
+    },
+    {
+      "id": "rc_002",
+      "prompt": "According to Einstein's theory of special relativity, time",
+      "reference": "dilates for observers moving at high velocity relative to one another."
+    },
+    {
+      "id": "rc_007",
+      "prompt": "The equivalence principle in general relativity suggests that gravitational acceleration",
+      "reference": "is locally indistinguishable from acceleration in a non-inertial reference frame."
+    },
+    {
+      "id": "rc_010",
+      "prompt": "The Schwarzschild radius defines the event horizon of a black hole, beyond which",
+      "reference": "no causal signal can escape to a distant observer."
+    },
+    {
+      "id": "ts_003",
+      "prompt": "The second law of thermodynamics states that entropy in an isolated system",
+      "reference": "does not decrease and tends to increase toward equilibrium."
+    },
+    {
+      "id": "ts_008",
+      "prompt": "In statistical mechanics, the partition function is a crucial quantity that encodes",
+      "reference": "the statistical weights of microstates and determines thermodynamic observables."
+    },
+    {
+      "id": "ts_010",
+      "prompt": "The relationship between microscopic dynamics and macroscopic thermodynamic behavior is governed by",
+      "reference": "ensemble statistics, coarse graining, and ergodic assumptions."
+    },
+    {
+      "id": "em_002",
+      "prompt": "Coulomb's law describes the force between two charged particles as being",
+      "reference": "proportional to charge product and inversely proportional to distance squared."
+    },
+    {
+      "id": "em_006",
+      "prompt": "Maxwell's equations unify electricity, magnetism, and light by demonstrating that",
+      "reference": "time-varying electric and magnetic fields propagate as electromagnetic waves."
+    },
+    {
+      "id": "em_010",
+      "prompt": "The gauge invariance of the electromagnetic field theory implies that the physical observables must",
+      "reference": "remain invariant under local phase transformations of the potential."
+    }
+  ]
+}

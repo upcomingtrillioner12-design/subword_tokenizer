@@ -266,15 +266,16 @@ python scripts/inference_lora.py \
 - [x] Task 3: Benchmark suite ([scripts/benchmark_inference.py](scripts/benchmark_inference.py))
 - [x] Task 4: Qualitative evaluation workflow ([scripts/qualitative_eval.py](scripts/qualitative_eval.py))
 - [x] Task 5: Test set evaluation ([scripts/eval_test_set.py](scripts/eval_test_set.py))
+- [x] Task 6: Perplexity/BLEU metrics ([scripts/compute_language_metrics.py](scripts/compute_language_metrics.py))
 
 ### Generated Artifacts
 - [results/phase3_benchmark_results.json](results/phase3_benchmark_results.json)
 - [results/phase3_qualitative_outputs.json](results/phase3_qualitative_outputs.json)
 - [results/phase3_qualitative_assessment.md](results/phase3_qualitative_assessment.md)
 - [results/phase3_test_set_evaluation.json](results/phase3_test_set_evaluation.json)
+- [results/language_metrics.json](results/language_metrics.json)
 
 ### Pending
-- [ ] Task 6: Perplexity / BLEU metrics
 - [ ] Task 7: Physics QA quiz evaluation
 
 ## Next Steps (Phase 3)
@@ -284,7 +285,7 @@ python scripts/inference_lora.py \
 - [x] Benchmark against Phase 1 on domain-specific tasks
 - [x] Manual quality assessment workflow and report generation
 - [x] Run full held-out test split evaluation (Task 5)
-- [ ] Compute language metrics (Task 6)
+- [x] Compute language metrics (Task 6)
 - [ ] Execute physics QA rubric evaluation (Task 7)
 
 ### Short-term (Next 2 Weeks)
