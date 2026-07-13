@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "purpose": "Qualitative evaluation subset - manual assessment of Phase 1 vs Phase 2",
+    "total_prompts": 12,
+    "categories": 4,
+    "selection_criteria": "Mix of easy/medium/hard across different physics domains",
+    "date": "2026-07-13"
+  },
+  "prompts": [
+    {
+      "id": "qm_001",
+      "category": "Quantum Mechanics",
+      "difficulty": "easy",
+      "text": "In quantum mechanics, the wave function describes the",
+      "context": "Basic quantum mechanics concept - introductory level"
+    },
+    {
+      "id": "qm_006",
+      "category": "Quantum Mechanics",
+      "difficulty": "medium",
+      "text": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+      "context": "Heisenberg's uncertainty principle - intermediate level"
+    },
+    {
+      "id": "qm_009",
+      "category": "Quantum Mechanics",
+      "difficulty": "hard",
+      "text": "The Born rule provides a probabilistic interpretation: the square of the wave function amplitude represents",
+      "context": "Advanced quantum mechanics concept - requires understanding of probability amplitudes"
+    },
+    {
+      "id": "rc_002",
+      "category": "Relativity and Cosmology",
+      "difficulty": "easy",
+      "text": "According to Einstein's theory of special relativity, time",
+      "context": "Time dilation - introductory special relativity"
+    },
+    {
+      "id": "rc_007",
+      "category": "Relativity and Cosmology",
+      "difficulty": "medium",
+      "text": "The equivalence principle in general relativity suggests that gravitational acceleration",
+      "context": "Equivalence principle - intermediate general relativity"
+    },
+    {
+      "id": "rc_010",
+      "category": "Relativity and Cosmology",
+      "difficulty": "hard",
+      "text": "The Schwarzschild radius defines the event horizon of a black hole, beyond which",
+      "context": "Black hole physics - advanced general relativity"
+    },
+    {
+      "id": "ts_003",
+      "category": "Thermodynamics and Statistical Mechanics",
+      "difficulty": "easy",
+      "text": "The second law of thermodynamics states that entropy in an isolated system",
+      "context": "Fundamental thermodynamic law - introductory"
+    },
+    {
+      "id": "ts_008",
+      "category": "Thermodynamics and Statistical Mechanics",
+      "difficulty": "medium",
+      "text": "In statistical mechanics, the partition function is a crucial quantity that encodes",
+      "context": "Partition function - intermediate statistical mechanics"
+    },
+    {
+      "id": "ts_010",
+      "category": "Thermodynamics and Statistical Mechanics",
+      "difficulty": "hard",
+      "text": "The relationship between microscopic dynamics and macroscopic thermodynamic behavior is governed by",
+      "context": "Ergodic hypothesis and foundations of statistical mechanics - advanced"
+    },
+    {
+      "id": "em_002",
+      "category": "Electromagnetism",
+      "difficulty": "easy",
+      "text": "Coulomb's law describes the force between two charged particles as being",
+      "context": "Basic electrostatics - introductory"
+    },
+    {
+      "id": "em_006",
+      "category": "Electromagnetism",
+      "difficulty": "medium",
+      "text": "Maxwell's equations unify electricity, magnetism, and light by demonstrating that",
+      "context": "Maxwell's equations - intermediate electromagnetism"
+    },
+    {
+      "id": "em_010",
+      "category": "Electromagnetism",
+      "difficulty": "hard",
+      "text": "The gauge invariance of the electromagnetic field theory implies that the physical observables must",
+      "context": "Gauge theory in electromagnetism - advanced"
+    }
+  ]
+}

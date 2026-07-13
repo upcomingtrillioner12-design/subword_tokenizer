@@ -1,0 +1,738 @@
+{
+  "metadata": {
+    "task": "phase3_task4_qualitative_evaluation",
+    "started": "2026-07-13 12:05:20",
+    "finished": "2026-07-13 12:05:27",
+    "device": "mps",
+    "num_prompts": 12,
+    "num_samples_per_prompt": 3,
+    "generation": {
+      "max_tokens": 64,
+      "temperature": 1.2,
+      "top_k": 100,
+      "top_p": 0.98
+    }
+  },
+  "results": [
+    {
+      "prompt_id": "qm_001",
+      "category": "Quantum Mechanics",
+      "difficulty": "easy",
+      "prompt_text": "In quantum mechanics, the wave function describes the",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.9053678339987528,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.9053678339987528,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0620239580021007,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.05535366699041333,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.05498687500949018,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.05498687500949018,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.05653158300265204,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.05539941700408235,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "qm_006",
+      "category": "Quantum Mechanics",
+      "difficulty": "medium",
+      "prompt_text": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.09021249999932479,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.09021249999932479,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08443091700610239,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08342495800752658,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.08441358400159515,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08441358400159515,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08342887500475626,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0842589579988271,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "qm_009",
+      "category": "Quantum Mechanics",
+      "difficulty": "hard",
+      "prompt_text": "The Born rule provides a probabilistic interpretation: the square of the wave function amplitude represents",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.09652725000341889,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.09652725000341889,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0823656669963384,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08630962499591988,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.08820358400407713,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08820358400407713,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08882395799446385,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08696087499265559,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "rc_002",
+      "category": "Relativity and Cosmology",
+      "difficulty": "easy",
+      "prompt_text": "According to Einstein's theory of special relativity, time",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.06875533401034772,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06875533401034772,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06346691699582152,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06396754199522547,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.06498199999623466,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06498199999623466,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06344741600332782,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06314487499184906,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "rc_007",
+      "category": "Relativity and Cosmology",
+      "difficulty": "medium",
+      "prompt_text": "The equivalence principle in general relativity suggests that gravitational acceleration",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.07532712499960326,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07532712499960326,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06852629198692739,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0702772910008207,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.07176991600135807,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07176991600135807,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07347825000761077,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06699595900136046,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "rc_010",
+      "category": "Relativity and Cosmology",
+      "difficulty": "hard",
+      "prompt_text": "The Schwarzschild radius defines the event horizon of a black hole, beyond which",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.08204866699816193,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08204866699816193,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07838995799829718,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.09340354200685397,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.08118645798822399,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08118645798822399,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07890958299685735,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08190291699429508,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "ts_003",
+      "category": "Thermodynamics and Statistical Mechanics",
+      "difficulty": "easy",
+      "prompt_text": "The second law of thermodynamics states that entropy in an isolated system",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.08051662499201484,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08051662499201484,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0717961249902146,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07253462499647867,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.07416970799386036,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07416970799386036,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08835987499332987,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0785079589986708,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "ts_008",
+      "category": "Thermodynamics and Statistical Mechanics",
+      "difficulty": "medium",
+      "prompt_text": "In statistical mechanics, the partition function is a crucial quantity that encodes",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.07680708300904371,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07680708300904371,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07251641699986067,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07184537500143051,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.07666245799919125,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07666245799919125,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07635279100213666,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07609316699381452,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "ts_010",
+      "category": "Thermodynamics and Statistical Mechanics",
+      "difficulty": "hard",
+      "prompt_text": "The relationship between microscopic dynamics and macroscopic thermodynamic behavior is governed by",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.08996229100739583,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08996229100739583,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0829210410011001,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08785062500101048,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.08585758300614543,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08585758300614543,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08843574998900294,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08964449999621138,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "em_002",
+      "category": "Electromagnetism",
+      "difficulty": "easy",
+      "prompt_text": "Coulomb's law describes the force between two charged particles as being",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.07639404200017452,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07639404200017452,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0674711669998942,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06711062499380205,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.06831237499136478,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06831237499136478,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06851258399547078,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07262629100296181,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "em_006",
+      "category": "Electromagnetism",
+      "difficulty": "medium",
+      "prompt_text": "Maxwell's equations unify electricity, magnetism, and light by demonstrating that",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.07658970900229178,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07658970900229178,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06683220798731782,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.06812366699159611,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.07038587500574067,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07038587500574067,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07126183299988043,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.07188120800128672,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    },
+    {
+      "prompt_id": "em_010",
+      "category": "Electromagnetism",
+      "difficulty": "hard",
+      "prompt_text": "The gauge invariance of the electromagnetic field theory implies that the physical observables must",
+      "phase1_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.080586415992002,
+        "tokens_per_second": 0.0
+      },
+      "phase1_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.080586415992002,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08385854099469725,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0855862500029616,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "phase2_best": {
+        "text": "[no tokens generated]",
+        "generated_tokens": 0,
+        "elapsed_seconds": 0.0874182080005994,
+        "tokens_per_second": 0.0
+      },
+      "phase2_trials": [
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.0874182080005994,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08753120800247416,
+          "tokens_per_second": 0.0
+        },
+        {
+          "text": "[no tokens generated]",
+          "generated_tokens": 0,
+          "elapsed_seconds": 0.08743124999455176,
+          "tokens_per_second": 0.0
+        }
+      ],
+      "manual_winner": "pending",
+      "manual_notes": ""
+    }
+  ]
+}
