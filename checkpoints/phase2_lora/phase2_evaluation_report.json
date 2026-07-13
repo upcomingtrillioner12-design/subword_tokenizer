@@ -1,0 +1,55 @@
+{
+  "device": "mps",
+  "eval_split": "val",
+  "eval_steps": 200,
+  "best": {
+    "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step9000.pt",
+    "eval_loss": 0.006000515322666615
+  },
+  "ranking": [
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step9000.pt",
+      "eval_loss": 0.006000515322666615
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_final.pt",
+      "eval_loss": 0.006049152267514728
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step10000.pt",
+      "eval_loss": 0.0061343704804312435
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step8000.pt",
+      "eval_loss": 0.006208166624419391
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step5000.pt",
+      "eval_loss": 0.006401822345796972
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step7000.pt",
+      "eval_loss": 0.0064529103966197
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step4000.pt",
+      "eval_loss": 0.006557771838270127
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step6000.pt",
+      "eval_loss": 0.00660844512807671
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step3000.pt",
+      "eval_loss": 0.007912050943705253
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step1000.pt",
+      "eval_loss": 0.008194404063979165
+    },
+    {
+      "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step2000.pt",
+      "eval_loss": 0.008277646944625303
+    }
+  ]
+}

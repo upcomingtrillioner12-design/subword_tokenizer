@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 0.005970929260365665,
+  "best_adapter": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt",
+  "final_adapter": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_final.pt",
+  "max_steps": 10000,
+  "start_step": 0,
+  "resumed_from": null,
+  "output_dir": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora"
+}
