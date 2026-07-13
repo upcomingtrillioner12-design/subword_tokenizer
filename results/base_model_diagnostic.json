@@ -1,0 +1,228 @@
+{
+  "phase1_base": {
+    "model": "Phase 1 Base Model (No LoRA)",
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "logits_analysis": [
+      {
+        "eos_token_prob": 0.999943733215332,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.999943733215332,
+          5.457205816128408e-07,
+          4.826629833587504e-07,
+          9.252045884977633e-08,
+          1.533630644701134e-08
+        ]
+      },
+      {
+        "eos_token_prob": 0.9999454021453857,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.9999454021453857,
+          5.841419010721438e-07,
+          4.5470372356248845e-07,
+          7.356098308264336e-08,
+          1.5231560013262424e-08
+        ]
+      },
+      {
+        "eos_token_prob": 0.9999393224716187,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.9999393224716187,
+          6.265694310059189e-07,
+          4.063679170940304e-07,
+          1.813923233839887e-07,
+          1.750080791396158e-08
+        ]
+      },
+      {
+        "eos_token_prob": 0.9999417066574097,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.9999417066574097,
+          7.527122534156661e-07,
+          4.5841693463444244e-07,
+          1.1015276157877452e-07,
+          1.6432910143748813e-08
+        ]
+      },
+      {
+        "eos_token_prob": 0.9999426603317261,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.9999426603317261,
+          5.601503971774946e-07,
+          4.546716922959604e-07,
+          1.0764325963918964e-07,
+          1.637975799440028e-08
+        ]
+      }
+    ],
+    "samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generated": "[no tokens generated]",
+        "tokens": 0
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generated": "[no tokens generated]",
+        "tokens": 0
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0
+  },
+  "phase2_lora": {
+    "model": "Phase 2 With LoRA",
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "logits_analysis": [
+      {
+        "eos_token_prob": 0.999943733215332,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.999943733215332,
+          5.457205816128408e-07,
+          4.826629833587504e-07,
+          9.252045884977633e-08,
+          1.533630644701134e-08
+        ]
+      },
+      {
+        "eos_token_prob": 0.9999454021453857,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.9999454021453857,
+          5.841419010721438e-07,
+          4.5470372356248845e-07,
+          7.356098308264336e-08,
+          1.5231560013262424e-08
+        ]
+      },
+      {
+        "eos_token_prob": 0.9999393224716187,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.9999393224716187,
+          6.265694310059189e-07,
+          4.063679170940304e-07,
+          1.813923233839887e-07,
+          1.750080791396158e-08
+        ]
+      },
+      {
+        "eos_token_prob": 0.9999417066574097,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.9999417066574097,
+          7.527122534156661e-07,
+          4.5841693463444244e-07,
+          1.1015276157877452e-07,
+          1.6432910143748813e-08
+        ]
+      },
+      {
+        "eos_token_prob": 0.9999426603317261,
+        "top_5_tokens": [
+          2,
+          4,
+          0,
+          3,
+          1700
+        ],
+        "top_5_probs": [
+          0.9999426603317261,
+          5.601503971774946e-07,
+          4.546716922959604e-07,
+          1.0764325963918964e-07,
+          1.637975799440028e-08
+        ]
+      }
+    ],
+    "samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generated": "[no tokens generated]",
+        "tokens": 0
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generated": "[no tokens generated]",
+        "tokens": 0
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0
+  }
+}
