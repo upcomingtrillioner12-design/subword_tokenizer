@@ -1,0 +1,159 @@
+\documentclass[11pt]{article}
+
+% arXiv-friendly packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{caption}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\title{Subword Tokenizer and SLM Training/Evaluation Stack:\\
+A Practical Foundation for Physics Research Assistant Systems}
+\author{Jaydip Singh \and Linkan Kumbhar}
+\date{July 13, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper presents an implementation-focused foundation for building a domain-oriented small language model (SLM) system for physics research assistance. The system combines a production Rust Byte Pair Encoding (BPE) tokenizer with a Python-based training and evaluation pipeline designed for resource-constrained hardware (Apple Silicon/MPS). We report Phase~1--3 results: baseline TinyLM loss 0.0107, best LoRA loss 0.0060 (44\% improvement), held-out test loss 0.00595 (45.45\% gain vs baseline), and improved physics QA score (+0.125 absolute). We document architecture, operational scripts, reliability mechanisms (checkpointing and stream retry/backoff), and a phased roadmap toward retrieval-augmented generation (RAG) and tool-using agents.
+\end{abstract}
+
+\section{Introduction}
+Small language models are increasingly relevant for cost-efficient, low-latency, and on-device AI workloads. Our objective is to establish a robust foundation layer that is reproducible on laptop-class hardware while remaining directly extensible to larger-scale training and deployment.
+
+The current system has two aligned layers:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Tokenizer layer (Rust):} a production BPE tokenizer with CLI and reusable library APIs.
+    \item \textbf{Prototype training layer (Python):} a TinyLM training path using the Rust tokenizer model, with automatic checkpointing and evaluation.
+\end{enumerate}
+
+\section{System Architecture}
+The implementation follows a streaming-to-training architecture:
+\begin{enumerate}[leftmargin=*]
+    \item Live arXiv stream with retry/backoff for transient failures.
+    \item Tokenization through Rust CLI (\texttt{bpe-tokenizer}) using a 32K vocabulary model.
+    \item Tiny Transformer training (MPS/CUDA/CPU auto-selection).
+    \item Step checkpoints, final checkpoints, and multi-run ranking by evaluation loss.
+\end{enumerate}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{architecture.png}
+    \caption{System architecture: Live arXiv stream $\rightarrow$ Rust tokenizer $\rightarrow$ TinyLM training $\rightarrow$ checkpoint evaluation.}
+    \label{fig:architecture}
+\end{figure}
+
+\section{Implementation Details}
+\subsection{Tokenizer Commands}
+Current tokenizer workflow:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{cargo run --bin bpe-tokenizer -- train <corpus.txt> <vocab\_size>}
+    \item \texttt{cargo run --bin bpe-tokenizer -- expand <corpus.txt> <vocab\_size>}
+    \item \texttt{cargo run --bin bpe-tokenizer -- tokenize <text>}
+    \item \texttt{cargo run --bin bpe-tokenizer -- decode <comma\_separated\_ids>}
+    \item \texttt{cargo run --bin bpe-tokenizer -- count}
+\end{itemize}
+
+\subsection{Prototype Training Commands}
+\begin{itemize}[leftmargin=*]
+    \item Quick prototype: \texttt{./scripts/run\_prototype.sh}
+    \item 3-run compare + best select: \texttt{./scripts/run\_prototype\_3x\_and\_select\_best.sh}
+    \item Long run ($\sim$3--4h on M3 Pro): \texttt{./scripts/run\_prototype\_long\_4h.sh}
+    \item Evaluation: \texttt{./scripts/run\_evaluation.sh}
+\end{itemize}
+
+\subsection{Validation and Reliability}
+\begin{itemize}[leftmargin=*]
+    \item Rust tokenizer tests are passing.
+    \item Prototype training is validated on Mac MPS.
+    \item Best-checkpoint JSON reports are generated automatically.
+    \item Retry/backoff mitigates arXiv timeout interruptions in long runs.
+\end{itemize}
+
+\section{Roadmap to Publication-Grade Physics Assistant SLM}
+\subsection{Final Goal}
+Build a physics research assistant using a 3B--7B parameter SLM, LoRA fine-tuning, RAG grounding, and tool-using agents.
+
+\subsection{Phase Plan}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.14\linewidth} >{\raggedright\arraybackslash}p{0.2\linewidth} >{\raggedright\arraybackslash}p{0.58\linewidth}}
+\toprule
+\textbf{Weeks} & \textbf{Phase} & \textbf{Deliverable} \\
+\midrule
+1--2 & Data Pipeline & 300M--1B tokenized physics corpus \\
+3--5 & Base SLM Training & 3B--7B checkpoint (decoder-only baseline) \\
+6--7 & LoRA Fine-Tuning & Parameter-efficient domain adaptation weights \\
+8--9 & RAG Integration & Vector index + retrieval-augmented response path \\
+10--11 & Agent Layer & Tool-using multi-step reasoning workflow \\
+12+ & Deployment & API + optional UI + cloud/runtime packaging \\
+\bottomrule
+\end{longtable}
+
+\subsection{Success Criteria}
+\begin{itemize}[leftmargin=*]
+    \item Physics-grounded coherent answers with retrieved context.
+    \item Stable tool-calling behavior for equations and code tasks.
+    \item End-to-end response latency below 5 seconds in target deployment profile.
+\end{itemize}
+
+\section{Risks and Mitigations}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Streaming instability:} addressed via retry/backoff and periodic checkpoints.
+    \item \textbf{Artifact growth:} requires retention and storage policy.
+    \item \textbf{Documentation drift:} enforce CI-based PDF generation from source.
+\end{itemize}
+
+\section{Conclusion}
+This work establishes a practical and reproducible foundation for SLM development, balancing implementation realism with a clear path to research-grade publication outcomes. The current milestone is a validated tokenizer+training+evaluation stack (Phase~1--3 complete); the next milestones are generation-control tuning, RAG integration, and agent-layer deployment.
+
+\begin{thebibliography}{99}
+
+\bibitem{jhandi2025slmtool}
+P.~Jhandi, O.~Kazi, S.~Subramanian, and N.~Sendas,
+\newblock ``Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning,''
+\newblock arXiv:2512.15943, 2025.
+
+\bibitem{kang2026enterprise}
+Y.~Kang et al.,
+\newblock ``Fine-tuning Small Language Models as Efficient Enterprise Search Relevance Labelers,''
+\newblock arXiv:2601.03211, 2026.
+
+\bibitem{sharma2025survey}
+R.~Sharma and M.~Mehta,
+\newblock ``Small Language Models for Agentic Systems: A Survey of Architectures, Capabilities, and Deployment Trade-offs,''
+\newblock arXiv:2510.03847, 2025.
+
+\bibitem{chong2026deterministic}
+Z.~K.~Chong et al.,
+\newblock ``Compiling Deterministic Structure into SLM Harnesses,''
+\newblock arXiv:2604.17450, 2026.
+
+\bibitem{karpathy2023nanogpt}
+A.~Karpathy,
+\newblock ``NanoGPT: The simplest, fastest repository for training medium-sized GPTs,''
+\newblock GitHub, 2023.
+
+\bibitem{eldan2023tinystories}
+R.~Eldan and Y.~Li,
+\newblock ``TinyStories: How Small Can Language Models Be and Still Speak Coherently?,''
+\newblock arXiv:2305.07759, 2023.
+
+\end{thebibliography}
+
+\end{document}

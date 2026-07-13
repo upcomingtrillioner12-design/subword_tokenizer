@@ -3,16 +3,21 @@
 
 
 ---
-title: Subword Tokenizer & Prototype Training Reference
-subtitle: Production-validated 35.2M-param TinyLM (0.0107 eval loss)
-date: July 8, 2026
+title: Subword Tokenizer & SLM Training Reference
+subtitle: Phase 1-3 validated (Phase 2 loss 0.0060, Task 7 QA gain +0.125)
+date: July 13, 2026
 author: "Jaydip Singh (jaydip.singh@gmail.com), Linkan Kumbhar (upcomingtrillioner12@gmail.com)"
+
+---
 
 ## 1. Executive Summary
 
-**Project**: Production-validated Subword Tokenizer + SLM Prototype Training  
-**Status**: Phase 1 Complete (July 8, 2026)  
-**Key Result**: **0.0107 eval loss** on 6000-step TinyLM (473× baseline improvement)
+**Project**: Production-validated Subword Tokenizer + SLM Prototype Training and Evaluation  
+**Status**: Phase 3 Complete (July 13, 2026)  
+**Key Results**:
+- **Phase 1**: 0.0107 eval loss on 6000-step TinyLM (35.2M params)
+- **Phase 2**: best LoRA eval loss **0.0060** (44% improvement vs Phase 1)
+- **Phase 3**: full 7-task evaluation suite complete (benchmark, qualitative, test set, PPL/BLEU, physics QA)
 
 ### System Architecture
 
@@ -29,7 +34,7 @@ Two unified layers:
    - Network resilience: 100-retry exponential backoff
    - Checkpoint periodicity: 500-step saves + final checkpoint
 
-### Validation Results (Phase 1 Complete)
+### Validation Results (Phase 1-3)
 
 **Production Checkpoint**: `prototype_long4h_epoch1.pt`
 - **Model**: TinyLM (d_model=384, n_layers=6, n_heads=6, 35.2M params)
@@ -39,9 +44,21 @@ Two unified layers:
 - **Stability**: Zero NaN, zero OOM, zero crashes
 - **Improvement**: 473× better than 2-step baseline (5.0738 → 0.0107)
 
-Status: **Ready for Phase 2 (LoRA fine-tuning)** and Phase 3 (RAG integration)
+**Phase 2 + 3 validated outcomes (July 13, 2026):**
+- Test-set loss: 0.010910 → **0.005952** (**45.45%** gain)
+- Inference latency benchmark (50 prompts): **1.1449x** average speedup
+- Physics QA (20 questions, ranking rubric): 0.325 → **0.450** (Δ **+0.125**)
+- BLEU-4 and open-ended qualitative scoring currently constrained by early-EOS generation behavior
+
+Status: **Ready for Phase 4 (RAG integration + generation control tuning)**
 
 ## 2. Recent Milestones
+
+**July 13, 2026**: Phase 3 Completion
+- Implemented and validated Tasks 1-7 end-to-end
+- Added inference/benchmark/qualitative/test-set/language-metrics/QA scripts
+- Produced consolidated report: `PHASE_3_COMPLETION.md`
+- Confirmed strong retained LoRA gains on held-out test split and QA scoring
 
 **July 8, 2026**: Big Prototype Training & Validation
 - Completed 6000-step training run (3.5 hours on M3 Pro)
