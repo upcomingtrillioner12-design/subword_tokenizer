@@ -15,7 +15,7 @@
 - [x] Task 4 complete: [scripts/qualitative_eval.py](scripts/qualitative_eval.py)
 - [x] Task 5 complete: test set evaluation ([scripts/eval_test_set.py](scripts/eval_test_set.py))
 - [x] Task 6 complete: perplexity / BLEU metrics ([scripts/compute_language_metrics.py](scripts/compute_language_metrics.py))
-- [ ] Task 7 pending: physics QA evaluation
+- [x] Task 7 complete: physics QA evaluation ([scripts/physics_qa_eval.py](scripts/physics_qa_eval.py))
 
 Current outputs:
 - [results/phase3_benchmark_results.json](results/phase3_benchmark_results.json)
@@ -23,6 +23,7 @@ Current outputs:
 - [results/phase3_qualitative_assessment.md](results/phase3_qualitative_assessment.md)
 - [results/phase3_test_set_evaluation.json](results/phase3_test_set_evaluation.json)
 - [results/language_metrics.json](results/language_metrics.json)
+- [results/physics_qa_results.json](results/physics_qa_results.json)
 
 ---
 

@@ -267,6 +267,7 @@ python scripts/inference_lora.py \
 - [x] Task 4: Qualitative evaluation workflow ([scripts/qualitative_eval.py](scripts/qualitative_eval.py))
 - [x] Task 5: Test set evaluation ([scripts/eval_test_set.py](scripts/eval_test_set.py))
 - [x] Task 6: Perplexity/BLEU metrics ([scripts/compute_language_metrics.py](scripts/compute_language_metrics.py))
+- [x] Task 7: Physics QA evaluation ([scripts/physics_qa_eval.py](scripts/physics_qa_eval.py))
 
 ### Generated Artifacts
 - [results/phase3_benchmark_results.json](results/phase3_benchmark_results.json)
@@ -274,9 +275,10 @@ python scripts/inference_lora.py \
 - [results/phase3_qualitative_assessment.md](results/phase3_qualitative_assessment.md)
 - [results/phase3_test_set_evaluation.json](results/phase3_test_set_evaluation.json)
 - [results/language_metrics.json](results/language_metrics.json)
+- [results/physics_qa_results.json](results/physics_qa_results.json)
 
 ### Pending
-- [ ] Task 7: Physics QA quiz evaluation
+- [x] Task 7: Physics QA quiz evaluation
 
 ## Next Steps (Phase 3)
 
@@ -286,7 +288,7 @@ python scripts/inference_lora.py \
 - [x] Manual quality assessment workflow and report generation
 - [x] Run full held-out test split evaluation (Task 5)
 - [x] Compute language metrics (Task 6)
-- [ ] Execute physics QA rubric evaluation (Task 7)
+- [x] Execute physics QA rubric evaluation (Task 7)
 
 ### Short-term (Next 2 Weeks)
 - [ ] Build inference pipeline with streaming output
