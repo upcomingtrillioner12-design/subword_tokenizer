@@ -13,7 +13,7 @@
 - [x] Task 2 complete: [data/eval_prompts.json](data/eval_prompts.json)
 - [x] Task 3 complete: [scripts/benchmark_inference.py](scripts/benchmark_inference.py)
 - [x] Task 4 complete: [scripts/qualitative_eval.py](scripts/qualitative_eval.py)
-- [ ] Task 5 pending: test set evaluation
+- [x] Task 5 complete: test set evaluation ([scripts/eval_test_set.py](scripts/eval_test_set.py))
 - [ ] Task 6 pending: perplexity / BLEU metrics
 - [ ] Task 7 pending: physics QA evaluation
 
@@ -21,6 +21,7 @@ Current outputs:
 - [results/phase3_benchmark_results.json](results/phase3_benchmark_results.json)
 - [results/phase3_qualitative_outputs.json](results/phase3_qualitative_outputs.json)
 - [results/phase3_qualitative_assessment.md](results/phase3_qualitative_assessment.md)
+- [results/phase3_test_set_evaluation.json](results/phase3_test_set_evaluation.json)
 
 ---
 

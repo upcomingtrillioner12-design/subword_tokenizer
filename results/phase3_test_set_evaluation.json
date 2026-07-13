@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "task": "phase3_task5_test_set_evaluation",
+    "timestamp": "2026-07-13 16:01:16",
+    "device": "mps",
+    "config": "config/phase2_lora_config.yaml",
+    "adapter": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt",
+    "test_bin": "/Users/jdsingh/slm_v0/data/offline_physics/test.bin",
+    "eval_steps": 300,
+    "seed": 42,
+    "elapsed_seconds": 16.985677375000023,
+    "num_test_tokens": 1698304
+  },
+  "results": {
+    "phase1_test_loss": 0.010910112691732744,
+    "phase2_test_loss": 0.00595155317724372,
+    "phase1_perplexity": 1.0109698450023097,
+    "phase2_perplexity": 1.0059692988571733,
+    "loss_delta": 0.004958559514489024,
+    "relative_gain_percent": 45.44920528865322
+  }
+}
