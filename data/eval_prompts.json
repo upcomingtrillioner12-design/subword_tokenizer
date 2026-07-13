@@ -1,0 +1,359 @@
+{
+  "metadata": {
+    "total_prompts": 50,
+    "categories": 5,
+    "prompts_per_category": 10,
+    "created_date": "2026-07-13",
+    "phase": 3,
+    "task": 2,
+    "description": "Physics evaluation prompts for Phase 3 inference and benchmark testing",
+    "format": "Partial sentences requiring model completion",
+    "difficulty_gradient": "Simple to complex within each category"
+  },
+  "quantum_mechanics": {
+    "category_name": "Quantum Mechanics",
+    "description": "Prompts covering quantum states, wave functions, superposition, and measurement",
+    "prompts": [
+      {
+        "id": "qm_001",
+        "difficulty": "easy",
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "context": "Introductory concept about wave functions"
+      },
+      {
+        "id": "qm_002",
+        "difficulty": "easy",
+        "prompt": "The uncertainty principle states that the product of uncertainties in position and momentum",
+        "context": "Heisenberg's uncertainty principle"
+      },
+      {
+        "id": "qm_003",
+        "difficulty": "easy",
+        "prompt": "Superposition is a fundamental principle where a quantum system can exist in",
+        "context": "Superposition concept"
+      },
+      {
+        "id": "qm_004",
+        "difficulty": "medium",
+        "prompt": "When a measurement is performed on a quantum system in superposition, the wave function",
+        "context": "Wave function collapse upon measurement"
+      },
+      {
+        "id": "qm_005",
+        "difficulty": "medium",
+        "prompt": "The Schrödinger equation describes how the quantum state evolves",
+        "context": "Time evolution of quantum systems"
+      },
+      {
+        "id": "qm_006",
+        "difficulty": "medium",
+        "prompt": "Quantum entanglement occurs when two particles are correlated such that",
+        "context": "Non-local correlations in quantum systems"
+      },
+      {
+        "id": "qm_007",
+        "difficulty": "hard",
+        "prompt": "The commutator of two observables determines whether they can have simultaneous eigenstates, and observables that commute",
+        "context": "Commutation relations and compatible observables"
+      },
+      {
+        "id": "qm_008",
+        "difficulty": "hard",
+        "prompt": "Quantum tunneling allows particles to penetrate potential barriers that classical mechanics would forbid because",
+        "context": "Tunneling through forbidden regions"
+      },
+      {
+        "id": "qm_009",
+        "difficulty": "hard",
+        "prompt": "The Born rule provides a probabilistic interpretation: the square of the wave function amplitude represents",
+        "context": "Probability interpretation of quantum mechanics"
+      },
+      {
+        "id": "qm_010",
+        "difficulty": "hard",
+        "prompt": "Angular momentum quantization in quantum mechanics requires that the eigenvalues of the z-component of angular momentum",
+        "context": "Quantized angular momentum values"
+      }
+    ]
+  },
+  "relativity_cosmology": {
+    "category_name": "Relativity & Cosmology",
+    "description": "Prompts covering special relativity, general relativity, black holes, and cosmic expansion",
+    "prompts": [
+      {
+        "id": "rc_001",
+        "difficulty": "easy",
+        "prompt": "According to special relativity, the speed of light in vacuum is",
+        "context": "Constancy of light speed"
+      },
+      {
+        "id": "rc_002",
+        "difficulty": "easy",
+        "prompt": "Time dilation is a relativistic effect where moving clocks appear to run",
+        "context": "Time dilation in special relativity"
+      },
+      {
+        "id": "rc_003",
+        "difficulty": "easy",
+        "prompt": "The Big Bang theory suggests the universe originated from",
+        "context": "Beginning of the universe"
+      },
+      {
+        "id": "rc_004",
+        "difficulty": "medium",
+        "prompt": "General relativity describes gravity not as a force but as",
+        "context": "Geometric interpretation of gravity"
+      },
+      {
+        "id": "rc_005",
+        "difficulty": "medium",
+        "prompt": "A black hole forms when matter is compressed so densely that nothing can escape beyond the",
+        "context": "Event horizons and black hole formation"
+      },
+      {
+        "id": "rc_006",
+        "difficulty": "medium",
+        "prompt": "The cosmic microwave background radiation provides evidence of",
+        "context": "Observational cosmology and early universe"
+      },
+      {
+        "id": "rc_007",
+        "difficulty": "hard",
+        "prompt": "The Schwarzschild metric describes the spacetime geometry around a spherically symmetric mass and predicts that",
+        "context": "Exact solutions in general relativity"
+      },
+      {
+        "id": "rc_008",
+        "difficulty": "hard",
+        "prompt": "Gravitational lensing occurs because massive objects curve spacetime, causing light paths to",
+        "context": "Light bending in gravitational fields"
+      },
+      {
+        "id": "rc_009",
+        "difficulty": "hard",
+        "prompt": "The cosmological constant in Einstein's field equations represents dark energy, which causes the expansion of the universe to",
+        "context": "Accelerating cosmic expansion"
+      },
+      {
+        "id": "rc_010",
+        "difficulty": "hard",
+        "prompt": "Hawking radiation demonstrates that black holes are not completely black because quantum effects near the event horizon",
+        "context": "Thermodynamics of black holes"
+      }
+    ]
+  },
+  "thermodynamics_statistical": {
+    "category_name": "Thermodynamics & Statistical Physics",
+    "description": "Prompts covering entropy, temperature, phase transitions, and statistical distributions",
+    "prompts": [
+      {
+        "id": "ts_001",
+        "difficulty": "easy",
+        "prompt": "Temperature is a measure of the average kinetic energy of",
+        "context": "Definition of temperature"
+      },
+      {
+        "id": "ts_002",
+        "difficulty": "easy",
+        "prompt": "The second law of thermodynamics states that entropy in an isolated system",
+        "context": "Arrow of time and entropy increase"
+      },
+      {
+        "id": "ts_003",
+        "difficulty": "easy",
+        "prompt": "Heat naturally flows from a hotter object to a cooler object because",
+        "context": "Direction of heat flow"
+      },
+      {
+        "id": "ts_004",
+        "difficulty": "medium",
+        "prompt": "Phase transitions occur when the chemical potential of different phases becomes equal at the",
+        "context": "Thermodynamic conditions for phase changes"
+      },
+      {
+        "id": "ts_005",
+        "difficulty": "medium",
+        "prompt": "The Boltzmann distribution describes how particles distribute among energy levels according to",
+        "context": "Statistical mechanics of particles"
+      },
+      {
+        "id": "ts_006",
+        "difficulty": "medium",
+        "prompt": "Entropy can be understood microscopically as the number of possible microscopic configurations consistent with a given macroscopic state, which is",
+        "context": "Microscopic interpretation of entropy"
+      },
+      {
+        "id": "ts_007",
+        "difficulty": "hard",
+        "prompt": "The partition function in statistical mechanics is central because it encodes information about all thermodynamic properties and is defined as",
+        "context": "Partition function and thermodynamic potentials"
+      },
+      {
+        "id": "ts_008",
+        "difficulty": "hard",
+        "prompt": "Critical phenomena near phase transitions exhibit scale invariance and universality, meaning different systems show",
+        "context": "Universal behavior in phase transitions"
+      },
+      {
+        "id": "ts_009",
+        "difficulty": "hard",
+        "prompt": "The Carnot cycle represents the maximum efficiency possible for a heat engine operating between two reservoirs and equals",
+        "context": "Limitations on heat engine efficiency"
+      },
+      {
+        "id": "ts_010",
+        "difficulty": "hard",
+        "prompt": "Bose-Einstein and Fermi-Dirac statistics describe different quantum particle distributions because",
+        "context": "Quantum statistics for indistinguishable particles"
+      }
+    ]
+  },
+  "electromagnetism": {
+    "category_name": "Electromagnetism",
+    "description": "Prompts covering electric fields, magnetic fields, Maxwell equations, and electromagnetic waves",
+    "prompts": [
+      {
+        "id": "em_001",
+        "difficulty": "easy",
+        "prompt": "Coulomb's law describes the electric force between two charged particles as being",
+        "context": "Electrostatic forces"
+      },
+      {
+        "id": "em_002",
+        "difficulty": "easy",
+        "prompt": "Moving electric charges produce magnetic fields, and moving magnetic fields produce",
+        "context": "Coupling between electric and magnetic fields"
+      },
+      {
+        "id": "em_003",
+        "difficulty": "easy",
+        "prompt": "An electric field exerts a force on a charged particle equal to",
+        "context": "Force on charge in electric field"
+      },
+      {
+        "id": "em_004",
+        "difficulty": "medium",
+        "prompt": "Gauss's law relates the electric field passing through a closed surface to the",
+        "context": "Relation between fields and charges"
+      },
+      {
+        "id": "em_005",
+        "difficulty": "medium",
+        "prompt": "The magnetic field circulation around a closed loop is proportional to the current passing through it, as expressed by",
+        "context": "Ampère's law"
+      },
+      {
+        "id": "em_006",
+        "difficulty": "medium",
+        "prompt": "Electromagnetic induction occurs when a changing magnetic flux induces",
+        "context": "Faraday's law of induction"
+      },
+      {
+        "id": "em_007",
+        "difficulty": "hard",
+        "prompt": "Maxwell's equations unify electricity, magnetism, and optics by showing that accelerating charges radiate",
+        "context": "Electromagnetic radiation from accelerated charges"
+      },
+      {
+        "id": "em_008",
+        "difficulty": "hard",
+        "prompt": "Electromagnetic waves consist of oscillating electric and magnetic fields perpendicular to each other and propagate at",
+        "context": "Properties of electromagnetic radiation"
+      },
+      {
+        "id": "em_009",
+        "difficulty": "hard",
+        "prompt": "The Poynting vector describes the direction and magnitude of electromagnetic energy flow and is proportional to",
+        "context": "Energy transport in electromagnetic fields"
+      },
+      {
+        "id": "em_010",
+        "difficulty": "hard",
+        "prompt": "Electromagnetic wave polarization describes the orientation of the electric field vector, and only perpendicular polarizations",
+        "context": "Polarization and wave superposition"
+      }
+    ]
+  },
+  "particle_physics": {
+    "category_name": "Particle Physics",
+    "description": "Prompts covering fundamental particles, interactions, the Standard Model, and particle decay",
+    "prompts": [
+      {
+        "id": "pp_001",
+        "difficulty": "easy",
+        "prompt": "Quarks are fundamental particles that combine to form",
+        "context": "Quark composition of hadrons"
+      },
+      {
+        "id": "pp_002",
+        "difficulty": "easy",
+        "prompt": "The Standard Model of particle physics describes all known particles and their",
+        "context": "Framework of particle interactions"
+      },
+      {
+        "id": "pp_003",
+        "difficulty": "easy",
+        "prompt": "Leptons such as electrons and neutrinos are fundamental particles that",
+        "context": "Properties of leptons"
+      },
+      {
+        "id": "pp_004",
+        "difficulty": "medium",
+        "prompt": "The Higgs mechanism explains how gauge bosons and fermions acquire mass through",
+        "context": "Electroweak symmetry breaking"
+      },
+      {
+        "id": "pp_005",
+        "difficulty": "medium",
+        "prompt": "Antimatter particles have the same mass but opposite quantum numbers as their corresponding matter particles, and when they meet they",
+        "context": "Matter-antimatter annihilation"
+      },
+      {
+        "id": "pp_006",
+        "difficulty": "medium",
+        "prompt": "The weak nuclear force is responsible for radioactive decay processes like beta decay, which converts",
+        "context": "Weak interactions in nuclear physics"
+      },
+      {
+        "id": "pp_007",
+        "difficulty": "hard",
+        "prompt": "Gauge theories describe fundamental interactions through the principle of local gauge invariance, and the Standard Model is based on the",
+        "context": "Symmetry principles in particle physics"
+      },
+      {
+        "id": "pp_008",
+        "difficulty": "hard",
+        "prompt": "Confinement in quantum chromodynamics means that quarks cannot be observed in isolation because",
+        "context": "Asymptotic freedom and quark confinement"
+      },
+      {
+        "id": "pp_009",
+        "difficulty": "hard",
+        "prompt": "CP violation and the weak force explain why the universe contains predominantly matter rather than equal amounts of",
+        "context": "Matter asymmetry in the universe"
+      },
+      {
+        "id": "pp_010",
+        "difficulty": "hard",
+        "prompt": "Grand unified theories attempt to unify the strong, weak, and electromagnetic interactions at high energies by proposing that",
+        "context": "Physics beyond the Standard Model"
+      }
+    ]
+  },
+  "summary": {
+    "total_by_difficulty": {
+      "easy": 10,
+      "medium": 20,
+      "hard": 20
+    },
+    "usage_notes": [
+      "Each prompt is a partial sentence requiring model completion",
+      "Prompts are designed to test physics understanding and terminology",
+      "Easy prompts cover basic definitions and concepts",
+      "Medium prompts test conceptual relationships and principles",
+      "Hard prompts address advanced mechanisms and theoretical frameworks",
+      "All prompts use domain-specific language from physics literature",
+      "Prompts should generate 20-100 tokens on average"
+    ]
+  }
+}
