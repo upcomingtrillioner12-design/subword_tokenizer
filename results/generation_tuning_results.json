@@ -1,0 +1,282 @@
+[
+  {
+    "config_name": "baseline",
+    "config": {
+      "max_tokens": 100,
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "top_k": 50
+    },
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation_samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.2743719999998575
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.08949016699989443
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0,
+    "std_tokens": 0.0
+  },
+  {
+    "config_name": "high_temp",
+    "config": {
+      "max_tokens": 100,
+      "temperature": 1.5,
+      "top_p": 1.0,
+      "top_k": 50
+    },
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation_samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.062070582999695034
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.08309512499999983
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0,
+    "std_tokens": 0.0
+  },
+  {
+    "config_name": "low_temp",
+    "config": {
+      "max_tokens": 100,
+      "temperature": 0.5,
+      "top_p": 1.0,
+      "top_k": 50
+    },
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation_samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.055971208000300976
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.07889545800026099
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0,
+    "std_tokens": 0.0
+  },
+  {
+    "config_name": "nucleus_0_9",
+    "config": {
+      "max_tokens": 100,
+      "temperature": 1.0,
+      "top_p": 0.9,
+      "top_k": null
+    },
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation_samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.056134541000574245
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.07898999999997613
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0,
+    "std_tokens": 0.0
+  },
+  {
+    "config_name": "nucleus_0_95",
+    "config": {
+      "max_tokens": 100,
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": null
+    },
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation_samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.057040708000386076
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.07941116699930717
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0,
+    "std_tokens": 0.0
+  },
+  {
+    "config_name": "top_k_30",
+    "config": {
+      "max_tokens": 100,
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "top_k": 30
+    },
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation_samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.05515537500014034
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.07899958300004073
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0,
+    "std_tokens": 0.0
+  },
+  {
+    "config_name": "long_output",
+    "config": {
+      "max_tokens": 200,
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "top_k": 50
+    },
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation_samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.05485033399963868
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.07982754199929332
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0,
+    "std_tokens": 0.0
+  },
+  {
+    "config_name": "creative",
+    "config": {
+      "max_tokens": 150,
+      "temperature": 1.2,
+      "top_p": 0.95,
+      "top_k": 40
+    },
+    "prompts_tested": 5,
+    "token_counts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation_samples": [
+      {
+        "prompt": "In quantum mechanics, the wave function describes the",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.05855245800012199
+      },
+      {
+        "prompt": "The uncertainty principle states that there is a fundamental limit to the precision with which",
+        "generation": "[no tokens generated]",
+        "token_count": 0,
+        "elapsed_sec": 0.08115516699945147
+      }
+    ],
+    "avg_tokens": 0.0,
+    "max_tokens": 0,
+    "min_tokens": 0,
+    "std_tokens": 0.0
+  }
+]
