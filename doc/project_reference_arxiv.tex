@@ -38,6 +38,8 @@ This paper presents an implementation-focused foundation for building a domain-o
 \section{Introduction}
 Small language models are increasingly relevant for cost-efficient, low-latency, and on-device AI workloads. Our objective is to establish a robust foundation layer that is reproducible on laptop-class hardware while remaining directly extensible to larger-scale training and deployment.
 
+At a basic level, our methodology follows the now-standard autoregressive transformer formulation for next-token prediction \cite{vaswani2017attention}, but adapts implementation choices to constrained hardware and practical research workflows. We use subword tokenization based on byte-pair encoding principles \cite{sennrich2016neural} to control vocabulary size and improve robustness for scientific terminology. We then apply lightweight adaptation ideas aligned with LoRA-style parameter-efficient fine-tuning \cite{hu2021lora} and evaluate pathways toward retrieval-augmented generation (RAG) \cite{lewis2020rag}. In short, the paper is less about proposing a new model architecture and more about providing a reproducible systems recipe that converts modern LLM/SLM concepts into a reliable, end-to-end physics-assistant stack.
+
 The current system has two aligned layers:
 \begin{enumerate}[leftmargin=*]
     \item \textbf{Tokenizer layer (Rust):} a production BPE tokenizer with CLI and reusable library APIs.
@@ -112,6 +114,11 @@ Build a physics research assistant using a 3B--7B parameter SLM, LoRA fine-tunin
     \item End-to-end response latency below 5 seconds in target deployment profile.
 \end{itemize}
 
+\section{Why This Work Is Useful for the Community}
+This work is intended to be useful for three overlapping communities. First, for students and independent researchers, it demonstrates a realistic path to building and validating domain-specialized language systems on commodity hardware, reducing dependence on large cluster budgets. Second, for applied ML engineers, it provides operational patterns (checkpointing, retry/backoff, evaluation scripts, and reproducible artifacts) that are often under-documented in purely model-centric papers. Third, for domain communities (physics and adjacent sciences), it offers a transparent scaffold for building assistants that can be audited, extended, and grounded via retrieval, rather than treated as opaque black-box systems.
+
+More broadly, the project contributes implementation clarity: which pieces are essential, what metrics matter at each phase, and where practical bottlenecks appear (e.g., early-EOS generation behavior despite improved loss metrics). This type of report can help others avoid costly iteration cycles and establish comparable baselines for future open-domain and domain-specific SLM research.
+
 \section{Risks and Mitigations}
 \begin{itemize}[leftmargin=*]
     \item \textbf{Streaming instability:} addressed via retry/backoff and periodic checkpoints.
@@ -153,6 +160,31 @@ A.~Karpathy,
 R.~Eldan and Y.~Li,
 \newblock ``TinyStories: How Small Can Language Models Be and Still Speak Coherently?,''
 \newblock arXiv:2305.07759, 2023.
+
+\bibitem{vaswani2017attention}
+A.~Vaswani et al.,
+\newblock ``Attention Is All You Need,''
+\newblock NeurIPS, 2017.
+
+\bibitem{sennrich2016neural}
+R.~Sennrich, B.~Haddow, and A.~Birch,
+\newblock ``Neural Machine Translation of Rare Words with Subword Units,''
+\newblock ACL, 2016.
+
+\bibitem{hu2021lora}
+E.~J.~Hu et al.,
+\newblock ``LoRA: Low-Rank Adaptation of Large Language Models,''
+\newblock arXiv:2106.09685, 2021.
+
+\bibitem{lewis2020rag}
+P.~Lewis et al.,
+\newblock ``Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks,''
+\newblock NeurIPS, 2020.
+
+\bibitem{touvron2023llama}
+H.~Touvron et al.,
+\newblock ``LLaMA: Open and Efficient Foundation Language Models,''
+\newblock arXiv:2302.13971, 2023.
 
 \end{thebibliography}
 

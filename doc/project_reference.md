@@ -110,6 +110,12 @@ TinyLM
 Architecture diagram: See [doc/architecture.md](architecture.md)
    - Multi-run ranking by eval loss (`best_checkpoint_*.json`).
 
+### ArXiv Submission Discussion (Why This Work Matters)
+
+Our planned arXiv submission focuses on a practical gap: many papers describe strong model ideas, but fewer document a reproducible, resource-aware path from tokenizer design to stable training and evaluation on constrained hardware. This project contributes that missing systems layer. We combine a Rust BPE tokenizer and a Python TinyLM + LoRA workflow with explicit reliability features (retry/backoff, checkpointing, ranked evaluation) and phased validation metrics. The result is not just a model checkpoint, but an end-to-end reference implementation that others can run, audit, and extend.
+
+This can be useful to multiple communities. For students and early researchers, it lowers the barrier to meaningful domain-LLM experimentation without requiring large compute clusters. For practitioners, it provides concrete scripts, file conventions, and metric artifacts that reduce engineering ambiguity. For domain communities like physics, it offers a transparent foundation for building retrieval-grounded assistants where behavior can be evaluated with task-specific tests (loss, latency, QA ranking), rather than only generic benchmarks.
+
 ## ## 4. Tokenizer CLI Commands (Current)
 
 From `subword_tokenizer/`:
@@ -376,4 +382,14 @@ Updated July 5, 2026 — Added references and architecture diagram for IIT Bomba
 [11] A. Karpathy. "NanoGPT: The simplest, fastest repository for training medium-sized GPTs." GitHub, 2023.
 
 [12] R. Eldan, Y. Li. "TinyStories: How Small Can Language Models Be and Still Speak Coherently?" arXiv preprint arXiv:2305.07759, 2023.
+
+[13] A. Vaswani, et al. "Attention Is All You Need." NeurIPS, 2017.
+
+[14] R. Sennrich, B. Haddow, A. Birch. "Neural Machine Translation of Rare Words with Subword Units." ACL, 2016.
+
+[15] E. J. Hu, et al. "LoRA: Low-Rank Adaptation of Large Language Models." arXiv preprint arXiv:2106.09685, 2021.
+
+[16] P. Lewis, et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." NeurIPS, 2020.
+
+[17] H. Touvron, et al. "LLaMA: Open and Efficient Foundation Language Models." arXiv preprint arXiv:2302.13971, 2023.
 
