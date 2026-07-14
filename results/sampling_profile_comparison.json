@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-07-14",
+  "profiles_compared": [
+    "production",
+    "canonical"
+  ],
+  "production": {
+    "config": {
+      "max_tokens": 64,
+      "temperature": 2.0,
+      "top_k": 100,
+      "top_p": null
+    },
+    "metrics": {
+      "phase1_avg_tokens": 32.46,
+      "phase2_avg_tokens": 38.58,
+      "phase1_avg_time": 0.3175921483202546,
+      "phase2_avg_time": 0.32756569579985806,
+      "speedup": 1.3920320866020632
+    }
+  },
+  "canonical": {
+    "config": {
+      "max_tokens": 50,
+      "temperature": 1.0,
+      "top_k": 50,
+      "top_p": null
+    },
+    "metrics": {
+      "phase1_avg_tokens": 39.24,
+      "phase2_avg_tokens": 37.96,
+      "phase1_avg_time": 0.32995654002021185,
+      "phase2_avg_time": 0.32270859084048426,
+      "speedup": 1.2070904395697308
+    }
+  }
+}

@@ -1,16 +1,17 @@
 {
   "metadata": {
     "task": "phase3_task4_qualitative_evaluation",
-    "started": "2026-07-13 12:05:20",
-    "finished": "2026-07-13 12:05:27",
-    "device": "mps",
+    "started": "2026-07-14 11:45:51",
+    "finished": "2026-07-14 11:47:03",
+    "device": "auto",
     "num_prompts": 12,
-    "num_samples_per_prompt": 3,
+    "num_samples_per_prompt": 10,
+    "sampling_profile": "canonical",
     "generation": {
-      "max_tokens": 64,
-      "temperature": 1.2,
-      "top_k": 100,
-      "top_p": 0.98
+      "max_tokens": 50,
+      "temperature": 1.0,
+      "top_k": 50,
+      "top_p": null
     }
   },
   "results": [
@@ -20,55 +21,139 @@
       "difficulty": "easy",
       "prompt_text": "In quantum mechanics, the wave function describes the",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.9053678339987528,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.8280620829973486,
+        "tokens_per_second": 60.38194602391919
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.9053678339987528,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.8280620829973486,
+          "tokens_per_second": 60.38194602391919
+        },
+        {
+          "text": "[48 tokens generated]",
+          "generated_tokens": 48,
+          "elapsed_seconds": 0.3212266249975073,
+          "tokens_per_second": 149.42721513315553
+        },
+        {
+          "text": "[36 tokens generated]",
+          "generated_tokens": 36,
+          "elapsed_seconds": 0.2516094580059871,
+          "tokens_per_second": 143.07888219028465
+        },
+        {
+          "text": "[24 tokens generated]",
+          "generated_tokens": 24,
+          "elapsed_seconds": 0.1882042079960229,
+          "tokens_per_second": 127.52105946806017
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3448976669969852,
+          "tokens_per_second": 144.97053701565648
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.32830174999980954,
+          "tokens_per_second": 152.29891403268184
         },
         {
           "text": "[no tokens generated]",
           "generated_tokens": 0,
-          "elapsed_seconds": 0.0620239580021007,
+          "elapsed_seconds": 0.06658354100363795,
           "tokens_per_second": 0.0
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.05535366699041333,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3214941250043921,
+          "tokens_per_second": 155.52383733082812
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3345139590019244,
+          "tokens_per_second": 149.4705935416954
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3308032080021803,
+          "tokens_per_second": 151.14726456845742
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.05498687500949018,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.32120120800391305,
+        "tokens_per_second": 155.66566611228583
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.05498687500949018,
-          "tokens_per_second": 0.0
+          "text": "[24 tokens generated]",
+          "generated_tokens": 24,
+          "elapsed_seconds": 0.18963658299617236,
+          "tokens_per_second": 126.5578593582042
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.05653158300265204,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.32120120800391305,
+          "tokens_per_second": 155.66566611228583
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.05539941700408235,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3194595000022673,
+          "tokens_per_second": 156.51436253936768
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3366677919984795,
+          "tokens_per_second": 148.51435506555916
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.396965125000861,
+          "tokens_per_second": 125.95564912633459
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3447784999953001,
+          "tokens_per_second": 145.02064369060597
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35458016699703876,
+          "tokens_per_second": 141.0118349919373
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3222101669962285,
+          "tokens_per_second": 155.17821944018687
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3177812499998254,
+          "tokens_per_second": 157.34093814543016
+        },
+        {
+          "text": "[30 tokens generated]",
+          "generated_tokens": 30,
+          "elapsed_seconds": 0.21594191700569354,
+          "tokens_per_second": 138.92624653882746
         }
       ],
       "manual_winner": "pending",
@@ -80,55 +165,139 @@
       "difficulty": "medium",
       "prompt_text": "The uncertainty principle states that there is a fundamental limit to the precision with which",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.09021249999932479,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3801167499987059,
+        "tokens_per_second": 131.538533885103
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.09021249999932479,
-          "tokens_per_second": 0.0
+          "text": "[49 tokens generated]",
+          "generated_tokens": 49,
+          "elapsed_seconds": 0.4716365419953945,
+          "tokens_per_second": 103.89356132731226
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08443091700610239,
-          "tokens_per_second": 0.0
+          "text": "[23 tokens generated]",
+          "generated_tokens": 23,
+          "elapsed_seconds": 0.2083591249975143,
+          "tokens_per_second": 110.38633417314642
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08342495800752658,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3801167499987059,
+          "tokens_per_second": 131.538533885103
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36448825000115903,
+          "tokens_per_second": 137.17863332999352
+        },
+        {
+          "text": "[19 tokens generated]",
+          "generated_tokens": 19,
+          "elapsed_seconds": 0.19138300000486197,
+          "tokens_per_second": 99.2773652807058
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3622040000045672,
+          "tokens_per_second": 138.0437543466376
+        },
+        {
+          "text": "[18 tokens generated]",
+          "generated_tokens": 18,
+          "elapsed_seconds": 0.1875815000021248,
+          "tokens_per_second": 95.95829012880326
+        },
+        {
+          "text": "[6 tokens generated]",
+          "generated_tokens": 6,
+          "elapsed_seconds": 0.12796687499940163,
+          "tokens_per_second": 46.887133877638696
+        },
+        {
+          "text": "[4 tokens generated]",
+          "generated_tokens": 4,
+          "elapsed_seconds": 0.11792387499735923,
+          "tokens_per_second": 33.92018791860067
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3691756250045728,
+          "tokens_per_second": 135.43689402403172
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.08441358400159515,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.4023098750039935,
+        "tokens_per_second": 124.28230850536214
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08441358400159515,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.4023098750039935,
+          "tokens_per_second": 124.28230850536214
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08342887500475626,
-          "tokens_per_second": 0.0
+          "text": "[13 tokens generated]",
+          "generated_tokens": 13,
+          "elapsed_seconds": 0.15644770799553953,
+          "tokens_per_second": 83.09485748663472
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0842589579988271,
-          "tokens_per_second": 0.0
+          "text": "[40 tokens generated]",
+          "generated_tokens": 40,
+          "elapsed_seconds": 0.29781912500038743,
+          "tokens_per_second": 134.30970895488315
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35865045899845427,
+          "tokens_per_second": 139.4115042808728
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3564544589971774,
+          "tokens_per_second": 140.27037322149454
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3586467499990249,
+          "tokens_per_second": 139.4129460259599
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3622890830010874,
+          "tokens_per_second": 138.01133499749957
+        },
+        {
+          "text": "[26 tokens generated]",
+          "generated_tokens": 26,
+          "elapsed_seconds": 0.2228050420017098,
+          "tokens_per_second": 116.69394806514511
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3707499999945867,
+          "tokens_per_second": 134.86176669111273
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3592579169999226,
+          "tokens_per_second": 139.17577771852075
         }
       ],
       "manual_winner": "pending",
@@ -140,55 +309,139 @@
       "difficulty": "hard",
       "prompt_text": "The Born rule provides a probabilistic interpretation: the square of the wave function amplitude represents",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.09652725000341889,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.4168575830044574,
+        "tokens_per_second": 119.94504127675988
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.09652725000341889,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.4168575830044574,
+          "tokens_per_second": 119.94504127675988
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0823656669963384,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3846007500033011,
+          "tokens_per_second": 130.00494668710564
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08630962499591988,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.40530612499424024,
+          "tokens_per_second": 123.36354403899162
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37104837500373833,
+          "tokens_per_second": 134.7533188886658
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36697041699517285,
+          "tokens_per_second": 136.2507648693047
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3730131659976905,
+          "tokens_per_second": 134.0435259604471
+        },
+        {
+          "text": "[22 tokens generated]",
+          "generated_tokens": 22,
+          "elapsed_seconds": 0.20670870799949626,
+          "tokens_per_second": 106.42996230257322
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3662814999988768,
+          "tokens_per_second": 136.50703079503967
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3886202499998035,
+          "tokens_per_second": 128.66030527237137
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3728244169979007,
+          "tokens_per_second": 134.11138788230585
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.08820358400407713,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3664846669998951,
+        "tokens_per_second": 136.43135580352754
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08820358400407713,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3664846669998951,
+          "tokens_per_second": 136.43135580352754
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08882395799446385,
-          "tokens_per_second": 0.0
+          "text": "[22 tokens generated]",
+          "generated_tokens": 22,
+          "elapsed_seconds": 0.20589679200202227,
+          "tokens_per_second": 106.84964921543761
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08696087499265559,
-          "tokens_per_second": 0.0
+          "text": "[15 tokens generated]",
+          "generated_tokens": 15,
+          "elapsed_seconds": 0.16961366699979408,
+          "tokens_per_second": 88.43626970235961
+        },
+        {
+          "text": "[5 tokens generated]",
+          "generated_tokens": 5,
+          "elapsed_seconds": 0.11900441600300837,
+          "tokens_per_second": 42.015247567565915
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.38378799999918556,
+          "tokens_per_second": 130.28025889320693
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.4060677079978632,
+          "tokens_per_second": 123.13217479549768
+        },
+        {
+          "text": "[9 tokens generated]",
+          "generated_tokens": 9,
+          "elapsed_seconds": 0.1430915000019013,
+          "tokens_per_second": 62.89681776961186
+        },
+        {
+          "text": "[42 tokens generated]",
+          "generated_tokens": 42,
+          "elapsed_seconds": 0.3250952500020503,
+          "tokens_per_second": 129.19290577064757
+        },
+        {
+          "text": "[12 tokens generated]",
+          "generated_tokens": 12,
+          "elapsed_seconds": 0.15779654100333573,
+          "tokens_per_second": 76.04729434307642
+        },
+        {
+          "text": "[10 tokens generated]",
+          "generated_tokens": 10,
+          "elapsed_seconds": 0.15038462500524474,
+          "tokens_per_second": 66.49615942887276
         }
       ],
       "manual_winner": "pending",
@@ -200,55 +453,139 @@
       "difficulty": "easy",
       "prompt_text": "According to Einstein's theory of special relativity, time",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.06875533401034772,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.34036091600137297,
+        "tokens_per_second": 146.90288352555234
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06875533401034772,
-          "tokens_per_second": 0.0
+          "text": "[17 tokens generated]",
+          "generated_tokens": 17,
+          "elapsed_seconds": 0.155467917000351,
+          "tokens_per_second": 109.34731954993401
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06346691699582152,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34036091600137297,
+          "tokens_per_second": 146.90288352555234
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06396754199522547,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.32661941699916497,
+          "tokens_per_second": 153.0833667495274
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3414352910040179,
+          "tokens_per_second": 146.44063258068894
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3470499579998432,
+          "tokens_per_second": 144.07147687948313
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.32941541699983645,
+          "tokens_per_second": 151.7840314074457
+        },
+        {
+          "text": "[37 tokens generated]",
+          "generated_tokens": 37,
+          "elapsed_seconds": 0.25420725000003586,
+          "tokens_per_second": 145.5505301284475
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.33225558300182456,
+          "tokens_per_second": 150.48656082244202
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.32707400000072084,
+          "tokens_per_second": 152.87060420543915
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3704429999997956,
+          "tokens_per_second": 134.97353169051
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.06498199999623466,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3437289170033182,
+        "tokens_per_second": 145.46346707139952
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06498199999623466,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3437289170033182,
+          "tokens_per_second": 145.46346707139952
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06344741600332782,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.32886733299528714,
+          "tokens_per_second": 152.03699176991998
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06314487499184906,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3341610830029822,
+          "tokens_per_second": 149.62843533624104
+        },
+        {
+          "text": "[6 tokens generated]",
+          "generated_tokens": 6,
+          "elapsed_seconds": 0.10687195799982874,
+          "tokens_per_second": 56.14194885443771
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3286051250033779,
+          "tokens_per_second": 152.15830854581475
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.332929583004443,
+          "tokens_per_second": 150.18190798422603
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37252795799577143,
+          "tokens_per_second": 134.21811417592326
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.32932625000103144,
+          "tokens_per_second": 151.82512781730398
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.33473787500406615,
+          "tokens_per_second": 149.37060826891081
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.32896179200179176,
+          "tokens_per_second": 151.99333544403743
         }
       ],
       "manual_winner": "pending",
@@ -260,55 +597,139 @@
       "difficulty": "medium",
       "prompt_text": "The equivalence principle in general relativity suggests that gravitational acceleration",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.07532712499960326,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3623182499941322,
+        "tokens_per_second": 138.0002249426016
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07532712499960326,
-          "tokens_per_second": 0.0
+          "text": "[33 tokens generated]",
+          "generated_tokens": 33,
+          "elapsed_seconds": 0.2536989169966546,
+          "tokens_per_second": 130.07544687482903
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06852629198692739,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3623182499941322,
+          "tokens_per_second": 138.0002249426016
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0702772910008207,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3839291670010425,
+          "tokens_per_second": 130.23235611548165
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3503233329975046,
+          "tokens_per_second": 142.72529201004193
+        },
+        {
+          "text": "[39 tokens generated]",
+          "generated_tokens": 39,
+          "elapsed_seconds": 0.285391500001424,
+          "tokens_per_second": 136.65438529110153
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35242579100304283,
+          "tokens_per_second": 141.87383919234304
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34912425000220537,
+          "tokens_per_second": 143.21548846774223
+        },
+        {
+          "text": "[9 tokens generated]",
+          "generated_tokens": 9,
+          "elapsed_seconds": 0.12370095799997216,
+          "tokens_per_second": 72.75610589856568
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34484462500404334,
+          "tokens_per_second": 144.99283553981374
+        },
+        {
+          "text": "[9 tokens generated]",
+          "generated_tokens": 9,
+          "elapsed_seconds": 0.12072312499367399,
+          "tokens_per_second": 74.55075405372094
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.07176991600135807,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.35442729200440226,
+        "tokens_per_second": 141.07265757451592
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07176991600135807,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35442729200440226,
+          "tokens_per_second": 141.07265757451592
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07347825000761077,
-          "tokens_per_second": 0.0
+          "text": "[49 tokens generated]",
+          "generated_tokens": 49,
+          "elapsed_seconds": 0.34948749999603024,
+          "tokens_per_second": 140.20530062035576
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06699595900136046,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3599551250008517,
+          "tokens_per_second": 138.90620393273105
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35119154199492186,
+          "tokens_per_second": 142.37244927932514
+        },
+        {
+          "text": "[26 tokens generated]",
+          "generated_tokens": 26,
+          "elapsed_seconds": 0.21421291599835968,
+          "tokens_per_second": 121.37456734961347
+        },
+        {
+          "text": "[37 tokens generated]",
+          "generated_tokens": 37,
+          "elapsed_seconds": 0.28559462500561494,
+          "tokens_per_second": 129.5542589405265
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3632140000045183,
+          "tokens_per_second": 137.65989196280432
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34869425000215415,
+          "tokens_per_second": 143.39209780399622
+        },
+        {
+          "text": "[47 tokens generated]",
+          "generated_tokens": 47,
+          "elapsed_seconds": 0.3345087919951766,
+          "tokens_per_second": 140.50452820587662
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3674670000036713,
+          "tokens_per_second": 136.0666399962458
         }
       ],
       "manual_winner": "pending",
@@ -320,55 +741,139 @@
       "difficulty": "hard",
       "prompt_text": "The Schwarzschild radius defines the event horizon of a black hole, beyond which",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.08204866699816193,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3740854169955128,
+        "tokens_per_second": 133.6593134305467
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08204866699816193,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3740854169955128,
+          "tokens_per_second": 133.6593134305467
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07838995799829718,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37176295799872605,
+          "tokens_per_second": 134.4943032225694
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.09340354200685397,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3606061669997871,
+          "tokens_per_second": 138.65542127578067
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3712420000010752,
+          "tokens_per_second": 134.6830369404733
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36315833299886435,
+          "tokens_per_second": 137.68099326570143
+        },
+        {
+          "text": "[33 tokens generated]",
+          "generated_tokens": 33,
+          "elapsed_seconds": 0.26035245900129667,
+          "tokens_per_second": 126.75125146344651
+        },
+        {
+          "text": "[37 tokens generated]",
+          "generated_tokens": 37,
+          "elapsed_seconds": 0.28555779100133805,
+          "tokens_per_second": 129.5709701012032
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37930962500104215,
+          "tokens_per_second": 131.81843197325304
+        },
+        {
+          "text": "[30 tokens generated]",
+          "generated_tokens": 30,
+          "elapsed_seconds": 0.24867024999548448,
+          "tokens_per_second": 120.64169316814038
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3738385409960756,
+          "tokens_per_second": 133.74757954805114
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.08118645798822399,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.37054450000141514,
+        "tokens_per_second": 134.93655957599975
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08118645798822399,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37054450000141514,
+          "tokens_per_second": 134.93655957599975
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07890958299685735,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36166487500304356,
+          "tokens_per_second": 138.24953280182166
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08190291699429508,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36530150000180583,
+          "tokens_per_second": 136.87324032272747
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36643545900005847,
+          "tokens_per_second": 136.44967694022216
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3540788749960484,
+          "tokens_per_second": 141.21147442235295
+        },
+        {
+          "text": "[4 tokens generated]",
+          "generated_tokens": 4,
+          "elapsed_seconds": 0.11025275000429247,
+          "tokens_per_second": 36.28027418675968
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35797262500273064,
+          "tokens_per_second": 139.67548496094804
+        },
+        {
+          "text": "[46 tokens generated]",
+          "generated_tokens": 46,
+          "elapsed_seconds": 0.3389558749986463,
+          "tokens_per_second": 135.71087977213466
+        },
+        {
+          "text": "[40 tokens generated]",
+          "generated_tokens": 40,
+          "elapsed_seconds": 0.3022636249952484,
+          "tokens_per_second": 132.3348120390894
+        },
+        {
+          "text": "[33 tokens generated]",
+          "generated_tokens": 33,
+          "elapsed_seconds": 0.26684520799608435,
+          "tokens_per_second": 123.66720110066296
         }
       ],
       "manual_winner": "pending",
@@ -380,55 +885,139 @@
       "difficulty": "easy",
       "prompt_text": "The second law of thermodynamics states that entropy in an isolated system",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.08051662499201484,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.38912600000185193,
+        "tokens_per_second": 128.49308450158057
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08051662499201484,
-          "tokens_per_second": 0.0
+          "text": "[19 tokens generated]",
+          "generated_tokens": 19,
+          "elapsed_seconds": 0.18387079200329026,
+          "tokens_per_second": 103.33343209649092
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0717961249902146,
-          "tokens_per_second": 0.0
+          "text": "[46 tokens generated]",
+          "generated_tokens": 46,
+          "elapsed_seconds": 0.34580491700035054,
+          "tokens_per_second": 133.0229783862598
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07253462499647867,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.38912600000185193,
+          "tokens_per_second": 128.49308450158057
+        },
+        {
+          "text": "[5 tokens generated]",
+          "generated_tokens": 5,
+          "elapsed_seconds": 0.11297945799742592,
+          "tokens_per_second": 44.255832773723505
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3574336250021588,
+          "tokens_per_second": 139.88611172129654
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35152199999720324,
+          "tokens_per_second": 142.23860811100815
+        },
+        {
+          "text": "[9 tokens generated]",
+          "generated_tokens": 9,
+          "elapsed_seconds": 0.12819191699963994,
+          "tokens_per_second": 70.20723467319144
+        },
+        {
+          "text": "[8 tokens generated]",
+          "generated_tokens": 8,
+          "elapsed_seconds": 0.12500974999420578,
+          "tokens_per_second": 63.99500839231181
+        },
+        {
+          "text": "[7 tokens generated]",
+          "generated_tokens": 7,
+          "elapsed_seconds": 0.1261837909987662,
+          "tokens_per_second": 55.474636992547204
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3697384580009384,
+          "tokens_per_second": 135.23072571442677
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.07416970799386036,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.36001854200003436,
+        "tokens_per_second": 138.88173570792148
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07416970799386036,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36001854200003436,
+          "tokens_per_second": 138.88173570792148
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08835987499332987,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35042754099413287,
+          "tokens_per_second": 142.6828492365477
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0785079589986708,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.4786064579966478,
+          "tokens_per_second": 104.46996517617028
+        },
+        {
+          "text": "[27 tokens generated]",
+          "generated_tokens": 27,
+          "elapsed_seconds": 0.22132770899770549,
+          "tokens_per_second": 121.99105174074661
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35310412499529775,
+          "tokens_per_second": 141.60129112245812
+        },
+        {
+          "text": "[34 tokens generated]",
+          "generated_tokens": 34,
+          "elapsed_seconds": 0.25898208400030853,
+          "tokens_per_second": 131.28321262547064
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.38036799999827053,
+          "tokens_per_second": 131.45164682682912
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3507001669931924,
+          "tokens_per_second": 142.57193097079585
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3505472090037074,
+          "tokens_per_second": 142.6341408967578
+        },
+        {
+          "text": "[1 tokens generated]",
+          "generated_tokens": 1,
+          "elapsed_seconds": 0.09052599999995437,
+          "tokens_per_second": 11.046550162389856
         }
       ],
       "manual_winner": "pending",
@@ -440,55 +1029,139 @@
       "difficulty": "medium",
       "prompt_text": "In statistical mechanics, the partition function is a crucial quantity that encodes",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.07680708300904371,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.35290325000096345,
+        "tokens_per_second": 141.68189156621114
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07680708300904371,
-          "tokens_per_second": 0.0
+          "text": "[29 tokens generated]",
+          "generated_tokens": 29,
+          "elapsed_seconds": 0.23434308399737347,
+          "tokens_per_second": 123.75018500791359
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07251641699986067,
-          "tokens_per_second": 0.0
+          "text": "[5 tokens generated]",
+          "generated_tokens": 5,
+          "elapsed_seconds": 0.1090916670000297,
+          "tokens_per_second": 45.833014908449776
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07184537500143051,
-          "tokens_per_second": 0.0
+          "text": "[10 tokens generated]",
+          "generated_tokens": 10,
+          "elapsed_seconds": 0.13914879199728603,
+          "tokens_per_second": 71.86551788530828
+        },
+        {
+          "text": "[17 tokens generated]",
+          "generated_tokens": 17,
+          "elapsed_seconds": 0.1756530419952469,
+          "tokens_per_second": 96.7816999176138
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35290325000096345,
+          "tokens_per_second": 141.68189156621114
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35695879199920455,
+          "tokens_per_second": 140.07219074214993
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3808933749969583,
+          "tokens_per_second": 131.27033254489996
+        },
+        {
+          "text": "[2 tokens generated]",
+          "generated_tokens": 2,
+          "elapsed_seconds": 0.09602079099568073,
+          "tokens_per_second": 20.82882237545789
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37271987499843817,
+          "tokens_per_second": 134.14900399451335
+        },
+        {
+          "text": "[40 tokens generated]",
+          "generated_tokens": 40,
+          "elapsed_seconds": 0.29810749999887776,
+          "tokens_per_second": 134.1797841387774
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.07666245799919125,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.34654733399656834,
+        "tokens_per_second": 144.28043471976363
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07666245799919125,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34654733399656834,
+          "tokens_per_second": 144.28043471976363
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07635279100213666,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35499145799985854,
+          "tokens_per_second": 140.8484595142566
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07609316699381452,
-          "tokens_per_second": 0.0
+          "text": "[38 tokens generated]",
+          "generated_tokens": 38,
+          "elapsed_seconds": 0.2818859170001815,
+          "tokens_per_second": 134.80630889401803
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3571891660030815,
+          "tokens_per_second": 139.98184928030165
+        },
+        {
+          "text": "[37 tokens generated]",
+          "generated_tokens": 37,
+          "elapsed_seconds": 0.28112975000112783,
+          "tokens_per_second": 131.61182692280545
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.39837887499743374,
+          "tokens_per_second": 125.50866307939167
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.356547875002434,
+          "tokens_per_second": 140.23362220195162
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35348700000031386,
+          "tokens_per_second": 141.44791746218561
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3539117920008721,
+          "tokens_per_second": 141.278140853461
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35517554199759616,
+          "tokens_per_second": 140.77545913997199
         }
       ],
       "manual_winner": "pending",
@@ -500,55 +1173,139 @@
       "difficulty": "hard",
       "prompt_text": "The relationship between microscopic dynamics and macroscopic thermodynamic behavior is governed by",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.08996229100739583,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.4163294579993817,
+        "tokens_per_second": 120.09719475597198
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08996229100739583,
-          "tokens_per_second": 0.0
+          "text": "[30 tokens generated]",
+          "generated_tokens": 30,
+          "elapsed_seconds": 0.25327783299871953,
+          "tokens_per_second": 118.44700203255319
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0829210410011001,
-          "tokens_per_second": 0.0
+          "text": "[3 tokens generated]",
+          "generated_tokens": 3,
+          "elapsed_seconds": 0.10825412499980303,
+          "tokens_per_second": 27.71256984438661
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08785062500101048,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.4163294579993817,
+          "tokens_per_second": 120.09719475597198
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3710962089971872,
+          "tokens_per_second": 134.7359492976631
+        },
+        {
+          "text": "[30 tokens generated]",
+          "generated_tokens": 30,
+          "elapsed_seconds": 0.2511076660011895,
+          "tokens_per_second": 119.47066562220323
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3810888750012964,
+          "tokens_per_second": 131.20299037811037
+        },
+        {
+          "text": "[16 tokens generated]",
+          "generated_tokens": 16,
+          "elapsed_seconds": 0.18220054099947447,
+          "tokens_per_second": 87.81532652005764
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3688822089970927,
+          "tokens_per_second": 135.54462313576656
+        },
+        {
+          "text": "[21 tokens generated]",
+          "generated_tokens": 21,
+          "elapsed_seconds": 0.2019365829983144,
+          "tokens_per_second": 103.99304419336089
+        },
+        {
+          "text": "[4 tokens generated]",
+          "generated_tokens": 4,
+          "elapsed_seconds": 0.11820845799957169,
+          "tokens_per_second": 33.838526173943436
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.08585758300614543,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.4027219999989029,
+        "tokens_per_second": 124.15512437894182
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08585758300614543,
-          "tokens_per_second": 0.0
+          "text": "[32 tokens generated]",
+          "generated_tokens": 32,
+          "elapsed_seconds": 0.2640935419985908,
+          "tokens_per_second": 121.16918784848873
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08843574998900294,
-          "tokens_per_second": 0.0
+          "text": "[21 tokens generated]",
+          "generated_tokens": 21,
+          "elapsed_seconds": 0.2098596669966355,
+          "tokens_per_second": 100.06686992568551
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08964449999621138,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.4027219999989029,
+          "tokens_per_second": 124.15512437894182
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37790891700569773,
+          "tokens_per_second": 132.3070130129958
+        },
+        {
+          "text": "[6 tokens generated]",
+          "generated_tokens": 6,
+          "elapsed_seconds": 0.12392770800215658,
+          "tokens_per_second": 48.41532290660607
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36845495799934724,
+          "tokens_per_second": 135.70179723321453
+        },
+        {
+          "text": "[10 tokens generated]",
+          "generated_tokens": 10,
+          "elapsed_seconds": 0.14874045799660962,
+          "tokens_per_second": 67.23120349829728
+        },
+        {
+          "text": "[13 tokens generated]",
+          "generated_tokens": 13,
+          "elapsed_seconds": 0.1676080409961287,
+          "tokens_per_second": 77.56191124684922
+        },
+        {
+          "text": "[20 tokens generated]",
+          "generated_tokens": 20,
+          "elapsed_seconds": 0.2017849159965408,
+          "tokens_per_second": 99.11543636067852
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.38561754200054565,
+          "tokens_per_second": 129.66215110600245
         }
       ],
       "manual_winner": "pending",
@@ -560,55 +1317,139 @@
       "difficulty": "easy",
       "prompt_text": "Coulomb's law describes the force between two charged particles as being",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.07639404200017452,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3469187089940533,
+        "tokens_per_second": 144.12598313012018
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07639404200017452,
-          "tokens_per_second": 0.0
+          "text": "[42 tokens generated]",
+          "generated_tokens": 42,
+          "elapsed_seconds": 0.2954546670007403,
+          "tokens_per_second": 142.1537876736087
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0674711669998942,
-          "tokens_per_second": 0.0
+          "text": "[1 tokens generated]",
+          "generated_tokens": 1,
+          "elapsed_seconds": 0.08444525000231806,
+          "tokens_per_second": 11.841992296458942
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06711062499380205,
-          "tokens_per_second": 0.0
+          "text": "[28 tokens generated]",
+          "generated_tokens": 28,
+          "elapsed_seconds": 0.2180009580042679,
+          "tokens_per_second": 128.43980254183944
+        },
+        {
+          "text": "[13 tokens generated]",
+          "generated_tokens": 13,
+          "elapsed_seconds": 0.14448970800003735,
+          "tokens_per_second": 89.97180615796275
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3469187089940533,
+          "tokens_per_second": 144.12598313012018
+        },
+        {
+          "text": "[10 tokens generated]",
+          "generated_tokens": 10,
+          "elapsed_seconds": 0.13752774999738904,
+          "tokens_per_second": 72.71259800432894
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3509280829966883,
+          "tokens_per_second": 142.479335290108
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3809479999981704,
+          "tokens_per_second": 131.25150939298837
+        },
+        {
+          "text": "[1 tokens generated]",
+          "generated_tokens": 1,
+          "elapsed_seconds": 0.08552458399935858,
+          "tokens_per_second": 11.692544450230823
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3464015829958953,
+          "tokens_per_second": 144.34114176837488
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.06831237499136478,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3442342499984079,
+        "tokens_per_second": 145.24992792039507
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06831237499136478,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3442342499984079,
+          "tokens_per_second": 145.24992792039507
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06851258399547078,
-          "tokens_per_second": 0.0
+          "text": "[36 tokens generated]",
+          "generated_tokens": 36,
+          "elapsed_seconds": 0.2631240830014576,
+          "tokens_per_second": 136.8175789511467
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07262629100296181,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36440720899554435,
+          "tokens_per_second": 137.20914066936407
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34533754199947,
+          "tokens_per_second": 144.7858802448902
+        },
+        {
+          "text": "[9 tokens generated]",
+          "generated_tokens": 9,
+          "elapsed_seconds": 0.12473199999658391,
+          "tokens_per_second": 72.1546996780817
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3390929169981973,
+          "tokens_per_second": 147.45220998015068
+        },
+        {
+          "text": "[14 tokens generated]",
+          "generated_tokens": 14,
+          "elapsed_seconds": 0.15404712499730522,
+          "tokens_per_second": 90.88128064866453
+        },
+        {
+          "text": "[32 tokens generated]",
+          "generated_tokens": 32,
+          "elapsed_seconds": 0.24272387500241166,
+          "tokens_per_second": 131.8370514630341
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3668073330045445,
+          "tokens_per_second": 136.31134249810796
+        },
+        {
+          "text": "[3 tokens generated]",
+          "generated_tokens": 3,
+          "elapsed_seconds": 0.10006466699996963,
+          "tokens_per_second": 29.980612437364233
         }
       ],
       "manual_winner": "pending",
@@ -620,55 +1461,139 @@
       "difficulty": "medium",
       "prompt_text": "Maxwell's equations unify electricity, magnetism, and light by demonstrating that",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.07658970900229178,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.37695470799371833,
+        "tokens_per_second": 132.64193002421186
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07658970900229178,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37695470799371833,
+          "tokens_per_second": 132.64193002421186
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06683220798731782,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34470641700318083,
+          "tokens_per_second": 145.0509695603915
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.06812366699159611,
-          "tokens_per_second": 0.0
+          "text": "[30 tokens generated]",
+          "generated_tokens": 30,
+          "elapsed_seconds": 0.22674204199574888,
+          "tokens_per_second": 132.30894339640136
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.35261841700412333,
+          "tokens_per_second": 141.79633731216973
+        },
+        {
+          "text": "[5 tokens generated]",
+          "generated_tokens": 5,
+          "elapsed_seconds": 0.10464941700047348,
+          "tokens_per_second": 47.77857481974675
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34613245900254697,
+          "tokens_per_second": 144.45336951086716
+        },
+        {
+          "text": "[40 tokens generated]",
+          "generated_tokens": 40,
+          "elapsed_seconds": 0.2969070419931086,
+          "tokens_per_second": 134.72230140276844
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3930115840048529,
+          "tokens_per_second": 127.22271310807622
+        },
+        {
+          "text": "[28 tokens generated]",
+          "generated_tokens": 28,
+          "elapsed_seconds": 0.22221179199550534,
+          "tokens_per_second": 126.00591421613824
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34453887499694247,
+          "tokens_per_second": 145.12150479519536
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.07038587500574067,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3461814999973285,
+        "tokens_per_second": 144.43290586119087
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07038587500574067,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3461814999973285,
+          "tokens_per_second": 144.43290586119087
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07126183299988043,
-          "tokens_per_second": 0.0
+          "text": "[27 tokens generated]",
+          "generated_tokens": 27,
+          "elapsed_seconds": 0.21286712500295835,
+          "tokens_per_second": 126.83968931146491
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.07188120800128672,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36199512500024866,
+          "tokens_per_second": 138.12340704854978
+        },
+        {
+          "text": "[9 tokens generated]",
+          "generated_tokens": 9,
+          "elapsed_seconds": 0.12470012499397853,
+          "tokens_per_second": 72.17314337443197
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3709227910003392,
+          "tokens_per_second": 134.79894256471903
+        },
+        {
+          "text": "[22 tokens generated]",
+          "generated_tokens": 22,
+          "elapsed_seconds": 0.19282887499866774,
+          "tokens_per_second": 114.09079682776762
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3483288339994033,
+          "tokens_per_second": 143.54252395908648
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3722287089985912,
+          "tokens_per_second": 134.32601728790684
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.34914075000415323,
+          "tokens_per_second": 143.20872026369085
+        },
+        {
+          "text": "[6 tokens generated]",
+          "generated_tokens": 6,
+          "elapsed_seconds": 0.10830591700505465,
+          "tokens_per_second": 55.39863532774464
         }
       ],
       "manual_winner": "pending",
@@ -680,55 +1605,139 @@
       "difficulty": "hard",
       "prompt_text": "The gauge invariance of the electromagnetic field theory implies that the physical observables must",
       "phase1_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.080586415992002,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3703687499946682,
+        "tokens_per_second": 135.00059062952747
       },
       "phase1_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.080586415992002,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3703687499946682,
+          "tokens_per_second": 135.00059062952747
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08385854099469725,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37381612500030315,
+          "tokens_per_second": 133.7555997616728
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0855862500029616,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37924704100441886,
+          "tokens_per_second": 131.8401848767949
+        },
+        {
+          "text": "[34 tokens generated]",
+          "generated_tokens": 34,
+          "elapsed_seconds": 0.27963920799811604,
+          "tokens_per_second": 121.58523922092164
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3721718750020955,
+          "tokens_per_second": 134.34653008027132
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3794163330021547,
+          "tokens_per_second": 131.78135902682936
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3707480000011856,
+          "tokens_per_second": 134.86249420048148
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37263829199946485,
+          "tokens_per_second": 134.17837370312927
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.36776104100135854,
+          "tokens_per_second": 135.9578487809841
+        },
+        {
+          "text": "[7 tokens generated]",
+          "generated_tokens": 7,
+          "elapsed_seconds": 0.130592917004833,
+          "tokens_per_second": 53.60168193303273
         }
       ],
       "phase2_best": {
-        "text": "[no tokens generated]",
-        "generated_tokens": 0,
-        "elapsed_seconds": 0.0874182080005994,
-        "tokens_per_second": 0.0
+        "text": "[50 tokens generated]",
+        "generated_tokens": 50,
+        "elapsed_seconds": 0.3995993330026977,
+        "tokens_per_second": 125.12533397963017
       },
       "phase2_trials": [
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.0874182080005994,
-          "tokens_per_second": 0.0
+          "text": "[26 tokens generated]",
+          "generated_tokens": 26,
+          "elapsed_seconds": 0.22852995900029782,
+          "tokens_per_second": 113.77064133620274
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08753120800247416,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3995993330026977,
+          "tokens_per_second": 125.12533397963017
         },
         {
-          "text": "[no tokens generated]",
-          "generated_tokens": 0,
-          "elapsed_seconds": 0.08743124999455176,
-          "tokens_per_second": 0.0
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3752613749966258,
+          "tokens_per_second": 133.24046473061497
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37024045800353633,
+          "tokens_per_second": 135.0473696732582
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37420825000299374,
+          "tokens_per_second": 133.6154400647233
+        },
+        {
+          "text": "[9 tokens generated]",
+          "generated_tokens": 9,
+          "elapsed_seconds": 0.14133191700238967,
+          "tokens_per_second": 63.67988343247213
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.3779039159999229,
+          "tokens_per_second": 132.3087639028599
+        },
+        {
+          "text": "[13 tokens generated]",
+          "generated_tokens": 13,
+          "elapsed_seconds": 0.16026441600115504,
+          "tokens_per_second": 81.11594778410641
+        },
+        {
+          "text": "[41 tokens generated]",
+          "generated_tokens": 41,
+          "elapsed_seconds": 0.3144319999992149,
+          "tokens_per_second": 130.39385304327286
+        },
+        {
+          "text": "[50 tokens generated]",
+          "generated_tokens": 50,
+          "elapsed_seconds": 0.37403758400614606,
+          "tokens_per_second": 133.67640616344698
         }
       ],
       "manual_winner": "pending",

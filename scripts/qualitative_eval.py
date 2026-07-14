@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from inference_lora import LoRAInferenceEngine, load_tokenizer
+from sampling_profiles import resolve_sampling_config
 
 
 def load_prompt_subset(path: Path) -> List[Dict[str, Any]]:
@@ -110,13 +111,22 @@ def main() -> None:
     parser.add_argument("--prompts", type=Path, default=Path("data/qualitative_eval_subset.json"))
     parser.add_argument("--output-dir", type=Path, default=Path("results"))
     parser.add_argument("--device", type=str, default="auto")
-    parser.add_argument("--max-tokens", type=int, default=64)
-    parser.add_argument("--temperature", type=float, default=1.2)
-    parser.add_argument("--top-k", type=int, default=100)
-    parser.add_argument("--top-p", type=float, default=0.98)
+    parser.add_argument("--sampling-profile", choices=["production", "canonical"], default="production")
+    parser.add_argument("--max-tokens", type=int, default=None)
+    parser.add_argument("--temperature", type=float, default=None)
+    parser.add_argument("--top-k", type=int, default=None)
+    parser.add_argument("--top-p", type=float, default=None)
     parser.add_argument("--num-samples", type=int, default=3, help="best-of-N per model/prompt")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
+
+    generation_config = resolve_sampling_config(
+        profile=args.sampling_profile,
+        max_tokens=args.max_tokens,
+        temperature=args.temperature,
+        top_k=args.top_k,
+        top_p=args.top_p,
+    )
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -152,20 +162,20 @@ def main() -> None:
             tokenizer=tokenizer,
             prompt=text,
             n=args.num_samples,
-            max_tokens=args.max_tokens,
-            temperature=args.temperature,
-            top_k=args.top_k,
-            top_p=args.top_p,
+            max_tokens=generation_config["max_tokens"],
+            temperature=generation_config["temperature"],
+            top_k=generation_config["top_k"],
+            top_p=generation_config["top_p"],
         )
         p2 = run_best_of_n(
             engine=phase2,
             tokenizer=tokenizer,
             prompt=text,
             n=args.num_samples,
-            max_tokens=args.max_tokens,
-            temperature=args.temperature,
-            top_k=args.top_k,
-            top_p=args.top_p,
+            max_tokens=generation_config["max_tokens"],
+            temperature=generation_config["temperature"],
+            top_k=generation_config["top_k"],
+            top_p=generation_config["top_p"],
         )
 
         rows.append(
@@ -192,11 +202,12 @@ def main() -> None:
             "device": args.device,
             "num_prompts": len(rows),
             "num_samples_per_prompt": args.num_samples,
+            "sampling_profile": args.sampling_profile,
             "generation": {
-                "max_tokens": args.max_tokens,
-                "temperature": args.temperature,
-                "top_k": args.top_k,
-                "top_p": args.top_p,
+                "max_tokens": generation_config["max_tokens"],
+                "temperature": generation_config["temperature"],
+                "top_k": generation_config["top_k"],
+                "top_p": generation_config["top_p"],
             },
         },
         "results": rows,

@@ -1,0 +1,17 @@
+# Production inference configuration
+# Optimized from hyperparameter tuning results:
+# - Balanced best config: temperature=2.0, top_k=100
+
+base_checkpoint: /Users/jdsingh/slm_v0/checkpoints/prototype_genfix_v2_final.pt
+lora_checkpoint: /Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt
+tokenizer_model: /Users/jdsingh/slm_v0/subword_tokenizer/model_32k_final.json
+
+# Runtime
+device: auto
+dtype: float32
+
+# Optimized generation settings
+max_tokens: 64
+temperature: 2.0
+top_k: 100
+top_p: null

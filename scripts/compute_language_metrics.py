@@ -40,6 +40,7 @@ load_config = phase2.load_config
 resolve_device = phase2.resolve_device
 
 import stream_train
+from sampling_profiles import resolve_sampling_config
 
 
 def parse_args() -> argparse.Namespace:
@@ -49,8 +50,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--references", default=str(ROOT / "data" / "bleu_references.json"))
     p.add_argument("--test-bin", default=None)
     p.add_argument("--eval-steps", type=int, default=300)
-    p.add_argument("--max-gen-tokens", type=int, default=48)
-    p.add_argument("--temperature", type=float, default=1.0)
+    p.add_argument("--sampling-profile", choices=["production", "canonical"], default="production")
+    p.add_argument("--max-gen-tokens", type=int, default=None)
+    p.add_argument("--temperature", type=float, default=None)
+    p.add_argument("--top-k", type=int, default=None)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--output", default=str(ROOT / "results" / "language_metrics.json"))
     return p.parse_args()
@@ -153,6 +156,7 @@ def generate_ids(
     device: str,
     max_gen_tokens: int,
     temperature: float,
+    top_k: int | None,
 ) -> List[int]:
     model.eval()
     current = torch.tensor([prompt_tokens[:256]], dtype=torch.long, device=device)
@@ -162,6 +166,9 @@ def generate_ids(
         for _ in range(max_gen_tokens):
             logits = model(current)
             next_logits = logits[0, -1, :] / max(temperature, 1e-6)
+            if top_k is not None and top_k > 0:
+                cutoff = torch.topk(next_logits, min(top_k, next_logits.shape[-1]))[0][..., -1]
+                next_logits[next_logits < cutoff] = -float("inf")
             probs = torch.softmax(next_logits, dim=-1)
             next_id = int(torch.multinomial(probs, 1).item())
             if next_id in (0, 2):
@@ -177,6 +184,14 @@ def generate_ids(
 
 def main() -> None:
     args = parse_args()
+
+    generation_config = resolve_sampling_config(
+        profile=args.sampling_profile,
+        max_tokens=args.max_gen_tokens,
+        temperature=args.temperature,
+        top_k=args.top_k,
+        top_p=None,
+    )
 
     random.seed(args.seed)
     np.random.seed(args.seed)
@@ -230,8 +245,22 @@ def main() -> None:
         prompt_ids = stream_train._tokenize_with_our_model(prompt)
         ref_ids = stream_train._tokenize_with_our_model(reference)
 
-        hyp1 = generate_ids(phase1, prompt_ids, device, args.max_gen_tokens, args.temperature)
-        hyp2 = generate_ids(phase2, prompt_ids, device, args.max_gen_tokens, args.temperature)
+        hyp1 = generate_ids(
+            phase1,
+            prompt_ids,
+            device,
+            int(generation_config["max_tokens"]),
+            float(generation_config["temperature"]),
+            generation_config["top_k"],
+        )
+        hyp2 = generate_ids(
+            phase2,
+            prompt_ids,
+            device,
+            int(generation_config["max_tokens"]),
+            float(generation_config["temperature"]),
+            generation_config["top_k"],
+        )
 
         s1 = bleu4_token_level(ref_ids, hyp1)
         s2 = bleu4_token_level(ref_ids, hyp2)
@@ -265,8 +294,10 @@ def main() -> None:
             "test_bin": str(test_bin),
             "references": str(ref_path),
             "eval_steps": int(args.eval_steps),
-            "max_gen_tokens": int(args.max_gen_tokens),
-            "temperature": float(args.temperature),
+            "sampling_profile": args.sampling_profile,
+            "max_gen_tokens": int(generation_config["max_tokens"]),
+            "temperature": float(generation_config["temperature"]),
+            "top_k": generation_config["top_k"],
             "seed": int(args.seed),
             "elapsed_seconds": elapsed,
         },

@@ -23,8 +23,11 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+if str(ROOT.parent) not in sys.path:
+    sys.path.insert(0, str(ROOT.parent))
 
 import stream_train
+from sampling_profiles import SAMPLING_PROFILES, resolve_sampling_config
 
 
 @dataclass
@@ -65,6 +68,7 @@ class BenchmarkEngine:
         lora_checkpoint: Path,
         tokenizer_model: Path,
         eval_prompts_path: Path,
+        generation_config: Optional[Dict] = None,
         device: str = "auto",
         verbose: bool = False,
     ):
@@ -74,6 +78,7 @@ class BenchmarkEngine:
         self.tokenizer_model = Path(tokenizer_model)
         self.eval_prompts_path = Path(eval_prompts_path)
         self.verbose = verbose
+        self.generation_config = generation_config or SAMPLING_PROFILES["production"].copy()
         
         # Device selection
         if device == "auto":
@@ -191,8 +196,10 @@ class BenchmarkEngine:
                 phase1_output, phase1_metrics = self.phase1_engine.generate(
                     prompt=prompt_text,
                     tokenizer=tokenizer,
-                    max_tokens=50,
-                    temperature=1.0,
+                    max_tokens=int(self.generation_config["max_tokens"]),
+                    temperature=float(self.generation_config["temperature"]),
+                    top_k=self.generation_config["top_k"],
+                    top_p=self.generation_config["top_p"],
                 )
                 phase1_tokens = phase1_metrics.generated_tokens
                 phase1_time = phase1_metrics.elapsed_seconds
@@ -200,6 +207,8 @@ class BenchmarkEngine:
             except Exception as e:
                 if self.verbose:
                     print(f"Phase 1 error: {e}")
+                    import traceback
+                    traceback.print_exc()
                 phase1_tokens, phase1_time, phase1_tps = 0, 0.0, 0.0
             
             # Run Phase 2
@@ -207,8 +216,10 @@ class BenchmarkEngine:
                 phase2_output, phase2_metrics = self.phase2_engine.generate(
                     prompt=prompt_text,
                     tokenizer=tokenizer,
-                    max_tokens=50,
-                    temperature=1.0,
+                    max_tokens=int(self.generation_config["max_tokens"]),
+                    temperature=float(self.generation_config["temperature"]),
+                    top_k=self.generation_config["top_k"],
+                    top_p=self.generation_config["top_p"],
                 )
                 phase2_tokens = phase2_metrics.generated_tokens
                 phase2_time = phase2_metrics.elapsed_seconds
@@ -346,6 +357,16 @@ def main():
                         help="Device: auto, cpu, mps, cuda")
     parser.add_argument("--num-samples", type=int, default=None,
                         help="Number of prompts to benchmark (default: all)")
+    parser.add_argument("--sampling-profile", choices=["production", "canonical"], default="production",
+                        help="Sampling profile for generation")
+    parser.add_argument("--max-tokens", type=int, default=None,
+                        help="Override max generated tokens")
+    parser.add_argument("--temperature", type=float, default=None,
+                        help="Override temperature")
+    parser.add_argument("--top-k", type=int, default=None,
+                        help="Override top-k")
+    parser.add_argument("--top-p", type=float, default=None,
+                        help="Override top-p")
     parser.add_argument("--verbose", action="store_true",
                         help="Print detailed progress")
     
@@ -354,12 +375,21 @@ def main():
     # Create output directory
     args.output_dir.mkdir(parents=True, exist_ok=True)
     
+    generation_config = resolve_sampling_config(
+        profile=args.sampling_profile,
+        max_tokens=args.max_tokens,
+        temperature=args.temperature,
+        top_k=args.top_k,
+        top_p=args.top_p,
+    )
+
     # Initialize benchmark engine
     engine = BenchmarkEngine(
         base_checkpoint=args.base_checkpoint,
         lora_checkpoint=args.lora_checkpoint,
         tokenizer_model=args.tokenizer_model,
         eval_prompts_path=args.eval_prompts,
+        generation_config=generation_config,
         device=args.device,
         verbose=args.verbose,
     )
@@ -377,6 +407,8 @@ def main():
             'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
             'total_prompts': len(results),
             'device': str(engine.device),
+            'sampling_profile': args.sampling_profile,
+            'generation_config': generation_config,
         },
         'results': [r.to_dict() for r in results],
         'statistics': stats,

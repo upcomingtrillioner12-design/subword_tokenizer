@@ -31,7 +31,19 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+ROOT_PARENT = ROOT.parent
+if str(ROOT_PARENT) not in sys.path:
+    sys.path.insert(0, str(ROOT_PARENT))
+
 import stream_train
+
+
+PRODUCTION_SAMPLING_DEFAULTS = {
+    "max_tokens": 64,
+    "temperature": 2.0,
+    "top_k": 100,
+    "top_p": None,
+}
 
 
 @dataclass
@@ -120,8 +132,12 @@ class LoRAInferenceEngine:
         if self.verbose:
             print(f"[inference] Loading base model from {self.base_checkpoint}")
         
-        # Load state dict
-        state = torch.load(self.base_checkpoint, map_location="cpu")
+        # Load state dict (with weights_only=False for compatibility with PyTorch 2.6+)
+        try:
+            state = torch.load(self.base_checkpoint, map_location="cpu", weights_only=False)
+        except TypeError:
+            # Fallback for older PyTorch versions that don't support weights_only
+            state = torch.load(self.base_checkpoint, map_location="cpu")
         
         # Extract model config from state or detect from weights
         config = state.get("config", {})
@@ -221,11 +237,22 @@ class LoRAInferenceEngine:
         generated = input_ids.clone()
         generated_count = 0
         
+        if self.verbose:
+            print(f"[inference] Starting generation: input shape={input_ids.shape}, max_tokens={max_tokens}")
+        
         with torch.no_grad():
             for step in range(max_tokens):
                 # Get logits for next token
+                if self.verbose and step == 0:
+                    print(f"[inference] Step 0: generated shape={generated.shape}")
+                
                 logits = self.model(generated)
+                if self.verbose and step == 0:
+                    print(f"[inference] Step 0: logits shape={logits.shape}")
+                
                 next_logits = logits[0, -1, :] / temperature
+                if self.verbose and step == 0:
+                    print(f"[inference] Step 0: next_logits shape={next_logits.shape}")
                 
                 # Top-k filtering
                 if top_k is not None:
@@ -247,13 +274,24 @@ class LoRAInferenceEngine:
                 next_token = torch.multinomial(probs, num_samples=1)
                 next_token_id = next_token.item()
                 
+                if self.verbose and step == 0:
+                    print(f"[inference] Step 0: next_token shape before reshape={next_token.shape}")
+                    print(f"[inference] Step 0: next_token shape after view(1,1)={next_token.view(1, 1).shape}")
+                
                 # Stop at common EOS tokens (token 0, 2, or EOS token id)
                 if next_token_id in [0, 2]:
                     if self.verbose:
                         print(f"[inference] Stopped at EOS token: {next_token_id}")
                     break
                 
-                generated = torch.cat([generated, next_token.unsqueeze(0).unsqueeze(0)], dim=1)
+                if self.verbose and step == 0:
+                    print(f"[inference] Step 0: Before cat - generated shape={generated.shape}, next_token.view shape={next_token.view(1, 1).shape}")
+                
+                generated = torch.cat([generated, next_token.view(1, 1)], dim=1)
+                
+                if self.verbose and step == 0:
+                    print(f"[inference] Step 0: After cat - generated shape={generated.shape}")
+                
                 generated_count += 1
                 
                 # Prevent overflow
@@ -364,23 +402,23 @@ def load_tokenizer(tokenizer_model_path: Path):
 
 def main():
     parser = argparse.ArgumentParser(description="Inference engine with LoRA adapter")
-    parser.add_argument("--base-checkpoint", type=Path, required=True,
+    parser.add_argument("--base-checkpoint", type=Path, default=None,
                         help="Path to base model checkpoint")
     parser.add_argument("--lora-checkpoint", type=Path, default=None,
                         help="Path to LoRA adapter checkpoint")
-    parser.add_argument("--tokenizer-model", type=Path, required=True,
+    parser.add_argument("--tokenizer-model", type=Path, default=None,
                         help="Path to tokenizer model")
     parser.add_argument("--config", type=Path, default=None,
                         help="Path to config YAML file")
-    parser.add_argument("--device", default="auto",
+    parser.add_argument("--device", default=None,
                         help="Device: auto, cpu, mps, cuda")
-    parser.add_argument("--dtype", default="float32",
+    parser.add_argument("--dtype", default=None,
                         help="Data type: float32, float16, bfloat16")
     parser.add_argument("--prompt", type=str, default=None,
                         help="Prompt to generate from")
-    parser.add_argument("--max-tokens", type=int, default=50,
+    parser.add_argument("--max-tokens", type=int, default=None,
                         help="Maximum tokens to generate")
-    parser.add_argument("--temperature", type=float, default=1.0,
+    parser.add_argument("--temperature", type=float, default=None,
                         help="Temperature for sampling")
     parser.add_argument("--top-k", type=int, default=None,
                         help="Top-k filtering")
@@ -392,12 +430,44 @@ def main():
     args = parser.parse_args()
     
     # Load config if provided
-    if args.config and args.config.exists():
+    config: Dict = {}
+    if args.config:
+        if not args.config.exists():
+            raise FileNotFoundError(f"Config file not found: {args.config}")
+        if yaml is None:
+            raise ImportError("PyYAML is required when using --config. Install with: pip install pyyaml")
         with open(args.config) as f:
-            config = yaml.safe_load(f)
-        # Override with config values if not explicitly set
-        if args.lora_checkpoint is None and "lora_checkpoint" in config:
-            args.lora_checkpoint = Path(config["lora_checkpoint"])
+            loaded = yaml.safe_load(f)
+            config = loaded if isinstance(loaded, dict) else {}
+
+    def _pick(name: str, default=None):
+        current = getattr(args, name)
+        if current is not None:
+            return current
+        return config.get(name, default)
+
+    # Resolve model/runtime arguments with precedence: CLI > config > defaults
+    args.base_checkpoint = _pick("base_checkpoint", None)
+    args.lora_checkpoint = _pick("lora_checkpoint", None)
+    args.tokenizer_model = _pick("tokenizer_model", None)
+    args.device = _pick("device", "auto")
+    args.dtype = _pick("dtype", "float32")
+
+    # Production sampling defaults are optimized from hyperparameter tuning
+    args.max_tokens = _pick("max_tokens", PRODUCTION_SAMPLING_DEFAULTS["max_tokens"])
+    args.temperature = _pick("temperature", PRODUCTION_SAMPLING_DEFAULTS["temperature"])
+    args.top_k = _pick("top_k", PRODUCTION_SAMPLING_DEFAULTS["top_k"])
+    args.top_p = _pick("top_p", PRODUCTION_SAMPLING_DEFAULTS["top_p"])
+
+    if args.base_checkpoint is None:
+        raise ValueError("Missing base checkpoint. Provide --base-checkpoint or set base_checkpoint in --config")
+    if args.tokenizer_model is None:
+        raise ValueError("Missing tokenizer model. Provide --tokenizer-model or set tokenizer_model in --config")
+
+    args.base_checkpoint = Path(args.base_checkpoint)
+    args.tokenizer_model = Path(args.tokenizer_model)
+    if args.lora_checkpoint is not None:
+        args.lora_checkpoint = Path(args.lora_checkpoint)
     
     # Initialize engine
     if args.verbose:
@@ -416,6 +486,11 @@ def main():
     print(f"\n[model_info]")
     for key, value in info.items():
         print(f"  {key}: {value}")
+    print(f"\n[generation_config]")
+    print(f"  max_tokens: {args.max_tokens}")
+    print(f"  temperature: {args.temperature}")
+    print(f"  top_k: {args.top_k}")
+    print(f"  top_p: {args.top_p}")
     print()
     
     # Load tokenizer
