@@ -1,8 +1,8 @@
 # Physics Research Assistant SLM - Project Status
 
 **Latest Update:** July 14, 2026  
-**Current Phase:** 3 (Inference & Evaluation) — ✅ **COMPLETE**  
-**Last Completed Milestone:** Phase 3 Tasks 1-7 + Production/Canonical Sampling Profile Comparison
+**Current Phase:** 4 (RAG Integration) — Task 2 ✅ **COMPLETE**  
+**Last Completed Milestone:** Phase 4 Task 2 - Retrieval Baseline (BM25 with 100% physics domain accuracy)
 
 ---
 
@@ -11,8 +11,10 @@
 Building a physics-specialized Small Language Model (SLM) using progressive fine-tuning:
 1. **Phase 1** ✅ — Pre-trained base model (35.2M params, 0.0107 eval loss)
 2. **Phase 2** ✅ — LoRA fine-tuning on physics corpus (**0.0060 eval loss, 44% improvement**)
-3. **Phase 3** ✅ — Inference, evaluation, and generation quality assessment (Tasks 1-7 complete)
-4. **Phase 4+** — RAG integration, tool-using agents, production deployment
+3. **Phase 3** ✅ — Inference, evaluation, and generation quality assessment (Tasks 1-8 complete)
+4. **Phase 4** 🚀 — RAG integration (Task 1: generation control tuning ✅, Task 2: retrieval baseline ✅)
+   - Task 3: RAG evaluation harness (in progress)
+   - Task 4+: Tool-using agents, production deployment
 
 ---
 

@@ -4,9 +4,11 @@ import argparse
 import json
 import shutil
 import time
+from typing import Optional
 import arxiv
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from pathlib import Path
 import subprocess
 import requests
@@ -27,6 +29,14 @@ TOKENIZER_MODEL = TOKENIZER_PROJECT_DIR / "model_32k.json"
 TOKENIZER_ACTIVE_MODEL = TOKENIZER_PROJECT_DIR / "model.json"
 TOKENIZER_BIN = TOKENIZER_PROJECT_DIR / "target" / "release" / "bpe-tokenizer"
 DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+
+EOS_TOKEN_ID = 2
+DEFAULT_GENERATION_PROMPTS = [
+    "In quantum mechanics, the wave function describes",
+    "The uncertainty principle states that",
+    "Entropy in thermodynamics is",
+    "In general relativity, spacetime curvature",
+]
 
 
 def _resolve_vocab_size(model_path: Path) -> int:
@@ -145,6 +155,77 @@ def _estimate_param_count(vocab_size: int, d_model: int, n_layers: int) -> int:
     return embed + lm_head + (n_layers * per_layer)
 
 
+@torch.no_grad()
+def _estimate_generation_tokens(
+    model: nn.Module,
+    prompt_ids: list[int],
+    max_new_tokens: int,
+    eos_token_id: int = EOS_TOKEN_ID,
+) -> int:
+    if not prompt_ids:
+        prompt_ids = [1]
+    x = torch.tensor(prompt_ids, dtype=torch.long, device=DEVICE).unsqueeze(0)
+    generated = x
+    count = 0
+    for _ in range(max_new_tokens):
+        logits = model(generated)
+        next_token = torch.argmax(logits[0, -1, :], dim=-1).item()
+        if next_token == eos_token_id:
+            break
+        next_token_t = torch.tensor([[next_token]], dtype=torch.long, device=DEVICE)
+        generated = torch.cat([generated, next_token_t], dim=1)
+        count += 1
+    return count
+
+
+@torch.no_grad()
+def _evaluate_generation_health(
+    model: nn.Module,
+    prompts: list[str],
+    max_new_tokens: int,
+    eos_token_id: int = EOS_TOKEN_ID,
+) -> dict:
+    model_was_training = model.training
+    model.eval()
+
+    token_counts = []
+    eos_probs = []
+
+    for prompt in prompts:
+        prompt_ids = _tokenize_with_our_model(prompt)
+        if not prompt_ids:
+            prompt_ids = [1]
+        x = torch.tensor(prompt_ids, dtype=torch.long, device=DEVICE).unsqueeze(0)
+
+        logits = model(x)
+        probs = F.softmax(logits[0, -1, :], dim=-1)
+        eos_probs.append(float(probs[eos_token_id].item()))
+
+        token_counts.append(
+            _estimate_generation_tokens(
+                model=model,
+                prompt_ids=prompt_ids,
+                max_new_tokens=max_new_tokens,
+                eos_token_id=eos_token_id,
+            )
+        )
+
+    if model_was_training:
+        model.train()
+
+    avg_gen_tokens = float(sum(token_counts) / max(len(token_counts), 1))
+    max_gen_tokens = int(max(token_counts) if token_counts else 0)
+    avg_eos_prob = float(sum(eos_probs) / max(len(eos_probs), 1))
+
+    return {
+        "avg_gen_tokens": avg_gen_tokens,
+        "max_gen_tokens": max_gen_tokens,
+        "avg_eos_prob": avg_eos_prob,
+        "token_counts": token_counts,
+        "eos_probs": eos_probs,
+    }
+
+
 def train(
     tokenizer_model: Path,
     category: str,
@@ -163,6 +244,14 @@ def train(
     stream_retry_backoff_seconds: int,
     save_every_steps: int,
     checkpoint_prefix: str,
+    checkpoints_dir: Path,
+    eos_token_id: int,
+    non_eos_threshold: float,
+    eos_penalty_weight: float,
+    generation_eval_every_steps: int,
+    generation_max_new_tokens: int,
+    early_stop_avg_gen_tokens: float,
+    early_stop_patience: int,
 ):
     _activate_tokenizer_model(tokenizer_model)
     vocab_size = _resolve_vocab_size(tokenizer_model)
@@ -179,8 +268,12 @@ def train(
     )
     print(f"Model => vocab_size={vocab_size}, d_model={d_model}, n_layers={n_layers}, n_heads={n_heads}, approx_params={estimated_params:,}")
 
-    checkpoints_dir = ROOT / "checkpoints"
+    checkpoints_dir = Path(checkpoints_dir)
     checkpoints_dir.mkdir(parents=True, exist_ok=True)
+
+    generation_history = []
+    global_step = 0
+    consecutive_generation_hits = 0
 
     for epoch in range(epochs):
         print(f"\n=== Epoch {epoch+1} ===")
@@ -196,13 +289,56 @@ def train(
         for x, y in make_batches(token_stream, batch_size=batch_size, seq_len=seq_len):
             optimizer.zero_grad()
             logits = model(x)
-            loss = nn.functional.cross_entropy(logits.view(-1, logits.size(-1)), y.view(-1))
+
+            ce_loss = F.cross_entropy(logits.view(-1, logits.size(-1)), y.view(-1))
+
+            probs = F.softmax(logits, dim=-1)
+            eos_probs = probs[..., eos_token_id]
+            eos_max_prob = max(0.0, 1.0 - non_eos_threshold)
+            eos_penalty = torch.relu(eos_probs - eos_max_prob).pow(2).mean()
+
+            loss = ce_loss + (eos_penalty_weight * eos_penalty)
+
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
             steps += 1
+            global_step += 1
             if steps % 10 == 0:
-                print(f"  Step {steps} | Loss: {loss.item():.4f}")
+                print(
+                    f"  Step {steps} | Loss: {loss.item():.4f} "
+                    f"(ce={ce_loss.item():.4f}, eos_pen={eos_penalty.item():.6f}, eos_mean={eos_probs.mean().item():.4f})"
+                )
+
+            if generation_eval_every_steps > 0 and global_step % generation_eval_every_steps == 0:
+                health = _evaluate_generation_health(
+                    model=model,
+                    prompts=DEFAULT_GENERATION_PROMPTS,
+                    max_new_tokens=generation_max_new_tokens,
+                    eos_token_id=eos_token_id,
+                )
+                generation_history.append({"global_step": global_step, **health})
+                print(
+                    f"  [gen-eval] step={global_step} avg_gen_tokens={health['avg_gen_tokens']:.2f} "
+                    f"max_gen_tokens={health['max_gen_tokens']} avg_eos_prob={health['avg_eos_prob']:.4f}"
+                )
+
+                if health["avg_gen_tokens"] >= early_stop_avg_gen_tokens:
+                    consecutive_generation_hits += 1
+                    print(
+                        f"  [gen-eval] improvement hit {consecutive_generation_hits}/{early_stop_patience} "
+                        f"(target avg_gen_tokens >= {early_stop_avg_gen_tokens})"
+                    )
+                else:
+                    consecutive_generation_hits = 0
+
+                if early_stop_patience > 0 and consecutive_generation_hits >= early_stop_patience:
+                    print(
+                        f"  [early-stop] generation target reached for {early_stop_patience} evals. "
+                        "Stopping training early."
+                    )
+                    break
+
             if save_every_steps > 0 and steps % save_every_steps == 0:
                 step_ckpt_path = checkpoints_dir / f"{checkpoint_prefix}_epoch{epoch+1}_step{steps}.pt"
                 torch.save(model.state_dict(), step_ckpt_path)
@@ -210,6 +346,14 @@ def train(
             if max_steps_per_epoch > 0 and steps >= max_steps_per_epoch:
                 print(f"  Reached max_steps_per_epoch={max_steps_per_epoch}, stopping epoch early.")
                 break
+
+        if early_stop_patience > 0 and consecutive_generation_hits >= early_stop_patience:
+            print("Early stopping completed at epoch boundary.")
+            ckpt_path = checkpoints_dir / f"{checkpoint_prefix}_epoch{epoch+1}_earlystop.pt"
+            torch.save(model.state_dict(), ckpt_path)
+            print(f"Saved early-stop checkpoint: {ckpt_path}")
+            break
+
         if steps == 0:
             print("No batches produced. Increase max_papers or reduce seq_len/batch_size.")
             continue
@@ -234,8 +378,19 @@ def train(
         "stream_max_retries": stream_max_retries,
         "stream_retry_backoff_seconds": stream_retry_backoff_seconds,
         "save_every_steps": save_every_steps,
+        "checkpoints_dir": str(checkpoints_dir),
         "tokenizer_model": str(tokenizer_model),
         "estimated_params": estimated_params,
+        "generation_aware": {
+            "eos_token_id": eos_token_id,
+            "non_eos_threshold": non_eos_threshold,
+            "eos_penalty_weight": eos_penalty_weight,
+            "generation_eval_every_steps": generation_eval_every_steps,
+            "generation_max_new_tokens": generation_max_new_tokens,
+            "early_stop_avg_gen_tokens": early_stop_avg_gen_tokens,
+            "early_stop_patience": early_stop_patience,
+        },
+        "generation_history": generation_history,
     }
     summary_path = checkpoints_dir / f"{checkpoint_prefix}_summary.json"
     summary_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
@@ -262,6 +417,21 @@ def parse_args():
     parser.add_argument("--stream-retry-backoff-seconds", type=int, default=5)
     parser.add_argument("--save-every-steps", type=int, default=0)
     parser.add_argument("--checkpoint-prefix", default=None)
+    parser.add_argument("--checkpoints-dir", default=None)
+
+    # Generation-aware loss and monitoring
+    parser.add_argument("--eos-token-id", type=int, default=EOS_TOKEN_ID)
+    parser.add_argument("--non-eos-threshold", type=float, default=0.20,
+                        help="Target minimum non-EOS probability (enforces P(non-EOS) >= threshold)")
+    parser.add_argument("--eos-penalty-weight", type=float, default=1.5,
+                        help="Weight for EOS overconfidence penalty term")
+    parser.add_argument("--generation-eval-every-steps", type=int, default=100,
+                        help="Run generation health evaluation every N global steps")
+    parser.add_argument("--generation-max-new-tokens", type=int, default=32)
+    parser.add_argument("--early-stop-avg-gen-tokens", type=float, default=10.0,
+                        help="Early stop when avg generated tokens reaches this target")
+    parser.add_argument("--early-stop-patience", type=int, default=2,
+                        help="Consecutive generation eval hits required for early stop")
     return parser.parse_args()
 
 
@@ -278,6 +448,7 @@ def _defaults_for_mode(mode: str):
             "max_steps_per_epoch": 50,
             "min_tokens": 12,
             "checkpoint_prefix": "prototype",
+            "checkpoints_dir": str(ROOT / "checkpoints"),
         }
     return {
         "max_papers": DEFAULT_MAX_PAPERS,
@@ -290,6 +461,7 @@ def _defaults_for_mode(mode: str):
         "max_steps_per_epoch": 0,
         "min_tokens": 50,
         "checkpoint_prefix": "standard",
+        "checkpoints_dir": str(ROOT / "checkpoints"),
     }
 
 if __name__ == "__main__":
@@ -314,4 +486,12 @@ if __name__ == "__main__":
         stream_retry_backoff_seconds=args.stream_retry_backoff_seconds,
         save_every_steps=args.save_every_steps,
         checkpoint_prefix=args.checkpoint_prefix if args.checkpoint_prefix else defaults["checkpoint_prefix"],
+        checkpoints_dir=Path(args.checkpoints_dir) if args.checkpoints_dir else Path(defaults["checkpoints_dir"]),
+        eos_token_id=args.eos_token_id,
+        non_eos_threshold=args.non_eos_threshold,
+        eos_penalty_weight=args.eos_penalty_weight,
+        generation_eval_every_steps=args.generation_eval_every_steps,
+        generation_max_new_tokens=args.generation_max_new_tokens,
+        early_stop_avg_gen_tokens=args.early_stop_avg_gen_tokens,
+        early_stop_patience=args.early_stop_patience,
     )

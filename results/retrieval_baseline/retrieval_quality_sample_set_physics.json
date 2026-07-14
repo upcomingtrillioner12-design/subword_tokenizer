@@ -1,0 +1,331 @@
+{
+  "index_meta": {
+    "num_docs": 25,
+    "avgdl": 40.88,
+    "chunk_size": 220,
+    "chunk_overlap": 40,
+    "source": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/synthetic_physics_papers.jsonl"
+  },
+  "queries": [
+    {
+      "query": "What causes black holes to evaporate?",
+      "top_k": [
+        {
+          "rank": 1,
+          "score": 5.0729,
+          "doc_id": 0,
+          "title": "Hawking Radiation and Black Hole Thermodynamics",
+          "snippet": "we investigate the mechanism by which black holes emit radiation through quantum effects near the event horizon the relationship between black hole entropy and surface area is established through semiclassical gravitatio"
+        },
+        {
+          "rank": 2,
+          "score": 3.9181,
+          "doc_id": 4,
+          "title": "Dark Matter Detection and Galactic Rotation Curves",
+          "snippet": "we analyze the observational evidence for dark matter in galactic systems through rotation curve measurements and gravitational lensing various dark matter candidates are evaluated including wimps axions and primordial b"
+        },
+        {
+          "rank": 3,
+          "score": 2.8686,
+          "doc_id": 21,
+          "title": "Black Hole Thermodynamics and the Information Paradox",
+          "snippet": "the connection between black hole physics and thermodynamics including hawking radiation and entropy is explored the apparent loss of quantum information in black hole evaporation is analyzed recent proposals for resolut"
+        },
+        {
+          "rank": 4,
+          "score": 1.6433,
+          "doc_id": 6,
+          "title": "LIGO and Gravitational Wave Detection: Observing the Cosmos",
+          "snippet": "this paper describes the detection of gravitational waves through laser interferometry the sensitivity improvements in modern detectors enable observation of black hole mergers and neutron star coalescence we discuss how"
+        },
+        {
+          "rank": 5,
+          "score": 0.8826,
+          "doc_id": 18,
+          "title": "Plasma Physics and Fusion Energy",
+          "snippet": "behavior of ionized gases under extreme conditions relevant to fusion reactions is analyzed plasma confinement techniques in tokamaks and stellarators are discussed progress toward controlled nuclear fusion is evaluated "
+        }
+      ]
+    },
+    {
+      "query": "Explain quantum entanglement and nonlocality.",
+      "top_k": [
+        {
+          "rank": 1,
+          "score": 7.6687,
+          "doc_id": 1,
+          "title": "Quantum Entanglement and Bell Nonlocality in Multipartite Systems",
+          "snippet": "this paper examines the phenomenon of quantum entanglement in systems with three or more particles demonstrating violation of bell inequalities in various configurations we establish upper bounds on classical correlation"
+        },
+        {
+          "rank": 2,
+          "score": 4.1905,
+          "doc_id": 14,
+          "title": "Quantum Computing and Entanglement-Based Algorithms",
+          "snippet": "this work explores how quantum entanglement enables computational speedup beyond classical algorithms shor s algorithm for factorization and grover s search algorithm are detailed practical requirements for fault toleran"
+        },
+        {
+          "rank": 3,
+          "score": 0.8146,
+          "doc_id": 12,
+          "title": "Quantum Cryptography and Key Distribution",
+          "snippet": "this paper reviews quantum mechanical principles applied to secure communication the bb84 protocol for quantum key distribution and its security proofs are presented practical implementations and security against eavesdr"
+        },
+        {
+          "rank": 4,
+          "score": 0.7851,
+          "doc_id": 5,
+          "title": "Wave-Particle Duality in Quantum Mechanics",
+          "snippet": "an exposition of the complementarity principle describing how quantum objects exhibit both wave and particle properties depending on measurement context double slit experiments and their interpretations are analyzed thro"
+        },
+        {
+          "rank": 5,
+          "score": 0.7851,
+          "doc_id": 24,
+          "title": "Relativistic Quantum Mechanics and the Dirac Equation",
+          "snippet": "the development of dirac s equation merging special relativity with quantum mechanics is presented prediction of antimatter and the treatment of electrons in electromagnetic fields are covered connections to quantum fiel"
+        }
+      ]
+    },
+    {
+      "query": "What is the Higgs mechanism in particle physics?",
+      "top_k": [
+        {
+          "rank": 1,
+          "score": 9.7213,
+          "doc_id": 2,
+          "title": "The Higgs Mechanism and Electroweak Symmetry Breaking",
+          "snippet": "we provide a comprehensive review of the higgs mechanism in the standard model the generation of gauge boson masses through spontaneous symmetry breaking is explored both theoretically and phenomenologically recent exper"
+        },
+        {
+          "rank": 2,
+          "score": 5.125,
+          "doc_id": 8,
+          "title": "Quantum Field Theory and the Standard Model",
+          "snippet": "comprehensive treatment of quantum field theory as applied to the standard model of particle physics path integral formulation renormalization and asymptotic freedom are covered running coupling constants and their role "
+        },
+        {
+          "rank": 3,
+          "score": 4.0089,
+          "doc_id": 5,
+          "title": "Wave-Particle Duality in Quantum Mechanics",
+          "snippet": "an exposition of the complementarity principle describing how quantum objects exhibit both wave and particle properties depending on measurement context double slit experiments and their interpretations are analyzed thro"
+        },
+        {
+          "rank": 4,
+          "score": 3.9865,
+          "doc_id": 18,
+          "title": "Plasma Physics and Fusion Energy",
+          "snippet": "behavior of ionized gases under extreme conditions relevant to fusion reactions is analyzed plasma confinement techniques in tokamaks and stellarators are discussed progress toward controlled nuclear fusion is evaluated "
+        },
+        {
+          "rank": 5,
+          "score": 3.9582,
+          "doc_id": 21,
+          "title": "Black Hole Thermodynamics and the Information Paradox",
+          "snippet": "the connection between black hole physics and thermodynamics including hawking radiation and entropy is explored the apparent loss of quantum information in black hole evaporation is analyzed recent proposals for resolut"
+        }
+      ]
+    },
+    {
+      "query": "How does general relativity describe gravity?",
+      "top_k": [
+        {
+          "rank": 1,
+          "score": 5.8927,
+          "doc_id": 3,
+          "title": "General Relativity: Spacetime Curvature and Gravitational Fields",
+          "snippet": "this foundational work describes how matter and energy curve spacetime geometry leading to gravitational interactions the einstein field equations and their solutions for various mass distributions are presented includin"
+        },
+        {
+          "rank": 2,
+          "score": 4.4895,
+          "doc_id": 17,
+          "title": "Symmetries and Conservation Laws in Physics",
+          "snippet": "emmy noether s theorem connecting continuous symmetries to conserved quantities forms the basis of this investigation applications in quantum mechanics field theory and general relativity demonstrate the central role of "
+        },
+        {
+          "rank": 3,
+          "score": 2.8805,
+          "doc_id": 10,
+          "title": "String Theory and Extra Dimensions",
+          "snippet": "an introduction to string theory as a candidate for quantum gravity the compactification of extra dimensions and the emergence of gauge theories from geometry are discussed recent developments in string phenomenology and"
+        },
+        {
+          "rank": 4,
+          "score": 2.0027,
+          "doc_id": 24,
+          "title": "Relativistic Quantum Mechanics and the Dirac Equation",
+          "snippet": "the development of dirac s equation merging special relativity with quantum mechanics is presented prediction of antimatter and the treatment of electrons in electromagnetic fields are covered connections to quantum fiel"
+        },
+        {
+          "rank": 5,
+          "score": 1.5862,
+          "doc_id": 14,
+          "title": "Quantum Computing and Entanglement-Based Algorithms",
+          "snippet": "this work explores how quantum entanglement enables computational speedup beyond classical algorithms shor s algorithm for factorization and grover s search algorithm are detailed practical requirements for fault toleran"
+        }
+      ]
+    },
+    {
+      "query": "What evidence supports dark matter in galaxies?",
+      "top_k": [
+        {
+          "rank": 1,
+          "score": 9.7861,
+          "doc_id": 4,
+          "title": "Dark Matter Detection and Galactic Rotation Curves",
+          "snippet": "we analyze the observational evidence for dark matter in galactic systems through rotation curve measurements and gravitational lensing various dark matter candidates are evaluated including wimps axions and primordial b"
+        },
+        {
+          "rank": 2,
+          "score": 2.8515,
+          "doc_id": 13,
+          "title": "Neutron Stars and Extreme Matter States",
+          "snippet": "we study the equation of state for nuclear matter at extreme densities found in neutron star cores quark gluon plasma formation and potential color flavor locked phases are examined observational constraints from mass ra"
+        },
+        {
+          "rank": 3,
+          "score": 2.442,
+          "doc_id": 2,
+          "title": "The Higgs Mechanism and Electroweak Symmetry Breaking",
+          "snippet": "we provide a comprehensive review of the higgs mechanism in the standard model the generation of gauge boson masses through spontaneous symmetry breaking is explored both theoretically and phenomenologically recent exper"
+        },
+        {
+          "rank": 4,
+          "score": 2.3167,
+          "doc_id": 11,
+          "title": "Spin-Orbit Coupling and Topological Insulators",
+          "snippet": "we investigate how spin orbit interactions modify electronic band structures in condensed matter systems the emergence of topologically protected surface states and their robustness to disorder is analyzed potential appl"
+        },
+        {
+          "rank": 5,
+          "score": 2.071,
+          "doc_id": 23,
+          "title": "Exotic Hadrons and Quark Model Extensions",
+          "snippet": "theoretical predictions and experimental evidence for hadronic states beyond traditional quark model classifications are examined tetraquarks pentaquarks and other multiquark states are analyzed implications for understa"
+        }
+      ]
+    },
+    {
+      "query": "What is wave-particle duality?",
+      "top_k": [
+        {
+          "rank": 1,
+          "score": 9.5334,
+          "doc_id": 5,
+          "title": "Wave-Particle Duality in Quantum Mechanics",
+          "snippet": "an exposition of the complementarity principle describing how quantum objects exhibit both wave and particle properties depending on measurement context double slit experiments and their interpretations are analyzed thro"
+        },
+        {
+          "rank": 2,
+          "score": 3.1918,
+          "doc_id": 6,
+          "title": "LIGO and Gravitational Wave Detection: Observing the Cosmos",
+          "snippet": "this paper describes the detection of gravitational waves through laser interferometry the sensitivity improvements in modern detectors enable observation of black hole mergers and neutron star coalescence we discuss how"
+        },
+        {
+          "rank": 3,
+          "score": 2.2884,
+          "doc_id": 8,
+          "title": "Quantum Field Theory and the Standard Model",
+          "snippet": "comprehensive treatment of quantum field theory as applied to the standard model of particle physics path integral formulation renormalization and asymptotic freedom are covered running coupling constants and their role "
+        },
+        {
+          "rank": 4,
+          "score": 1.8776,
+          "doc_id": 18,
+          "title": "Plasma Physics and Fusion Energy",
+          "snippet": "behavior of ionized gases under extreme conditions relevant to fusion reactions is analyzed plasma confinement techniques in tokamaks and stellarators are discussed progress toward controlled nuclear fusion is evaluated "
+        },
+        {
+          "rank": 5,
+          "score": 1.7335,
+          "doc_id": 21,
+          "title": "Black Hole Thermodynamics and the Information Paradox",
+          "snippet": "the connection between black hole physics and thermodynamics including hawking radiation and entropy is explored the apparent loss of quantum information in black hole evaporation is analyzed recent proposals for resolut"
+        }
+      ]
+    },
+    {
+      "query": "How are gravitational waves detected?",
+      "top_k": [
+        {
+          "rank": 1,
+          "score": 6.9458,
+          "doc_id": 6,
+          "title": "LIGO and Gravitational Wave Detection: Observing the Cosmos",
+          "snippet": "this paper describes the detection of gravitational waves through laser interferometry the sensitivity improvements in modern detectors enable observation of black hole mergers and neutron star coalescence we discuss how"
+        },
+        {
+          "rank": 2,
+          "score": 4.292,
+          "doc_id": 3,
+          "title": "General Relativity: Spacetime Curvature and Gravitational Fields",
+          "snippet": "this foundational work describes how matter and energy curve spacetime geometry leading to gravitational interactions the einstein field equations and their solutions for various mass distributions are presented includin"
+        },
+        {
+          "rank": 3,
+          "score": 2.0068,
+          "doc_id": 4,
+          "title": "Dark Matter Detection and Galactic Rotation Curves",
+          "snippet": "we analyze the observational evidence for dark matter in galactic systems through rotation curve measurements and gravitational lensing various dark matter candidates are evaluated including wimps axions and primordial b"
+        },
+        {
+          "rank": 4,
+          "score": 1.9308,
+          "doc_id": 14,
+          "title": "Quantum Computing and Entanglement-Based Algorithms",
+          "snippet": "this work explores how quantum entanglement enables computational speedup beyond classical algorithms shor s algorithm for factorization and grover s search algorithm are detailed practical requirements for fault toleran"
+        },
+        {
+          "rank": 5,
+          "score": 1.7887,
+          "doc_id": 5,
+          "title": "Wave-Particle Duality in Quantum Mechanics",
+          "snippet": "an exposition of the complementarity principle describing how quantum objects exhibit both wave and particle properties depending on measurement context double slit experiments and their interpretations are analyzed thro"
+        }
+      ]
+    },
+    {
+      "query": "What is superconductivity at low temperatures?",
+      "top_k": [
+        {
+          "rank": 1,
+          "score": 3.9776,
+          "doc_id": 7,
+          "title": "Superconductivity and the BCS Theory of Cooper Pairs",
+          "snippet": "we examine the microscopic theory of superconductivity through electron phonon interactions the formation of cooper pairs below the critical temperature and the resulting energy gap are analyzed experimental signatures a"
+        },
+        {
+          "rank": 2,
+          "score": 2.5039,
+          "doc_id": 19,
+          "title": "Molecular Dynamics and Computational Materials Science",
+          "snippet": "numerical simulation techniques for studying many body systems at atomic scale are presented force fields and interatomic potentials are reviewed applications to materials discovery and phase transitions are highlighted "
+        },
+        {
+          "rank": 3,
+          "score": 2.2884,
+          "doc_id": 13,
+          "title": "Neutron Stars and Extreme Matter States",
+          "snippet": "we study the equation of state for nuclear matter at extreme densities found in neutron star cores quark gluon plasma formation and potential color flavor locked phases are examined observational constraints from mass ra"
+        },
+        {
+          "rank": 4,
+          "score": 1.8776,
+          "doc_id": 18,
+          "title": "Plasma Physics and Fusion Energy",
+          "snippet": "behavior of ionized gases under extreme conditions relevant to fusion reactions is analyzed plasma confinement techniques in tokamaks and stellarators are discussed progress toward controlled nuclear fusion is evaluated "
+        },
+        {
+          "rank": 5,
+          "score": 1.7335,
+          "doc_id": 21,
+          "title": "Black Hole Thermodynamics and the Information Paradox",
+          "snippet": "the connection between black hole physics and thermodynamics including hawking radiation and entropy is explored the apparent loss of quantum information in black hole evaporation is analyzed recent proposals for resolut"
+        }
+      ]
+    }
+  ]
+}
