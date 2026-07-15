@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-07-15T17:57:03.648481",
+  "subset_size": 20,
+  "by_type": {
+    "misleading_context": 6,
+    "near_miss_distractor": 6,
+    "unanswerable": 8
+  },
+  "answerability": {
+    "answerable": 12,
+    "unanswerable": 8
+  },
+  "strategy": "FAISS-based direct retrieval evaluation",
+  "expected_duration_seconds": 60,
+  "models_to_test": [
+    "all-mpnet-base-v2"
+  ],
+  "notes": "Full 3-model comparison can proceed once baseline is ready"
+}

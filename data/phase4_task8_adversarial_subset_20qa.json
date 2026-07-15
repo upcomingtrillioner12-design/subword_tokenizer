@@ -1,0 +1,341 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "task": "Phase 4 Task 7: Adversarial Evaluation",
+    "description": "40-question adversarial QA dataset with misleading contexts, near-miss distractors, and low-signal retrieval tasks to test robustness of reranking strategies",
+    "question_types": {
+      "misleading_context": "Correct answer present but surrounded by highly similar but incorrect statements",
+      "near_miss_distractor": "Distractors that are factually close to correct answer (off by unit/coefficient/order)",
+      "unanswerable": "Question cannot be answered from given corpus (requires external knowledge)",
+      "ambiguous": "Multiple valid answers or interpretation required"
+    },
+    "difficulty_levels": [
+      "hard",
+      "expert"
+    ],
+    "total_questions": 20,
+    "subset": "balanced_20_for_task8"
+  },
+  "questions": [
+    {
+      "id": "adv_physics_001",
+      "domain": "physics",
+      "subdomain": "quantum_mechanics",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "question": "What is Planck's constant value in SI units (J\u00b7s)?",
+      "expected_answer": "6.62607015 \u00d7 10^-34",
+      "distractors": [
+        "6.62607015 \u00d7 10^-33",
+        "6.62607015 \u00d7 10^-35",
+        "6.62607015 \u00d7 10^-36",
+        "6.626 \u00d7 10^-34"
+      ],
+      "distractor_notes": "Near-miss: off by one order of magnitude, very similar numerically"
+    },
+    {
+      "id": "adv_physics_002",
+      "domain": "physics",
+      "subdomain": "thermodynamics",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "question": "What is the speed of sound in air at 20\u00b0C in m/s?",
+      "expected_answer": "343",
+      "distractors": [
+        "330",
+        "344",
+        "340",
+        "3430"
+      ],
+      "distractor_notes": "Near-miss: adjacent values and off-by-order misleading"
+    },
+    {
+      "id": "adv_biology_001",
+      "domain": "biology",
+      "subdomain": "molecular_biology",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "question": "How many nucleotides are in a complete turn of the DNA double helix?",
+      "expected_answer": "10",
+      "distractors": [
+        "10.5",
+        "10.0 (but with caveat about B-form)",
+        "11",
+        "9"
+      ],
+      "distractor_notes": "Small integer differences can cause major biological implications"
+    },
+    {
+      "id": "adv_math_002",
+      "domain": "mathematics",
+      "subdomain": "linear_algebra",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "question": "What is the determinant of the matrix [[2, 3], [4, 5]]?",
+      "expected_answer": "-2",
+      "distractors": [
+        "2",
+        "-2 (but calculate as 2*5 - 3*4)",
+        "10",
+        "-10"
+      ],
+      "distractor_notes": "Sign is critical; easy to confuse order of operations"
+    },
+    {
+      "id": "adv_cs_001",
+      "domain": "computer_science",
+      "subdomain": "algorithms",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "question": "What is the time complexity of merge sort in the worst case?",
+      "expected_answer": "O(n log n)",
+      "distractors": [
+        "O(n^2)",
+        "O(n log n) with O(n) space",
+        "O(n)",
+        "O(log n)"
+      ],
+      "distractor_notes": "Correct complexity but space is often confused; tests deep understanding"
+    },
+    {
+      "id": "adv_physics_003",
+      "domain": "physics",
+      "subdomain": "electromagnetism",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "question": "What is the magnetic field produced by a long straight wire carrying current I at distance r?",
+      "expected_answer": "B = \u03bc\u2080I / (2\u03c0r)",
+      "distractors": [
+        "B = \u03bc\u2080I / \u03c0r",
+        "B = \u03bc\u2080I / (2r)",
+        "B = \u03bc\u2080I / (2\u03c0r\u00b2)",
+        "B = \u03bc\u2080I * 2\u03c0r"
+      ],
+      "distractor_notes": "Common algebraic variations that look plausible without derivation"
+    },
+    {
+      "id": "adv_chemistry_001",
+      "domain": "chemistry",
+      "subdomain": "organic_chemistry",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "question": "What is the molecular weight of ethanol (C2H5OH) in g/mol?",
+      "expected_answer": "46.07",
+      "distractors": [
+        "46.07 \u00d7 2 (92.14)",
+        "45.07",
+        "47.07",
+        "44.07"
+      ],
+      "distractor_notes": "Off-by-one in carbon/hydrogen count, very close to correct answer"
+    },
+    {
+      "id": "adv_math_001",
+      "domain": "mathematics",
+      "subdomain": "calculus",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "question": "What is the derivative of f(x) = x^3 + 2x^2 - 5x + 1?",
+      "expected_answer": "3x^2 + 4x - 5",
+      "distractors": [
+        "3x^2 + 4x + 5",
+        "3x^2 + 2x - 5",
+        "x^2 + 4x - 5",
+        "3x^3 + 4x - 5"
+      ],
+      "distractor_notes": "Single sign/coefficient errors that look correct without careful verification"
+    },
+    {
+      "id": "adv_earth_science_002",
+      "domain": "earth_science",
+      "subdomain": "meteorology",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "question": "What is the highest temperature ever recorded on Earth's surface?",
+      "expected_answer": "54.0\u00b0C",
+      "distractors": [
+        "54.4\u00b0C",
+        "53.9\u00b0C",
+        "55.0\u00b0C",
+        "52.0\u00b0C"
+      ],
+      "distractor_notes": "Record holders and measurement disputes make this ambiguous; values very close"
+    },
+    {
+      "id": "adv_physics_004",
+      "domain": "physics",
+      "subdomain": "mechanics",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "question": "What is the gravitational acceleration at Earth's surface?",
+      "expected_answer": "9.81 m/s\u00b2",
+      "distractors": [
+        "9.8 m/s\u00b2",
+        "10 m/s\u00b2",
+        "9.71 m/s\u00b2",
+        "9.91 m/s\u00b2"
+      ],
+      "distractor_notes": "Rounding and location variations create near-identical answers"
+    },
+    {
+      "id": "adv_biology_003",
+      "domain": "biology",
+      "subdomain": "genetics",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "question": "What percentage of the human genome is protein-coding?",
+      "expected_answer": "1.5%",
+      "distractors": [
+        "2.0%",
+        "1.0%",
+        "1.5 (confusion with number)",
+        "3.0%"
+      ],
+      "distractor_notes": "Historically disputed; exact percentage varies by definition"
+    },
+    {
+      "id": "adv_earth_science_003",
+      "domain": "earth_science",
+      "subdomain": "climatology",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "question": "What is the current atmospheric CO\u2082 concentration in ppm (2024)?",
+      "expected_answer": "420",
+      "distractors": [
+        "410",
+        "430",
+        "400",
+        "425"
+      ],
+      "distractor_notes": "Year-dependent; exact value changes annually"
+    },
+    {
+      "id": "adv_chemistry_002",
+      "domain": "chemistry",
+      "subdomain": "kinetics",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "question": "What is the activation energy for the SN2 reaction of chloromethane with hydroxide ion in aprotic solvent?",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "distractors": [
+        "45 kJ/mol",
+        "72 kJ/mol",
+        "35 kJ/mol",
+        "88 kJ/mol"
+      ],
+      "distractor_notes": "Requires specific experimental data not in general corpus"
+    },
+    {
+      "id": "adv_biology_002",
+      "domain": "biology",
+      "subdomain": "ecology",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "question": "What is the current population of Arctic foxes in the Siberian tundra as of 2024?",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "distractors": [
+        "45,000",
+        "23,000",
+        "78,000",
+        "12,000"
+      ],
+      "distractor_notes": "Requires real-time ecological survey data"
+    },
+    {
+      "id": "adv_earth_science_001",
+      "domain": "earth_science",
+      "subdomain": "geology",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "question": "What is the exact mineral composition percentage of the deepest crustal layer under the Mariana Trench?",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "distractors": [
+        "85% olivine, 15% pyroxene",
+        "70% olivine, 30% feldspar",
+        "60% magnetite, 40% hematite",
+        "90% olivine, 10% garnet"
+      ],
+      "distractor_notes": "Requires deep geological surveys not yet available"
+    },
+    {
+      "id": "adv_cs_002",
+      "domain": "computer_science",
+      "subdomain": "databases",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "question": "What is the optimal index strategy for a specific query on tables with 5.2B rows and cardinality distribution X?",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "distractors": [
+        "Create a composite index on columns A, B, C",
+        "Use hash index on primary key",
+        "Create bitmap index on all columns",
+        "No indexing needed"
+      ],
+      "distractor_notes": "Requires specific workload characteristics and database statistics"
+    },
+    {
+      "id": "adv_chemistry_003",
+      "domain": "chemistry",
+      "subdomain": "thermodynamics",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "question": "What is the exact standard free energy of formation for a hypothetical compound XY\u2084 at 37\u00b0C?",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "distractors": [
+        "-123.5 kJ/mol",
+        "-234.2 kJ/mol",
+        "-45.7 kJ/mol",
+        "-567.8 kJ/mol"
+      ],
+      "distractor_notes": "Hypothetical compound requires synthesis data not in literature"
+    },
+    {
+      "id": "adv_biology_004",
+      "domain": "biology",
+      "subdomain": "physiology",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "question": "What is the exact number of mitochondria in a human liver cell from a specific individual under specific conditions?",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "distractors": [
+        "500-1000",
+        "1000-2000",
+        "100-500",
+        "2000-10000"
+      ],
+      "distractor_notes": "Cell-specific and condition-dependent, highly variable"
+    },
+    {
+      "id": "adv_math_004",
+      "domain": "mathematics",
+      "subdomain": "probability",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "question": "What is the exact probability that a randomly selected integer has a specific Diophantine property?",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "distractors": [
+        "0.5",
+        "0.333...",
+        "0.0",
+        "1.0"
+      ],
+      "distractor_notes": "Requires Ramsey theory computation not feasible"
+    },
+    {
+      "id": "adv_earth_science_004",
+      "domain": "earth_science",
+      "subdomain": "oceanography",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "question": "What is the exact current velocity at a specific point in the Gulf Stream on July 15, 2026?",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "distractors": [
+        "1.5 m/s",
+        "2.3 m/s",
+        "0.8 m/s",
+        "3.1 m/s"
+      ],
+      "distractor_notes": "Requires real-time oceanographic measurements"
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "timestamp": "2026-07-15T17:47:10.097912",
+  "task": "phase4_task8_embedding_comparison",
+  "models_evaluated": [
+    "all-mpnet-base-v2"
+  ],
+  "subset_size": 20,
+  "model_results": {
+    "all-mpnet-base-v2": {
+      "questions": [
+        {
+          "id": "adv_physics_001",
+          "type": "misleading_context",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_physics_002",
+          "type": "misleading_context",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_biology_001",
+          "type": "misleading_context",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_math_002",
+          "type": "misleading_context",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_cs_001",
+          "type": "misleading_context",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_physics_003",
+          "type": "misleading_context",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_chemistry_001",
+          "type": "near_miss_distractor",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_math_001",
+          "type": "near_miss_distractor",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_earth_science_002",
+          "type": "near_miss_distractor",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_physics_004",
+          "type": "near_miss_distractor",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_biology_003",
+          "type": "near_miss_distractor",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_earth_science_003",
+          "type": "near_miss_distractor",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false
+          }
+        },
+        {
+          "id": "adv_chemistry_002",
+          "type": "unanswerable",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false,
+            "note": "unanswerable"
+          }
+        },
+        {
+          "id": "adv_biology_002",
+          "type": "unanswerable",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false,
+            "note": "unanswerable"
+          }
+        },
+        {
+          "id": "adv_earth_science_001",
+          "type": "unanswerable",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false,
+            "note": "unanswerable"
+          }
+        },
+        {
+          "id": "adv_cs_002",
+          "type": "unanswerable",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false,
+            "note": "unanswerable"
+          }
+        },
+        {
+          "id": "adv_chemistry_003",
+          "type": "unanswerable",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false,
+            "note": "unanswerable"
+          }
+        },
+        {
+          "id": "adv_biology_004",
+          "type": "unanswerable",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false,
+            "note": "unanswerable"
+          }
+        },
+        {
+          "id": "adv_math_004",
+          "type": "unanswerable",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false,
+            "note": "unanswerable"
+          }
+        },
+        {
+          "id": "adv_earth_science_004",
+          "type": "unanswerable",
+          "results": {
+            "precision@5": 0.0,
+            "precision@10": 0.0,
+            "answer_rank": -1,
+            "found": false,
+            "note": "unanswerable"
+          }
+        }
+      ],
+      "metrics": {
+        "precision@5": 0.0,
+        "precision@10": 0.0,
+        "avg_rank": -1,
+        "found_count": 0,
+        "found_percentage": 0.0
+      }
+    }
+  },
+  "summary": {
+    "best_model": "all-mpnet-base-v2",
+    "model_rankings": [
+      [
+        "all-mpnet-base-v2",
+        0.0
+      ]
+    ],
+    "baseline_model": "all-mpnet-base-v2",
+    "baseline_score": 0.0,
+    "improvements": {
+      "all-mpnet-base-v2": 0.0
+    },
+    "evaluation_date": "2026-07-15T17:47:27.048646"
+  }
+}
