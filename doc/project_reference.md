@@ -13,11 +13,12 @@ author: "Jaydip Singh (jaydip.singh@gmail.com), Linkan Kumbhar (upcomingtrillion
 ## 1. Executive Summary
 
 **Project**: Production-validated Subword Tokenizer + SLM Prototype Training and Evaluation  
-**Status**: Phase 3 Complete (July 13, 2026)  
+**Status**: Phase 4 Task 4 In Progress (July 15, 2026)  
 **Key Results**:
 - **Phase 1**: 0.0107 eval loss on 6000-step TinyLM (35.2M params)
 - **Phase 2**: best LoRA eval loss **0.0060** (44% improvement vs Phase 1)
 - **Phase 3**: full 7-task evaluation suite complete (benchmark, qualitative, test set, PPL/BLEU, physics QA)
+- **Phase 4 Task 4 (new)**: end-to-end RAG generation evaluation pipeline + neural reranking integrated
 
 ### System Architecture
 
@@ -53,6 +54,13 @@ Two unified layers:
 Status: **Ready for Phase 4 (RAG integration + generation control tuning)**
 
 ## 2. Recent Milestones
+
+**July 15, 2026**: Phase 4 Task 4 Kickoff (RAG generation + reranking)
+- Integrated LoRA adapter loading in inference engine for generation-time use
+- Added neural reranker module (`scripts/neural_reranker.py`) using cross-encoder scoring
+- Added end-to-end evaluation script (`scripts/run_rag_generation_evaluation.py`)
+- Added Task 4 config (`config/phase4_task4_rag_eval.yaml`)
+- Smoke test completed and reports generated in `results/rag_generation_eval/`
 
 **July 13, 2026**: Phase 3 Completion
 - Implemented and validated Tasks 1-7 end-to-end
@@ -160,6 +168,30 @@ From repository root:
 2. Add resume-from-checkpoint support for interrupted long runs.
 3. Add CI/doc task to regenerate this PDF from markdown automatically.
 4. Track large artifacts through retention/LFS policy.
+
+## ## 8.1 Phase 4 Task 4 (Current Work)
+
+### Goal
+Integrate retrieval + reranking + LoRA generation in one evaluation loop and produce end-to-end quality metrics.
+
+### New Scripts
+- `scripts/neural_reranker.py`
+- `scripts/run_rag_generation_evaluation.py`
+
+### New Config
+- `config/phase4_task4_rag_eval.yaml`
+
+### Run Commands
+From `subword_tokenizer/`:
+
+- Smoke test (1-2 questions):
+   - `python3 scripts/run_rag_generation_evaluation.py --limit 2`
+- Full configured run:
+   - `python3 scripts/run_rag_generation_evaluation.py`
+
+### Output Artifacts
+- JSON reports: `results/rag_generation_eval/rag_generation_eval_*.json`
+- Markdown reports: `results/rag_generation_eval/rag_generation_eval_*.md`
 
 ## 
 

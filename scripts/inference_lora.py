@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import time
 from dataclasses import dataclass, asdict
 from pathlib import Path
@@ -58,6 +59,70 @@ class InferenceMetrics:
     
     def to_dict(self) -> Dict:
         return asdict(self)
+
+
+class LoRALinear(nn.Module):
+    """LoRA wrapper matching Phase 2 training-time module behavior."""
+
+    def __init__(self, base: nn.Linear, r: int, alpha: float, dropout: float):
+        super().__init__()
+        if r <= 0:
+            raise ValueError("LoRA rank r must be > 0")
+
+        self.base = base
+        self.r = int(r)
+        self.scale = float(alpha) / float(r)
+        self.dropout = nn.Dropout(float(dropout))
+
+        in_features = base.in_features
+        out_features = base.out_features
+
+        self.lora_A = nn.Parameter(torch.zeros(self.r, in_features))
+        self.lora_B = nn.Parameter(torch.zeros(out_features, self.r))
+
+        nn.init.kaiming_uniform_(self.lora_A, a=math.sqrt(5))
+        nn.init.zeros_(self.lora_B)
+
+        for p in self.base.parameters():
+            p.requires_grad = False
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        base_out = self.base(x)
+        lora_out = F.linear(F.linear(self.dropout(x), self.lora_A), self.lora_B)
+        return base_out + lora_out * self.scale
+
+    @property
+    def weight(self) -> torch.Tensor:
+        return self.base.weight
+
+    @property
+    def bias(self) -> torch.Tensor | None:
+        return self.base.bias
+
+
+def _set_module_by_name(root: nn.Module, module_name: str, new_module: nn.Module) -> None:
+    parts = module_name.split(".")
+    parent = root
+    for p in parts[:-1]:
+        parent = getattr(parent, p)
+    setattr(parent, parts[-1], new_module)
+
+
+def _inject_lora_modules(model: nn.Module, lora_cfg: Dict) -> List[str]:
+    target_modules: List[str] = list(lora_cfg.get("target_modules", []))
+    r = int(lora_cfg.get("r", 8))
+    alpha = float(lora_cfg.get("alpha", 16.0))
+    dropout = float(lora_cfg.get("dropout", 0.0))
+
+    replaced: List[str] = []
+    for name, module in list(model.named_modules()):
+        if not isinstance(module, nn.Linear):
+            continue
+        if any(t in name for t in target_modules):
+            _set_module_by_name(model, name, LoRALinear(module, r=r, alpha=alpha, dropout=dropout))
+            replaced.append(name)
+
+    return replaced
 
 
 class LoRAInferenceEngine:
@@ -182,20 +247,24 @@ class LoRAInferenceEngine:
         """Load and inject LoRA adapter into base model."""
         if self.verbose:
             print(f"[inference] Loading LoRA adapter from {self.lora_checkpoint}")
-        
-        adapter_state = torch.load(self.lora_checkpoint, map_location="cpu")
-        
-        # Inject LoRA into model layers (this modifies the model in-place)
-        for name, module in self.model.named_modules():
-            if isinstance(module, nn.Linear) and name in adapter_state:
-                # Load LoRA weights
-                if self.verbose:
-                    print(f"[inference]   Injecting LoRA into {name}")
-                
-                # For now, we assume adapter_state directly contains the LoRA modules
-                # In a full implementation, we'd need to reconstruct LoRA layers
-                
+
+        payload = torch.load(self.lora_checkpoint, map_location="cpu")
+        lora_state = payload.get("lora_state", payload)
+        lora_cfg = payload.get("config", {}).get("lora", {})
+
+        replaced = _inject_lora_modules(self.model, lora_cfg)
+        if not replaced:
+            raise RuntimeError("No linear modules matched LoRA target_modules during inference injection")
+
+        missing, unexpected = self.model.load_state_dict(lora_state, strict=False)
+        bad_missing = [k for k in missing if ("lora_A" in k or "lora_B" in k)]
+        if bad_missing:
+            raise RuntimeError(f"Missing LoRA keys after adapter load: {bad_missing[:10]}")
+        if unexpected:
+            raise RuntimeError(f"Unexpected keys while loading LoRA adapter: {unexpected[:10]}")
+
         if self.verbose:
+            print(f"[inference] LoRA modules injected: {len(replaced)}")
             print(f"[inference] LoRA adapter loaded successfully")
     
     @torch.no_grad()
@@ -278,8 +347,9 @@ class LoRAInferenceEngine:
                     print(f"[inference] Step 0: next_token shape before reshape={next_token.shape}")
                     print(f"[inference] Step 0: next_token shape after view(1,1)={next_token.view(1, 1).shape}")
                 
-                # Stop at common EOS tokens (token 0, 2, or EOS token id)
-                if next_token_id in [0, 2]:
+                # Stop at EOS token.
+                # Token 0 is treated as soft-EOS and only allowed to stop after a few generated tokens.
+                if next_token_id == 2 or (next_token_id == 0 and generated_count >= 5):
                     if self.verbose:
                         print(f"[inference] Stopped at EOS token: {next_token_id}")
                     break
@@ -383,6 +453,19 @@ def load_tokenizer(tokenizer_model_path: Path):
     """Load tokenizer from model file."""
     # Use the tokenization functions from stream_train module
     stream_train._activate_tokenizer_model(tokenizer_model_path)
+
+    model_json = json.loads(Path(tokenizer_model_path).read_text(encoding="utf-8"))
+    vocab = model_json.get("vocab", {})
+    id_to_token = {int(v): k for k, v in vocab.items()}
+
+    specials = model_json.get("special_tokens", [])
+    special_ids = set()
+    for item in specials:
+        if isinstance(item, dict) and "id" in item:
+            try:
+                special_ids.add(int(item["id"]))
+            except Exception:
+                continue
     
     class SimpleTokenizer:
         """Simple wrapper around the CLI tokenizer."""
@@ -392,10 +475,16 @@ def load_tokenizer(tokenizer_model_path: Path):
             return ids[:max_length]
         
         def decode_ids(self, ids: List[int]) -> str:
-            """Decode token IDs to text (approximate)."""
-            # This is a simple approximation - for real decoding we'd need the vocab
-            # For now, just return a placeholder
-            return f"[{len(ids)} tokens generated]"
+            """Decode token IDs to text using vocab reverse mapping."""
+            pieces: List[str] = []
+            for tok_id in ids:
+                if tok_id in special_ids:
+                    continue
+                pieces.append(id_to_token.get(int(tok_id), ""))
+            text = "".join(pieces).strip()
+            if not text:
+                return "[no text decoded]"
+            return text
     
     return SimpleTokenizer()
 
