@@ -38,23 +38,14 @@ def load_corpus_chunks():
     return chunks
 
 
-def compute_retrieval_score(query, expected_answer, model, chunks, top_k=10):
+def compute_retrieval_score(query, expected_answer, model, sampled_chunks, sampled_embs, top_k=10):
     """Compute retrieval quality metrics"""
     try:
         query_emb = model.encode([query])[0]
-        
-        # Sample for efficiency
-        if len(chunks) > 500:
-            sampled_indices = np.random.choice(len(chunks), 500, replace=False)
-            sampled_chunks = [chunks[i] for i in sampled_indices]
-        else:
-            sampled_chunks = chunks
-        
-        chunk_embs = model.encode(sampled_chunks, batch_size=32)
-        
+
         # Similarities
-        similarities = chunk_embs @ query_emb / (
-            np.linalg.norm(chunk_embs, axis=1) * np.linalg.norm(query_emb) + 1e-8
+        similarities = sampled_embs @ query_emb / (
+            np.linalg.norm(sampled_embs, axis=1) * np.linalg.norm(query_emb) + 1e-8
         )
         
         top_indices = np.argsort(similarities)[::-1][:top_k]
@@ -108,66 +99,88 @@ def main():
     questions = subset_data['questions'][:20]
     print(f"  ✓ Loaded {len(questions)} questions")
     
-    # Initialize model
-    print("\n🔧 Loading embedding model...")
-    print("  all-mpnet-base-v2...", end='', flush=True)
-    model = EmbeddingSelector('all-mpnet-base-v2')
-    print(" ✓")
-    
+    # Fixed sample for fair comparison
+    sample_size = min(800, len(chunks))
+    rng = np.random.default_rng(42)
+    sample_idx = rng.choice(len(chunks), size=sample_size, replace=False)
+    sampled_chunks = [chunks[i] for i in sample_idx]
+
+    models_to_test = [
+        'all-mpnet-base-v2',
+        'hkunlp/instructor-base',
+        'allenai/scibert_scivocab_uncased',
+    ]
+
     # Evaluate
-    print(f"\n🔍 Evaluating on {len(questions)} questions...\n")
-    
+    print(f"\n🔍 Evaluating {len(models_to_test)} models on {len(questions)} questions...\n")
+
     results = {
         'timestamp': datetime.now().isoformat(),
-        'model': 'all-mpnet-base-v2',
         'subset_size': len(questions),
-        'questions': [],
-        'metrics': {
-            'max_sim': [],
-            'top5_sim': [],
-            'top10_sim': [],
-            'answers_found': 0,
-            'answerable_count': 0
+        'corpus_sample_size': sample_size,
+        'models': {}
+    }
+
+    for model_name in models_to_test:
+        print(f"🔧 Loading {model_name}...", end='', flush=True)
+        model = EmbeddingSelector(model_name)
+        sampled_embs = model.encode(sampled_chunks, batch_size=32)
+        print(" ✓")
+
+        model_rows = []
+        max_sim = []
+        top5_sim = []
+        top10_sim = []
+        found = 0
+        answerable = 0
+        ranks = []
+
+        for i, q in enumerate(questions, 1):
+            q_id = q.get('id', f'q_{i}')
+            question = q.get('question', '')
+            expected = q.get('expected_answer', '')
+            q_type = q.get('type', 'unknown')
+            is_answerable = expected != 'CANNOT_BE_ANSWERED'
+
+            score = compute_retrieval_score(question, expected, model, sampled_chunks, sampled_embs)
+
+            model_rows.append({
+                'id': q_id,
+                'type': q_type,
+                'is_answerable': is_answerable,
+                'scores': score
+            })
+
+            max_sim.append(score['max_similarity'])
+            top5_sim.append(score['avg_top5'])
+            top10_sim.append(score['avg_top10'])
+            answerable += int(is_answerable)
+
+            if score['answer_found']:
+                found += 1
+                if score['answer_rank'] > 0:
+                    ranks.append(score['answer_rank'])
+
+            if i % 5 == 0:
+                print(f"  [{i}/{len(questions)}] {model_name}")
+
+        metrics = {
+            'precision_at_5': float(np.mean([1.0 if (r['scores']['answer_rank'] > 0 and r['scores']['answer_rank'] <= 5) else 0.0 for r in model_rows])),
+            'precision_at_10': float(np.mean([1.0 if r['scores']['answer_rank'] > 0 else 0.0 for r in model_rows])),
+            'avg_rank_when_found': float(np.mean(ranks)) if ranks else -1.0,
+            'avg_max_similarity': float(np.mean(max_sim)),
+            'avg_top5_similarity': float(np.mean(top5_sim)),
+            'avg_top10_similarity': float(np.mean(top10_sim)),
+            'answers_found': found,
+            'answerable_questions': answerable,
+            'answer_retrieval_rate': float(found / max(1, answerable))
         }
-    }
-    
-    for i, q in enumerate(questions, 1):
-        q_id = q.get('id', f'q_{i}')
-        question = q.get('question', '')
-        expected = q.get('expected_answer', '')
-        q_type = q.get('type', 'unknown')
-        is_answerable = expected != 'CANNOT_BE_ANSWERED'
-        
-        score = compute_retrieval_score(question, expected, model, chunks)
-        
-        results['questions'].append({
-            'id': q_id,
-            'type': q_type,
-            'is_answerable': is_answerable,
-            'scores': score
-        })
-        
-        results['metrics']['max_sim'].append(score['max_similarity'])
-        results['metrics']['top5_sim'].append(score['avg_top5'])
-        results['metrics']['top10_sim'].append(score['avg_top10'])
-        results['metrics']['answerable_count'] += is_answerable
-        
-        if score['answer_found']:
-            results['metrics']['answers_found'] += 1
-        
-        if i % 5 == 0:
-            print(f"  [{i}/{len(questions)}] max_sim={score['max_similarity']:.4f}, "
-                  f"avg_top5={score['avg_top5']:.4f}")
-    
-    # Summary
-    results['summary'] = {
-        'avg_max_similarity': float(np.mean(results['metrics']['max_sim'])),
-        'avg_top5_similarity': float(np.mean(results['metrics']['top5_sim'])),
-        'avg_top10_similarity': float(np.mean(results['metrics']['top10_sim'])),
-        'answers_found': results['metrics']['answers_found'],
-        'answerable_questions': results['metrics']['answerable_count'],
-        'answer_retrieval_rate': float(results['metrics']['answers_found'] / max(1, results['metrics']['answerable_count']))
-    }
+
+        results['models'][model_name] = {
+            'model_info': model.get_model_info(),
+            'metrics': metrics,
+            'questions': model_rows
+        }
     
     # Save
     output_dir = Path('results/rag_generation_eval')
@@ -185,15 +198,25 @@ def main():
     print("\n" + "=" * 75)
     print("RESULTS SUMMARY")
     print("=" * 75)
-    print(f"\nModel: all-mpnet-base-v2")
-    print(f"Questions: {results['summary']['answerable_questions']} answerable / {len(questions)} total")
-    print(f"\nRetrieval Quality (average cosine similarity):")
-    print(f"  Max similarity (best chunk):  {results['summary']['avg_max_similarity']:.4f}")
-    print(f"  Avg top-5 similarity:         {results['summary']['avg_top5_similarity']:.4f}")
-    print(f"  Avg top-10 similarity:        {results['summary']['avg_top10_similarity']:.4f}")
-    print(f"\nAnswer Retrieval:")
-    print(f"  Answers found in top-10:      {results['summary']['answers_found']}/{results['summary']['answerable_questions']}")
-    print(f"  Retrieval success rate:       {results['summary']['answer_retrieval_rate']:.1%}")
+    ranking = sorted(
+        [(m, d['metrics']['precision_at_10']) for m, d in results['models'].items()],
+        key=lambda x: x[1],
+        reverse=True
+    )
+    for i, (model_name, p10) in enumerate(ranking, start=1):
+        p5 = results['models'][model_name]['metrics']['precision_at_5']
+        print(f"  {i}. {model_name}: p@5={p5:.3f}, p@10={p10:.3f}")
+
+    results['summary'] = {
+        'ranking_by_precision_at_10': ranking,
+        'best_model': ranking[0][0] if ranking else None
+    }
+
+    with open(output_file, 'w') as f:
+        json.dump(results, f, indent=2)
+
+    print(f"\nBest model: {results['summary']['best_model']}")
+    print(f"Saved: {output_file}")
     
     return 0
 
