@@ -25,6 +25,7 @@ except ImportError:
 from hybrid_retrieval import HybridRetriever
 from inference_lora import LoRAInferenceEngine, load_tokenizer
 from neural_reranker import CrossEncoderReranker
+from semantic_metrics import SemanticMetricsEvaluator
 from tool_executor import ToolExecutor
 
 
@@ -204,6 +205,11 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
             verbose=True,
         )
 
+    semantic_eval = SemanticMetricsEvaluator(
+        config=cfg.get("semantic_metrics", {}),
+        enabled=bool(eval_cfg.get("enable_semantic_metrics", False)),
+    )
+
     generator = TinyLMRAGGenerator(cfg)
 
     qa_path = Path(eval_cfg["dataset"])
@@ -227,6 +233,12 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
     faithful_scores: List[float] = []
     mc_exact_scores: List[float] = []
     mc_semantic_scores: List[float] = []
+    semantic_similarity_scores: List[float] = []
+    bertscore_f1_scores: List[float] = []
+    entailment_scores: List[float] = []
+    factual_consistency_scores: List[float] = []
+    numeric_unit_scores: List[float] = []
+    uncertainty_scores: List[float] = []
 
     eval_mode = str(eval_cfg.get("mode", "generation")).lower()
 
@@ -267,9 +279,17 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
         contains_expected = 1.0 if expected.lower() in answer.lower() else 0.0
         faith = context_faithfulness(answer, context)
 
+        sem = semantic_eval.evaluate(answer, expected, context)
+
         f1_scores.append(f1)
         contain_scores.append(contains_expected)
         faithful_scores.append(faith)
+        semantic_similarity_scores.append(sem["semantic_similarity"])
+        bertscore_f1_scores.append(sem["bertscore_f1"])
+        entailment_scores.append(sem["entailment_score"])
+        factual_consistency_scores.append(sem["factual_consistency"])
+        numeric_unit_scores.append(sem["numeric_unit_consistency"])
+        uncertainty_scores.append(sem["uncertainty_score"])
 
         row = {
             "id": q.get("id", f"q_{i:03d}"),
@@ -281,6 +301,12 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
                 "token_f1": f1,
                 "contains_expected": contains_expected,
                 "faithfulness": faith,
+                "semantic_similarity": sem["semantic_similarity"],
+                "bertscore_f1": sem["bertscore_f1"],
+                "entailment_score": sem["entailment_score"],
+                "factual_consistency": sem["factual_consistency"],
+                "numeric_unit_consistency": sem["numeric_unit_consistency"],
+                "uncertainty_score": sem["uncertainty_score"],
                 "mc_exact": mc_exact,
                 "mc_semantic_or_better": mc_semantic,
                 "expected_rank": rank_expected,
@@ -329,6 +355,11 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
                 "fallback": bool(reranker.fallback) if reranker is not None else None,
             },
             "generation": cfg["generation"],
+            "semantic_metrics": {
+                **cfg.get("semantic_metrics", {}),
+                "active": semantic_eval.active,
+                "init_errors": semantic_eval.init_errors,
+            },
             "model": {
                 "base_checkpoint": cfg["model"]["base_checkpoint"],
                 "lora_checkpoint": cfg["model"]["lora_checkpoint"],
@@ -339,6 +370,12 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
             "avg_token_f1": avg(f1_scores),
             "avg_contains_expected": avg(contain_scores),
             "avg_faithfulness": avg(faithful_scores),
+            "avg_semantic_similarity": avg(semantic_similarity_scores),
+            "avg_bertscore_f1": avg(bertscore_f1_scores),
+            "avg_entailment_score": avg(entailment_scores),
+            "avg_factual_consistency": avg(factual_consistency_scores),
+            "avg_numeric_unit_consistency": avg(numeric_unit_scores),
+            "avg_uncertainty_score": avg(uncertainty_scores),
             "mc_exact_rate": avg(mc_exact_scores),
             "mc_semantic_or_better_rate": avg(mc_semantic_scores),
         },
@@ -370,6 +407,12 @@ def save_report(report: Dict[str, Any], out_dir: Path) -> None:
     lines.append(f"| avg_token_f1 | {report['summary']['avg_token_f1']:.4f} |")
     lines.append(f"| avg_contains_expected | {report['summary']['avg_contains_expected']:.4f} |")
     lines.append(f"| avg_faithfulness | {report['summary']['avg_faithfulness']:.4f} |")
+    lines.append(f"| avg_semantic_similarity | {report['summary'].get('avg_semantic_similarity', 0.0):.4f} |")
+    lines.append(f"| avg_bertscore_f1 | {report['summary'].get('avg_bertscore_f1', 0.0):.4f} |")
+    lines.append(f"| avg_entailment_score | {report['summary'].get('avg_entailment_score', 0.0):.4f} |")
+    lines.append(f"| avg_factual_consistency | {report['summary'].get('avg_factual_consistency', 0.0):.4f} |")
+    lines.append(f"| avg_numeric_unit_consistency | {report['summary'].get('avg_numeric_unit_consistency', 0.0):.4f} |")
+    lines.append(f"| avg_uncertainty_score | {report['summary'].get('avg_uncertainty_score', 0.0):.4f} |")
     lines.append(f"| mc_exact_rate | {report['summary'].get('mc_exact_rate', 0.0):.4f} |")
     lines.append(
         f"| mc_semantic_or_better_rate | {report['summary'].get('mc_semantic_or_better_rate', 0.0):.4f} |"
@@ -385,7 +428,7 @@ def save_report(report: Dict[str, Any], out_dir: Path) -> None:
         lines.append(f"- Expected: {row['expected_answer']}")
         lines.append(f"- Generated: {row['generated_answer']}")
         lines.append(
-            f"- Metrics: f1={row['metrics']['token_f1']:.3f}, contains={row['metrics']['contains_expected']:.1f}, faith={row['metrics']['faithfulness']:.3f}"
+            f"- Metrics: f1={row['metrics']['token_f1']:.3f}, contains={row['metrics']['contains_expected']:.1f}, faith={row['metrics']['faithfulness']:.3f}, sem={row['metrics'].get('semantic_similarity', 0.0):.3f}, entail={row['metrics'].get('entailment_score', 0.0):.3f}, unc={row['metrics'].get('uncertainty_score', 0.0):.3f}"
         )
         lines.append("")
 

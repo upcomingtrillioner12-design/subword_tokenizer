@@ -1,0 +1,270 @@
+{
+  "metadata": {
+    "task": "phase4_task4_rag_generation_eval",
+    "timestamp": "2026-07-15 19:44:20",
+    "num_questions": 2,
+    "elapsed_seconds": 35.64946220899583,
+    "retrieval": {
+      "bm25_index": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/bm25_index.json",
+      "dense_index": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index.faiss",
+      "dense_metadata": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index_metadata.jsonl",
+      "embedding_model": "allenai/scibert_scivocab_uncased",
+      "fusion_method": "rrf",
+      "alpha": 0.5,
+      "k_retrieve": 10,
+      "context_docs": 4
+    },
+    "reranker": {
+      "enabled": true,
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "strategy": "hybrid",
+      "top_n": 6,
+      "cross_weight": 0.55,
+      "semantic_weight": 0.3,
+      "lexical_weight": 0.15,
+      "active": true,
+      "fallback": false
+    },
+    "generation": {
+      "max_tokens": 48,
+      "temperature": 0.9,
+      "top_k": 50,
+      "top_p": 0.95,
+      "prompt_mode": "strict",
+      "enforce_context_overlap": true,
+      "faithfulness_floor": 0.25
+    },
+    "semantic_metrics": {
+      "enabled": true,
+      "embedding_model": "all-mpnet-base-v2",
+      "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+      "max_tokens_for_bertscore": 80,
+      "active": true,
+      "init_errors": []
+    },
+    "model": {
+      "base_checkpoint": "/Users/jdsingh/slm_v0/checkpoints/production_sml_v1.pt",
+      "lora_checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt",
+      "tokenizer_model": "/Users/jdsingh/slm_v0/model_32k.json"
+    }
+  },
+  "summary": {
+    "avg_token_f1": 1.0,
+    "avg_contains_expected": 1.0,
+    "avg_faithfulness": 0.0,
+    "avg_semantic_similarity": 1.0,
+    "avg_bertscore_f1": 1.0000000596046448,
+    "avg_entailment_score": 0.9373152942862362,
+    "avg_factual_consistency": 0.9373152942862362,
+    "avg_numeric_unit_consistency": 0.0,
+    "avg_uncertainty_score": 0.8,
+    "mc_exact_rate": 1.0,
+    "mc_semantic_or_better_rate": 1.0
+  },
+  "results": [
+    {
+      "id": "adv_physics_001",
+      "category": "unknown",
+      "query": "What is Planck's constant value in SI units (J\u00b7s)?",
+      "expected_answer": "6.62607015 \u00d7 10^-34",
+      "generated_answer": "6.62607015 \u00d7 10^-34",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0,
+        "entailment_score": 0.8953658767044544,
+        "factual_consistency": 0.8953658767044544,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "6.62607015 \u00d7 10^-34",
+          "avg_logprob": -15.595630645751953
+        },
+        {
+          "option": "6.62607015 \u00d7 10^-33",
+          "avg_logprob": -15.595630645751953
+        },
+        {
+          "option": "6.62607015 \u00d7 10^-35",
+          "avg_logprob": -15.595630645751953
+        },
+        {
+          "option": "6.62607015 \u00d7 10^-36",
+          "avg_logprob": -15.595630645751953
+        },
+        {
+          "option": "6.626 \u00d7 10^-34",
+          "avg_logprob": -15.595630645751953
+        }
+      ],
+      "context": "[1] source=frankenstein.txt\ndiscovered unworthiness of one beloved and so was disposed to set a greater value on tried worth there was a show of gratitude and worship in his attachment to my mother differing wholly from the doting fondness of age for it was inspired by reverence for her virtues and a desire to be the means of in some degree recompensing her for the sorrows she had endured but which gave inexpressible grace to his behaviour to her everything was made to yield to her wishes and her convenience he strove to shelter her as a fair exotic is sheltered by the gardener from every rougher wind and to surround her with all that could tend to excite pleasurable emotion in her soft and benevolent mind her health and even the tranquillity of her hitherto constant spirit had been shaken by what she had gone through during the two years that had elapsed previous to their marriage my father had gradually relinquished all his public functions and immediately after their union they sought the pleasant climate of italy and the change of scene and interest attendant on a tour through that land of wonders as a restorative for her weakened frame from italy they visited germany and france i their eldest child was born at naples and as an infant accompanied\n\n[2] source=moby_dick.txt\nonly four published outlines of the great sperm whale colnett s huggins s frederick cuvier s and beale s in the previous chapter colnett and cuvier have been referred to huggins s is far better than theirs but by great odds beale s is the best all beale s drawings of this whale are good excepting the middle figure in the picture of three whales in various attitudes capping his second chapter his frontispiece boats attacking sperm whales though no doubt calculated to excite the civil scepticism of some parlor men is admirably correct and life like in its general effect some of the sperm whale drawings in j ross browne are pretty correct in contour but they are wretchedly engraved that is not his fault though of the right whale the best outline pictures are in scoresby but they are drawn on too small a scale to convey a desirable impression he has but one picture of whaling scenes and this is a sad deficiency because it is by such pictures only when at all well done that you can derive anything like a truthful idea of the living whale as seen by his living hunters but taken for all in all by far the finest though in some details not the most correct presentations of whales and whaling\n\n[3] source=moby_dick.txt\njohn bull is poor ireland but a fast fish what to that apostolic lancer brother jonathan is texas but a fast fish and concerning all these is not possession the whole of the law but if the doctrine of fast fish be pretty generally applicable the kindred doctrine of loose fish is still more widely so that is internationally and universally applicable what was america in 1492 but a loose fish in which columbus struck the spanish standard by way of waifing it for his royal master and mistress what was poland to the czar what greece to the turk what india to england what at last will mexico be to the united states all loose fish what are the rights of man and the liberties of the world but loose fish what all men s minds and opinions but loose fish what is the principle of religious belief in them but a loose fish what to the ostentatious smuggling verbalists are the thoughts of thinkers but loose fish what is the great globe itself but a loose fish and what are you reader but a loose fish and a fast fish too chapter 90 heads or tails de balena vero sufficit si rex habeat caput et regina caudam _bracton l 3 c 3 _ latin from the books of\n\n[4] source=pride_prejudice.txt\nthe secrets which had weighed on her for a fortnight and was certain of a willing listener in jane whenever she might wish to talk again of either but there was still something lurking behind of which prudence forbade the disclosure she dared not relate the other half of mr darcy s letter nor explain to her sister how sincerely she had been valued by his friend here was knowledge in which no one could partake and she was sensible that nothing less than a perfect understanding between the parties could justify her in throwing off this last encumbrance of mystery and then said she if that very improbable event should ever take place i shall merely be able to tell what bingley may tell in a much more agreeable manner himself the liberty of communication cannot be mine till it has lost all its value she was now on being settled at home at leisure to observe the real state of her sister s spirits jane was not happy she still cherished a very tender affection for bingley having never even fancied herself in love before her regard had all the warmth of first attachment and from her age and disposition greater steadiness than first attachments often boast and so fervently did she value his remembrance and prefer him",
+      "retrieved_topk": [
+        {
+          "doc_id": 35,
+          "rank": 1,
+          "score": 0.016129032258064516,
+          "rerank_score": 0.7861162285848516,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.024583923696538123,
+            "cross_encoder": -11.120794296264648,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "discovered unworthiness of one beloved and so was disposed to set a greater value on tried worth there was a show of gratitude and worship in his attachment to my mother differing wholly from the doting fondness of age for it was inspired by reverence for her virtues and a desire to be the means of in some degree recompensing her for the sorrows she had endured but which gave inexpressible grace to his behaviour to her everything was made to yield to her wishes and her convenience he strove to shelter her as a fair exotic is sheltered by the gardener from every rougher wind and to surround her with all that could tend to excite pleasurable emotion in her soft and benevolent mind her health and even the tranquillity of her hitherto constant spirit had been shaken by what she had gone through during the two years that had elapsed previous to their marriage my father had gradually relinquished all his public functions and immediately after their union they sought the pleasant climate of italy and the change of scene and interest attendant on a tour through that land of wonders as a restorative for her weakened frame from italy they visited germany and france i their eldest child was born at naples and as an infant accompanied"
+        },
+        {
+          "doc_id": 3099,
+          "rank": 2,
+          "score": 0.015625,
+          "rerank_score": 0.49372636592614266,
+          "rerank_components": {
+            "lexical": 4.0,
+            "semantic": 0.03394586417718127,
+            "cross_encoder": -11.254514694213867,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "only four published outlines of the great sperm whale colnett s huggins s frederick cuvier s and beale s in the previous chapter colnett and cuvier have been referred to huggins s is far better than theirs but by great odds beale s is the best all beale s drawings of this whale are good excepting the middle figure in the picture of three whales in various attitudes capping his second chapter his frontispiece boats attacking sperm whales though no doubt calculated to excite the civil scepticism of some parlor men is admirably correct and life like in its general effect some of the sperm whale drawings in j ross browne are pretty correct in contour but they are wretchedly engraved that is not his fault though of the right whale the best outline pictures are in scoresby but they are drawn on too small a scale to convey a desirable impression he has but one picture of whaling scenes and this is a sad deficiency because it is by such pictures only when at all well done that you can derive anything like a truthful idea of the living whale as seen by his living hunters but taken for all in all by far the finest though in some details not the most correct presentations of whales and whaling"
+        },
+        {
+          "doc_id": 3374,
+          "rank": 3,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.44999999999999996,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.06487204239169025,
+            "cross_encoder": -11.396154403686523,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "john bull is poor ireland but a fast fish what to that apostolic lancer brother jonathan is texas but a fast fish and concerning all these is not possession the whole of the law but if the doctrine of fast fish be pretty generally applicable the kindred doctrine of loose fish is still more widely so that is internationally and universally applicable what was america in 1492 but a loose fish in which columbus struck the spanish standard by way of waifing it for his royal master and mistress what was poland to the czar what greece to the turk what india to england what at last will mexico be to the united states all loose fish what are the rights of man and the liberties of the world but loose fish what all men s minds and opinions but loose fish what is the principle of religious belief in them but a loose fish what to the ostentatious smuggling verbalists are the thoughts of thinkers but loose fish what is the great globe itself but a loose fish and what are you reader but a loose fish and a fast fish too chapter 90 heads or tails de balena vero sufficit si rex habeat caput et regina caudam _bracton l 3 c 3 _ latin from the books of"
+        },
+        {
+          "doc_id": 844,
+          "rank": 4,
+          "score": 0.015151515151515152,
+          "rerank_score": 0.4191254458031473,
+          "rerank_components": {
+            "lexical": 4.0,
+            "semantic": 0.028109658715739557,
+            "cross_encoder": -11.276351928710938,
+            "strategy": "hybrid"
+          },
+          "source": "pride_prejudice.txt",
+          "text": "the secrets which had weighed on her for a fortnight and was certain of a willing listener in jane whenever she might wish to talk again of either but there was still something lurking behind of which prudence forbade the disclosure she dared not relate the other half of mr darcy s letter nor explain to her sister how sincerely she had been valued by his friend here was knowledge in which no one could partake and she was sensible that nothing less than a perfect understanding between the parties could justify her in throwing off this last encumbrance of mystery and then said she if that very improbable event should ever take place i shall merely be able to tell what bingley may tell in a much more agreeable manner himself the liberty of communication cannot be mine till it has lost all its value she was now on being settled at home at leisure to observe the real state of her sister s spirits jane was not happy she still cherished a very tender affection for bingley having never even fancied herself in love before her regard had all the warmth of first attachment and from her age and disposition greater steadiness than first attachments often boast and so fervently did she value his remembrance and prefer him"
+        }
+      ]
+    },
+    {
+      "id": "adv_physics_002",
+      "category": "unknown",
+      "query": "What is the speed of sound in air at 20\u00b0C in m/s?",
+      "expected_answer": "343",
+      "generated_answer": "343",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0000001192092896,
+        "entailment_score": 0.9792647118680179,
+        "factual_consistency": 0.9792647118680179,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "343",
+          "avg_logprob": -8.854785788804293
+        },
+        {
+          "option": "330",
+          "avg_logprob": -8.854785788804293
+        },
+        {
+          "option": "344",
+          "avg_logprob": -8.854785788804293
+        },
+        {
+          "option": "340",
+          "avg_logprob": -8.854785788804293
+        },
+        {
+          "option": "3430",
+          "avg_logprob": -8.854785788804293
+        }
+      ],
+      "context": "[1] source=frankenstein.txt\nof sound sense and real information combined it is true with a repulsive physiognomy and manners but not on that account the less valuable in m waldman i found a true friend his gentleness was never tinged by dogmatism and his instructions were given with an air of frankness and good nature that banished every idea of pedantry in a thousand ways he smoothed for me the path of knowledge and made the most abstruse inquiries clear and facile to my apprehension my application was at first fluctuating and uncertain it gained strength as i proceeded and soon became so ardent and eager that the stars often disappeared in the light of morning whilst i was yet engaged in my laboratory as i applied so closely it may be easily conceived that my progress was rapid my ardour was indeed the astonishment of the students and my proficiency that of the masters professor krempe often asked me with a sly smile how cornelius agrippa went on whilst m waldman expressed the most heartfelt exultation in my progress two years passed in this manner during which i paid no visit to geneva but was engaged heart and soul in the pursuit of some discoveries which i hoped to make none but those who have experienced them can conceive of the enticements\n\n[2] source=moby_dick.txt\nendless pains and sorrows there which none but they that feel can tell oh i was plunging to despair in black distress i called my god when i could scarce believe him mine he bowed his ear to my complaints no more the whale did me confine with speed he flew to my relief as on a radiant dolphin borne awful yet bright as lightning shone the face of my deliverer god my song for ever shall record that terrible that joyful hour i give the glory to my god his all the mercy and the power nearly all joined in singing this hymn which swelled high above the howling of the storm a brief pause ensued the preacher slowly turned over the leaves of the bible and at last folding his hand down upon the proper page said beloved shipmates clinch the last verse of the first chapter of jonah and god had prepared a great fish to swallow up jonah shipmates this book containing only four chapters four yarns is one of the smallest strands in the mighty cable of the scriptures yet what depths of the soul does jonah s deep sealine sound what a pregnant lesson to us is this prophet what a noble thing is that canticle in the fish s belly how billow like\n\n[3] source=moby_dick.txt\nwhale watching these sprinklings and spoutings that all this should be and yet that down to this blessed minute fifteen and a quarter minutes past one o clock p m of this sixteenth day of december a d 1851 it should still remain a problem whether these spoutings are after all really water or nothing but vapor this is surely a noteworthy thing let us then look at this matter along with some interesting items contingent every one knows that by the peculiar cunning of their gills the finny tribes in general breathe the air which at all times is combined with the element in which they swim hence a herring or a cod might live a century and never once raise its head above the surface but owing to his marked internal structure which gives him regular lungs like a human being s the whale can only live by inhaling the disengaged air in the open atmosphere wherefore the necessity for his periodical visits to the upper world but he cannot in any degree breathe through his mouth for in his ordinary attitude the sperm whale s mouth is buried at least eight feet beneath the surface and what is still more his windpipe has no connexion with his mouth no he breathes through his spiracle alone and this\n\n[4] source=moby_dick.txt\nsay deprecatory and humble air towards him as he sits at the head of the table this is marvellous sometimes most comical wherefore this difference a problem perhaps not to have been belshazzar king of babylon and to have been belshazzar not haughtily but courteously therein certainly must have been some touch of mundane grandeur but he who in the rightly regal and intelligent spirit presides over his own private dinner table of invited guests that man s unchallenged power and dominion of individual influence for the time that man s royalty of state transcends belshazzar s for belshazzar was not the greatest who has but once dined his friends has tasted what it is to be c sar it is a witchery of social czarship which there is no withstanding now if to this consideration you superadd the official supremacy of a ship master then by inference you will derive the cause of that peculiarity of sea life just mentioned over his ivory inlaid table ahab presided like a mute maned sea lion on the white coral beach surrounded by his warlike but still deferential cubs in his own proper turn each officer waited to be served they were as little children before ahab and yet in ahab there seemed not to lurk the smallest social arrogance with one",
+      "retrieved_topk": [
+        {
+          "doc_id": 69,
+          "rank": 1,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.9137371509390393,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.08775303384852083,
+            "cross_encoder": -11.102558135986328,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "of sound sense and real information combined it is true with a repulsive physiognomy and manners but not on that account the less valuable in m waldman i found a true friend his gentleness was never tinged by dogmatism and his instructions were given with an air of frankness and good nature that banished every idea of pedantry in a thousand ways he smoothed for me the path of knowledge and made the most abstruse inquiries clear and facile to my apprehension my application was at first fluctuating and uncertain it gained strength as i proceeded and soon became so ardent and eager that the stars often disappeared in the light of morning whilst i was yet engaged in my laboratory as i applied so closely it may be easily conceived that my progress was rapid my ardour was indeed the astonishment of the students and my proficiency that of the masters professor krempe often asked me with a sly smile how cornelius agrippa went on whilst m waldman expressed the most heartfelt exultation in my progress two years passed in this manner during which i paid no visit to geneva but was engaged heart and soul in the pursuit of some discoveries which i hoped to make none but those who have experienced them can conceive of the enticements"
+        },
+        {
+          "doc_id": 2621,
+          "rank": 2,
+          "score": 0.015151515151515152,
+          "rerank_score": 0.8063040897227075,
+          "rerank_components": {
+            "lexical": 9.0,
+            "semantic": 0.08972288629568886,
+            "cross_encoder": -11.171015739440918,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "endless pains and sorrows there which none but they that feel can tell oh i was plunging to despair in black distress i called my god when i could scarce believe him mine he bowed his ear to my complaints no more the whale did me confine with speed he flew to my relief as on a radiant dolphin borne awful yet bright as lightning shone the face of my deliverer god my song for ever shall record that terrible that joyful hour i give the glory to my god his all the mercy and the power nearly all joined in singing this hymn which swelled high above the howling of the storm a brief pause ensued the preacher slowly turned over the leaves of the bible and at last folding his hand down upon the proper page said beloved shipmates clinch the last verse of the first chapter of jonah and god had prepared a great fish to swallow up jonah shipmates this book containing only four chapters four yarns is one of the smallest strands in the mighty cable of the scriptures yet what depths of the soul does jonah s deep sealine sound what a pregnant lesson to us is this prophet what a noble thing is that canticle in the fish s belly how billow like"
+        },
+        {
+          "doc_id": 3312,
+          "rank": 3,
+          "score": 0.014492753623188406,
+          "rerank_score": 0.6045952458183622,
+          "rerank_components": {
+            "lexical": 9.0,
+            "semantic": 0.08307491166484599,
+            "cross_encoder": -11.22887134552002,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "whale watching these sprinklings and spoutings that all this should be and yet that down to this blessed minute fifteen and a quarter minutes past one o clock p m of this sixteenth day of december a d 1851 it should still remain a problem whether these spoutings are after all really water or nothing but vapor this is surely a noteworthy thing let us then look at this matter along with some interesting items contingent every one knows that by the peculiar cunning of their gills the finny tribes in general breathe the air which at all times is combined with the element in which they swim hence a herring or a cod might live a century and never once raise its head above the surface but owing to his marked internal structure which gives him regular lungs like a human being s the whale can only live by inhaling the disengaged air in the open atmosphere wherefore the necessity for his periodical visits to the upper world but he cannot in any degree breathe through his mouth for in his ordinary attitude the sperm whale s mouth is buried at least eight feet beneath the surface and what is still more his windpipe has no connexion with his mouth no he breathes through his spiracle alone and this"
+        },
+        {
+          "doc_id": 2846,
+          "rank": 4,
+          "score": 0.015625,
+          "rerank_score": 0.5303612648337059,
+          "rerank_components": {
+            "lexical": 9.0,
+            "semantic": 0.061732566266716325,
+            "cross_encoder": -11.211979866027832,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "say deprecatory and humble air towards him as he sits at the head of the table this is marvellous sometimes most comical wherefore this difference a problem perhaps not to have been belshazzar king of babylon and to have been belshazzar not haughtily but courteously therein certainly must have been some touch of mundane grandeur but he who in the rightly regal and intelligent spirit presides over his own private dinner table of invited guests that man s unchallenged power and dominion of individual influence for the time that man s royalty of state transcends belshazzar s for belshazzar was not the greatest who has but once dined his friends has tasted what it is to be c sar it is a witchery of social czarship which there is no withstanding now if to this consideration you superadd the official supremacy of a ship master then by inference you will derive the cause of that peculiarity of sea life just mentioned over his ivory inlaid table ahab presided like a mute maned sea lion on the white coral beach surrounded by his warlike but still deferential cubs in his own proper turn each officer waited to be served they were as little children before ahab and yet in ahab there seemed not to lurk the smallest social arrogance with one"
+        }
+      ]
+    }
+  ]
+}
