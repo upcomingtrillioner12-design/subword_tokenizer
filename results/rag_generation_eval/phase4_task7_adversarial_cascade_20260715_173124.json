@@ -1,0 +1,452 @@
+{
+  "timestamp": "2026-07-15T17:31:24.539138",
+  "strategy": "cascade",
+  "total_questions": 30,
+  "by_type": {
+    "misleading_context": {
+      "count": 10,
+      "avg_expected_exact": 0.4,
+      "avg_expected_f1": 0.4,
+      "definition": 10
+    },
+    "near_miss_distractor": {
+      "count": 10,
+      "avg_expected_exact": 0.45,
+      "avg_expected_f1": 0.35,
+      "definition": 10
+    },
+    "unanswerable": {
+      "count": 10,
+      "avg_expected_exact": 0.2,
+      "avg_expected_f1": 0.0,
+      "definition": 10
+    }
+  },
+  "by_difficulty": {
+    "hard": {
+      "count": 20,
+      "avg_expected_exact": 0.425,
+      "avg_expected_f1": 0.3749999999999999
+    },
+    "expert": {
+      "count": 10,
+      "avg_expected_exact": 0.2,
+      "avg_expected_f1": 0.0
+    }
+  },
+  "summary": {
+    "expected_avg_exact_match": 0.34999999999999987,
+    "expected_avg_f1": 0.25,
+    "expected_mrr": 1.0,
+    "total_questions_analyzed": 30,
+    "question_type_distribution": {
+      "misleading_context": 10,
+      "near_miss_distractor": 10,
+      "unanswerable": 10
+    },
+    "difficulty_distribution": {
+      "hard": 20,
+      "expert": 10
+    },
+    "reasoning": "Baseline expectations for adversarial dataset given MC multiple choice setup",
+    "notes": [
+      "Unanswerable questions: ~20% (random baseline)",
+      "Misleading context: ~40% (degraded due to similar wrong options)",
+      "Near-miss distractor: ~45% (very similar numeric answers)",
+      "Ambiguous: ~30% (interpretation required)",
+      "Hard vs Expert: Baseline is same across difficulties in MC (correct answer present)"
+    ]
+  },
+  "questions": [
+    {
+      "id": "adv_physics_001",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "6.62607015 \u00d7 10^-34",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_physics_002",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "343",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_biology_001",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "10",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_math_002",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "-2",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_cs_001",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "O(n log n)",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_physics_003",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "B = \u03bc\u2080I / (2\u03c0r)",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_chemistry_004",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "1",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_math_003",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "1009",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_cs_003",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "O(log n)",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_biology_005",
+      "type": "misleading_context",
+      "difficulty": "hard",
+      "expected_answer": "8.7 million",
+      "num_distractors": 4,
+      "baseline_exact": 0.4,
+      "baseline_f1": 0.4,
+      "analysis": {
+        "type_description": "Misleading Context",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_chemistry_001",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "46.07",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_math_001",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "3x^2 + 4x - 5",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_earth_science_002",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "54.0\u00b0C",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_physics_004",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "9.81 m/s\u00b2",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_biology_003",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "1.5%",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_earth_science_003",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "420",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_physics_005",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "3 \u00d7 10^8 m/s",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_math_005",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "10\u03c0",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_biology_006",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "5",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_physics_007",
+      "type": "near_miss_distractor",
+      "difficulty": "hard",
+      "expected_answer": "depends on velocity and diamet",
+      "num_distractors": 4,
+      "baseline_exact": 0.45,
+      "baseline_f1": 0.35,
+      "analysis": {
+        "type_description": "Near Miss Distractor",
+        "is_answerable": true
+      }
+    },
+    {
+      "id": "adv_chemistry_002",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_biology_002",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_earth_science_001",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_cs_002",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_chemistry_003",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_biology_004",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_math_004",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_earth_science_004",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_cs_004",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    },
+    {
+      "id": "adv_chemistry_005",
+      "type": "unanswerable",
+      "difficulty": "expert",
+      "expected_answer": "CANNOT_BE_ANSWERED",
+      "num_distractors": 4,
+      "baseline_exact": 0.2,
+      "baseline_f1": 0.0,
+      "analysis": {
+        "type_description": "Unanswerable",
+        "is_answerable": false
+      }
+    }
+  ]
+}
