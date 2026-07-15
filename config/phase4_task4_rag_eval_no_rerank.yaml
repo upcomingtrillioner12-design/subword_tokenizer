@@ -30,5 +30,6 @@ generation:
 
 evaluation:
   dataset: /Users/jdsingh/slm_v0/subword_tokenizer/data/physics_qa_dataset.json
+  mode: mc_likelihood
   max_questions: 20
   output_dir: /Users/jdsingh/slm_v0/subword_tokenizer/results/rag_generation_eval

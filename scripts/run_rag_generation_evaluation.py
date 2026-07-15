@@ -74,6 +74,16 @@ class TinyLMRAGGenerator:
         )
         return text.strip()
 
+    def score_option(self, query: str, context: str, option_text: str) -> float:
+        prompt = (
+            "You are a physics research assistant. Use ONLY the provided context.\n\n"
+            f"Context:\n{context}\n\n"
+            f"Question: {query}\n"
+            "Answer:"
+        )
+        continuation = " " + option_text.strip()
+        return self.engine.score_continuation(prompt=prompt, continuation=continuation, tokenizer=self.tokenizer)
+
 
 def token_f1(pred: str, gold: str) -> float:
     import re
@@ -163,6 +173,10 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
     f1_scores: List[float] = []
     contain_scores: List[float] = []
     faithful_scores: List[float] = []
+    mc_exact_scores: List[float] = []
+    mc_semantic_scores: List[float] = []
+
+    eval_mode = str(eval_cfg.get("mode", "generation")).lower()
 
     for i, q in enumerate(questions, start=1):
         query = q["question"]
@@ -174,7 +188,23 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
             final_docs = reranker.rerank(query, retrieved, top_n=rerank_top_n)
 
         context = build_context(final_docs, max_docs=context_docs)
-        answer = generator.generate(query, context)
+        if eval_mode == "mc_likelihood" and q.get("distractors"):
+            options = [expected] + list(q.get("distractors", []))
+            scored = [(opt, generator.score_option(query, context, opt)) for opt in options]
+            scored_sorted = sorted(scored, key=lambda x: x[1], reverse=True)
+            answer = scored_sorted[0][0]
+
+            rank_expected = next((idx + 1 for idx, (opt, _) in enumerate(scored_sorted) if opt == expected), 999)
+            mc_exact = 1.0 if rank_expected == 1 else 0.0
+            mc_semantic = 1.0 if rank_expected <= 2 else 0.0
+            mc_exact_scores.append(mc_exact)
+            mc_semantic_scores.append(mc_semantic)
+        else:
+            answer = generator.generate(query, context)
+            scored_sorted = None
+            rank_expected = None
+            mc_exact = None
+            mc_semantic = None
 
         f1 = token_f1(answer, expected)
         contains_expected = 1.0 if expected.lower() in answer.lower() else 0.0
@@ -194,7 +224,13 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
                 "token_f1": f1,
                 "contains_expected": contains_expected,
                 "faithfulness": faith,
+                "mc_exact": mc_exact,
+                "mc_semantic_or_better": mc_semantic,
+                "expected_rank": rank_expected,
             },
+            "option_scores": [
+                {"option": opt, "avg_logprob": score} for opt, score in (scored_sorted or [])
+            ],
             "retrieved_topk": [
                 {
                     "doc_id": d.get("doc_id"),
@@ -207,7 +243,13 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
             ],
         }
         per_q.append(row)
-        print(f"[{i}/{len(questions)}] {row['id']} f1={f1:.3f} contains={contains_expected:.1f} faith={faith:.3f}")
+        if eval_mode == "mc_likelihood":
+            print(
+                f"[{i}/{len(questions)}] {row['id']} rank={rank_expected} "
+                f"mc_exact={0.0 if mc_exact is None else mc_exact:.1f}"
+            )
+        else:
+            print(f"[{i}/{len(questions)}] {row['id']} f1={f1:.3f} contains={contains_expected:.1f} faith={faith:.3f}")
 
     elapsed = time.perf_counter() - started
 
@@ -237,6 +279,8 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
             "avg_token_f1": avg(f1_scores),
             "avg_contains_expected": avg(contain_scores),
             "avg_faithfulness": avg(faithful_scores),
+            "mc_exact_rate": avg(mc_exact_scores),
+            "mc_semantic_or_better_rate": avg(mc_semantic_scores),
         },
         "results": per_q,
     }
@@ -266,6 +310,10 @@ def save_report(report: Dict[str, Any], out_dir: Path) -> None:
     lines.append(f"| avg_token_f1 | {report['summary']['avg_token_f1']:.4f} |")
     lines.append(f"| avg_contains_expected | {report['summary']['avg_contains_expected']:.4f} |")
     lines.append(f"| avg_faithfulness | {report['summary']['avg_faithfulness']:.4f} |")
+    lines.append(f"| mc_exact_rate | {report['summary'].get('mc_exact_rate', 0.0):.4f} |")
+    lines.append(
+        f"| mc_semantic_or_better_rate | {report['summary'].get('mc_semantic_or_better_rate', 0.0):.4f} |"
+    )
     lines.append("")
     lines.append("## Per-question")
     lines.append("")

@@ -433,6 +433,42 @@ class LoRAInferenceEngine:
         batch_elapsed = time.perf_counter() - batch_start
         
         return generated_texts, all_metrics
+
+    @torch.no_grad()
+    def score_continuation(
+        self,
+        prompt: str,
+        continuation: str,
+        tokenizer,
+        max_length: int = 256,
+    ) -> float:
+        """Average token log-probability for `continuation` conditioned on `prompt`."""
+        prompt_ids = tokenizer.encode_text(prompt, max_length=max_length)
+        cont_ids = tokenizer.encode_text(continuation, max_length=max_length)
+
+        if not prompt_ids or not cont_ids:
+            return float("-inf")
+
+        # Ensure sequence fits model context window
+        room = max(2, max_length - len(prompt_ids))
+        cont_ids = cont_ids[:room]
+        if not cont_ids:
+            return float("-inf")
+
+        seq = prompt_ids + cont_ids
+        x = torch.tensor([seq], dtype=torch.long, device=self.device)
+
+        logits = self.model(x)
+        log_probs = F.log_softmax(logits, dim=-1)
+
+        start = len(prompt_ids) - 1
+        total = 0.0
+        count = 0
+        for i, tok in enumerate(cont_ids):
+            total += float(log_probs[0, start + i, tok].item())
+            count += 1
+
+        return total / max(count, 1)
     
     def get_model_info(self) -> Dict:
         """Get information about the loaded model."""

@@ -1,0 +1,1165 @@
+{
+  "metadata": {
+    "task": "phase4_task4_rag_generation_eval",
+    "timestamp": "2026-07-15 14:59:46",
+    "num_questions": 20,
+    "elapsed_seconds": 59.92385520799871,
+    "retrieval": {
+      "bm25_index": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/bm25_physics_papers_index.json",
+      "dense_index": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_physics/dense_index.faiss",
+      "dense_metadata": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_physics/dense_index_metadata.jsonl",
+      "embedding_model": "all-mpnet-base-v2",
+      "fusion_method": "rrf",
+      "alpha": 0.5,
+      "k_retrieve": 8,
+      "context_docs": 3
+    },
+    "reranker": {
+      "enabled": false,
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "top_n": 5,
+      "active": false,
+      "fallback": null
+    },
+    "generation": {
+      "max_tokens": 48,
+      "temperature": 1.2,
+      "top_k": 80,
+      "top_p": null
+    },
+    "model": {
+      "base_checkpoint": "/Users/jdsingh/slm_v0/checkpoints/production_sml_v1.pt",
+      "lora_checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt",
+      "tokenizer_model": "/Users/jdsingh/slm_v0/model_32k.json"
+    }
+  },
+  "summary": {
+    "avg_token_f1": 1.0,
+    "avg_contains_expected": 1.0,
+    "avg_faithfulness": 0.3059523809523809,
+    "mc_exact_rate": 1.0,
+    "mc_semantic_or_better_rate": 1.0
+  },
+  "results": [
+    {
+      "id": "qm_qa_001",
+      "category": "quantum_mechanics",
+      "query": "What is the de Broglie wavelength relation for a particle?",
+      "expected_answer": "lambda equals h over p",
+      "generated_answer": "lambda equals h over p",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "lambda equals h over p",
+          "avg_logprob": -8.952473044395447
+        },
+        {
+          "option": "lambda equals p over h",
+          "avg_logprob": -8.952473044395447
+        },
+        {
+          "option": "energy equals m c squared",
+          "avg_logprob": -8.952473044395447
+        },
+        {
+          "option": "force equals mass times acceleration",
+          "avg_logprob": -8.952473044395447
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 5,
+          "rank": 1,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 8,
+          "rank": 2,
+          "score": 0.03125763125763126,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 10,
+          "rank": 3,
+          "score": 0.031024531024531024,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "qm_qa_002",
+      "category": "quantum_mechanics",
+      "query": "According to the Born rule, what does the square of the wavefunction magnitude represent?",
+      "expected_answer": "probability density",
+      "generated_answer": "probability density",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "probability density",
+          "avg_logprob": -11.552981853485107
+        },
+        {
+          "option": "total energy density",
+          "avg_logprob": -11.552981853485107
+        },
+        {
+          "option": "particle momentum",
+          "avg_logprob": -11.552981853485107
+        },
+        {
+          "option": "electric field strength",
+          "avg_logprob": -11.552981853485107
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 20,
+          "rank": 1,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 17,
+          "rank": 2,
+          "score": 0.031024531024531024,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 9,
+          "rank": 3,
+          "score": 0.030776515151515152,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "qm_qa_003",
+      "category": "quantum_mechanics",
+      "query": "Which commutator corresponds to position and momentum in one dimension?",
+      "expected_answer": "x and p commute to i hbar",
+      "generated_answer": "x and p commute to i hbar",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.2857142857142857,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "x and p commute to i hbar",
+          "avg_logprob": -14.982789039611816
+        },
+        {
+          "option": "x and p commute to zero",
+          "avg_logprob": -14.982789039611816
+        },
+        {
+          "option": "x and p commute to h squared",
+          "avg_logprob": -14.982789039611816
+        },
+        {
+          "option": "x and p commute to c",
+          "avg_logprob": -14.982789039611816
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 17,
+          "rank": 1,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 24,
+          "rank": 2,
+          "score": 0.031054405392392875,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 10,
+          "rank": 3,
+          "score": 0.030776515151515152,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "qm_qa_004",
+      "category": "quantum_mechanics",
+      "query": "What principle limits simultaneous precision of position and momentum?",
+      "expected_answer": "heisenberg uncertainty principle",
+      "generated_answer": "heisenberg uncertainty principle",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.3333333333333333,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "heisenberg uncertainty principle",
+          "avg_logprob": -13.274855136871338
+        },
+        {
+          "option": "pauli exclusion principle",
+          "avg_logprob": -13.274855136871338
+        },
+        {
+          "option": "equivalence principle",
+          "avg_logprob": -13.274855136871338
+        },
+        {
+          "option": "least action principle",
+          "avg_logprob": -13.274855136871338
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 5,
+          "rank": 1,
+          "score": 0.03278688524590164,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 17,
+          "rank": 2,
+          "score": 0.03128054740957967,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 24,
+          "rank": 3,
+          "score": 0.03125763125763126,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "rc_qa_001",
+      "category": "relativity_cosmology",
+      "query": "In special relativity, what happens to time for a fast-moving clock?",
+      "expected_answer": "time dilation",
+      "generated_answer": "time dilation",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "time dilation",
+          "avg_logprob": -14.87386703491211
+        },
+        {
+          "option": "time contraction",
+          "avg_logprob": -14.87386703491211
+        },
+        {
+          "option": "time is unchanged",
+          "avg_logprob": -14.87386703491211
+        },
+        {
+          "option": "time reversal",
+          "avg_logprob": -14.87386703491211
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 24,
+          "rank": 1,
+          "score": 0.03278688524590164,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 3,
+          "rank": 2,
+          "score": 0.031754032258064516,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 17,
+          "rank": 3,
+          "score": 0.031024531024531024,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "rc_qa_002",
+      "category": "relativity_cosmology",
+      "query": "What geometric object is curved by mass-energy in general relativity?",
+      "expected_answer": "spacetime",
+      "generated_answer": "spacetime",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 1.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "spacetime",
+          "avg_logprob": -15.25843620300293
+        },
+        {
+          "option": "electric potential",
+          "avg_logprob": -15.25843620300293
+        },
+        {
+          "option": "wavefunction phase",
+          "avg_logprob": -15.25843620300293
+        },
+        {
+          "option": "rest mass",
+          "avg_logprob": -15.25843620300293
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 3,
+          "rank": 1,
+          "score": 0.03278688524590164,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 17,
+          "rank": 2,
+          "score": 0.0315136476426799,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 0,
+          "rank": 3,
+          "score": 0.031009615384615385,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "rc_qa_003",
+      "category": "relativity_cosmology",
+      "query": "What boundary of a black hole marks no return for light?",
+      "expected_answer": "event horizon",
+      "generated_answer": "event horizon",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 1.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "event horizon",
+          "avg_logprob": -13.192906856536865
+        },
+        {
+          "option": "photon sphere only",
+          "avg_logprob": -13.192906856536865
+        },
+        {
+          "option": "ergosphere always",
+          "avg_logprob": -13.192906856536865
+        },
+        {
+          "option": "accretion disk",
+          "avg_logprob": -13.192906856536865
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 21,
+          "rank": 1,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 0,
+          "rank": 2,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 6,
+          "rank": 3,
+          "score": 0.03149801587301587,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "rc_qa_004",
+      "category": "relativity_cosmology",
+      "query": "What is the speed of light in vacuum denoted by?",
+      "expected_answer": "c",
+      "generated_answer": "c",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "c",
+          "avg_logprob": -14.862005710601807
+        },
+        {
+          "option": "h",
+          "avg_logprob": -14.862005710601807
+        },
+        {
+          "option": "G",
+          "avg_logprob": -14.862005710601807
+        },
+        {
+          "option": "k",
+          "avg_logprob": -14.862005710601807
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 24,
+          "rank": 1,
+          "score": 0.031544957774465976,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 0,
+          "rank": 2,
+          "score": 0.03131881575727918,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 16,
+          "rank": 3,
+          "score": 0.030621785881252923,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "ts_qa_001",
+      "category": "thermodynamics_statistical",
+      "query": "State the trend of entropy in an isolated system according to the second law.",
+      "expected_answer": "entropy increases",
+      "generated_answer": "entropy increases",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.5,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "entropy increases",
+          "avg_logprob": -14.42935037612915
+        },
+        {
+          "option": "entropy decreases",
+          "avg_logprob": -14.42935037612915
+        },
+        {
+          "option": "entropy is always zero",
+          "avg_logprob": -14.42935037612915
+        },
+        {
+          "option": "entropy oscillates periodically",
+          "avg_logprob": -14.42935037612915
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 22,
+          "rank": 1,
+          "score": 0.03200204813108039,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 21,
+          "rank": 2,
+          "score": 0.031754032258064516,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 0,
+          "rank": 3,
+          "score": 0.030776515151515152,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "ts_qa_002",
+      "category": "thermodynamics_statistical",
+      "query": "What function sums Boltzmann factors over states and encodes equilibrium thermodynamics?",
+      "expected_answer": "partition function",
+      "generated_answer": "partition function",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "partition function",
+          "avg_logprob": -14.228183269500732
+        },
+        {
+          "option": "hamiltonian density",
+          "avg_logprob": -14.228183269500732
+        },
+        {
+          "option": "entropy current",
+          "avg_logprob": -14.228183269500732
+        },
+        {
+          "option": "equation of continuity",
+          "avg_logprob": -14.228183269500732
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 9,
+          "rank": 1,
+          "score": 0.032266458495966696,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 21,
+          "rank": 2,
+          "score": 0.0315136476426799,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 19,
+          "rank": 3,
+          "score": 0.03036576949620428,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "ts_qa_003",
+      "category": "thermodynamics_statistical",
+      "query": "What statistical factor weights a microstate of energy E at temperature T?",
+      "expected_answer": "exp minus E over kT",
+      "generated_answer": "exp minus E over kT",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "exp minus E over kT",
+          "avg_logprob": -15.241577625274658
+        },
+        {
+          "option": "exp plus E over kT",
+          "avg_logprob": -15.241577625274658
+        },
+        {
+          "option": "E times kT",
+          "avg_logprob": -15.241577625274658
+        },
+        {
+          "option": "E over T squared",
+          "avg_logprob": -15.241577625274658
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 9,
+          "rank": 1,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 13,
+          "rank": 2,
+          "score": 0.03125763125763126,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 19,
+          "rank": 3,
+          "score": 0.030536130536130537,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "ts_qa_004",
+      "category": "thermodynamics_statistical",
+      "query": "In equilibrium, what thermodynamic quantity is equal for systems in thermal contact?",
+      "expected_answer": "temperature",
+      "generated_answer": "temperature",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "temperature",
+          "avg_logprob": -14.543997287750244
+        },
+        {
+          "option": "pressure only",
+          "avg_logprob": -14.543997287750244
+        },
+        {
+          "option": "volume only",
+          "avg_logprob": -14.543997287750244
+        },
+        {
+          "option": "particle number only",
+          "avg_logprob": -14.543997287750244
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 21,
+          "rank": 1,
+          "score": 0.031024531024531024,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 19,
+          "rank": 2,
+          "score": 0.03036576949620428,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 1,
+          "rank": 3,
+          "score": 0.03021353930031804,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "em_qa_001",
+      "category": "electromagnetism",
+      "query": "Which law gives divergence of electric field in terms of charge density?",
+      "expected_answer": "gauss law",
+      "generated_answer": "gauss law",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "gauss law",
+          "avg_logprob": -14.982789039611816
+        },
+        {
+          "option": "faraday law",
+          "avg_logprob": -14.982789039611816
+        },
+        {
+          "option": "ampere law without displacement",
+          "avg_logprob": -14.982789039611816
+        },
+        {
+          "option": "lenz law",
+          "avg_logprob": -14.982789039611816
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 17,
+          "rank": 1,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 24,
+          "rank": 2,
+          "score": 0.031746031746031744,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 8,
+          "rank": 3,
+          "score": 0.031544957774465976,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "em_qa_002",
+      "category": "electromagnetism",
+      "query": "What is the force on charge q moving with velocity v in fields E and B called?",
+      "expected_answer": "lorentz force",
+      "generated_answer": "lorentz force",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.5,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "lorentz force",
+          "avg_logprob": -14.919634342193604
+        },
+        {
+          "option": "coriolis force",
+          "avg_logprob": -14.919634342193604
+        },
+        {
+          "option": "newton gravitational force",
+          "avg_logprob": -14.919634342193604
+        },
+        {
+          "option": "yukawa force",
+          "avg_logprob": -14.919634342193604
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 24,
+          "rank": 1,
+          "score": 0.03278688524590164,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 23,
+          "rank": 2,
+          "score": 0.0315136476426799,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 19,
+          "rank": 3,
+          "score": 0.030798389007344232,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "em_qa_003",
+      "category": "electromagnetism",
+      "query": "What does a changing magnetic field induce according to Faraday's law?",
+      "expected_answer": "electric field",
+      "generated_answer": "electric field",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.5,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "electric field",
+          "avg_logprob": -15.041090965270996
+        },
+        {
+          "option": "mass current",
+          "avg_logprob": -15.041090965270996
+        },
+        {
+          "option": "gravitational wave",
+          "avg_logprob": -15.041090965270996
+        },
+        {
+          "option": "chemical potential",
+          "avg_logprob": -15.041090965270996
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 24,
+          "rank": 1,
+          "score": 0.03225806451612903,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 17,
+          "rank": 2,
+          "score": 0.032018442622950824,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 9,
+          "rank": 3,
+          "score": 0.03125763125763126,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "em_qa_004",
+      "category": "electromagnetism",
+      "query": "Coulomb force scales with distance r as what inverse power?",
+      "expected_answer": "inverse square",
+      "generated_answer": "inverse square",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "inverse square",
+          "avg_logprob": -15.034481048583984
+        },
+        {
+          "option": "inverse first power",
+          "avg_logprob": -15.034481048583984
+        },
+        {
+          "option": "inverse cube",
+          "avg_logprob": -15.034481048583984
+        },
+        {
+          "option": "inverse fourth power",
+          "avg_logprob": -15.034481048583984
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 19,
+          "rank": 1,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 23,
+          "rank": 2,
+          "score": 0.03200204813108039,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 8,
+          "rank": 3,
+          "score": 0.031009615384615385,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "pp_qa_001",
+      "category": "particle_physics",
+      "query": "Which boson is associated with the electromagnetic interaction?",
+      "expected_answer": "photon",
+      "generated_answer": "photon",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "photon",
+          "avg_logprob": -13.968008995056152
+        },
+        {
+          "option": "gluon only",
+          "avg_logprob": -13.968008995056152
+        },
+        {
+          "option": "higgs boson",
+          "avg_logprob": -13.968008995056152
+        },
+        {
+          "option": "graviton",
+          "avg_logprob": -13.968008995056152
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 2,
+          "rank": 1,
+          "score": 0.03252247488101534,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 24,
+          "rank": 2,
+          "score": 0.032266458495966696,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 7,
+          "rank": 3,
+          "score": 0.02964426877470356,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "pp_qa_002",
+      "category": "particle_physics",
+      "query": "What mechanism gives masses to W and Z bosons in the Standard Model?",
+      "expected_answer": "higgs mechanism",
+      "generated_answer": "higgs mechanism",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 1.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "higgs mechanism",
+          "avg_logprob": -12.267473936080933
+        },
+        {
+          "option": "casimir effect",
+          "avg_logprob": -12.267473936080933
+        },
+        {
+          "option": "cherenkov radiation",
+          "avg_logprob": -12.267473936080933
+        },
+        {
+          "option": "photoelectric effect",
+          "avg_logprob": -12.267473936080933
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 2,
+          "rank": 1,
+          "score": 0.03278688524590164,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 8,
+          "rank": 2,
+          "score": 0.03225806451612903,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 23,
+          "rank": 3,
+          "score": 0.031746031746031744,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "pp_qa_003",
+      "category": "particle_physics",
+      "query": "What interaction is mediated by gluons?",
+      "expected_answer": "strong interaction",
+      "generated_answer": "strong interaction",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "strong interaction",
+          "avg_logprob": -15.338013648986816
+        },
+        {
+          "option": "electromagnetic interaction",
+          "avg_logprob": -15.338013648986816
+        },
+        {
+          "option": "weak interaction",
+          "avg_logprob": -15.338013648986816
+        },
+        {
+          "option": "gravitational interaction",
+          "avg_logprob": -15.338013648986816
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 11,
+          "rank": 1,
+          "score": 0.030536130536130537,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 2,
+          "rank": 2,
+          "score": 0.030330882352941176,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 0,
+          "rank": 3,
+          "score": 0.03028233151183971,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "pp_qa_004",
+      "category": "particle_physics",
+      "query": "Which quantum number is conserved in strong interactions and labels quark families?",
+      "expected_answer": "flavor",
+      "generated_answer": "flavor",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 1.0,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1
+      },
+      "option_scores": [
+        {
+          "option": "flavor",
+          "avg_logprob": -8.35583714209497
+        },
+        {
+          "option": "temperature",
+          "avg_logprob": -8.35583714209497
+        },
+        {
+          "option": "viscosity",
+          "avg_logprob": -8.35583714209497
+        },
+        {
+          "option": "entropy flux",
+          "avg_logprob": -8.35583714209497
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 23,
+          "rank": 1,
+          "score": 0.03278688524590164,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 13,
+          "rank": 2,
+          "score": 0.031024531024531024,
+          "rerank_score": null,
+          "source": "unknown"
+        },
+        {
+          "doc_id": 17,
+          "rank": 3,
+          "score": 0.030776515151515152,
+          "rerank_score": null,
+          "source": "unknown"
+        }
+      ]
+    }
+  ]
+}
