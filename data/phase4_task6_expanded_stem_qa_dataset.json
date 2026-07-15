@@ -1,0 +1,792 @@
+{
+  "metadata": {
+    "name": "phase4_task6_expanded_stem_qa_dataset",
+    "total_questions": 60,
+    "domains": 6,
+    "questions_per_domain": 10,
+    "date": "2026-07-15",
+    "description": "Expanded STEM QA benchmark with physics, chemistry, biology, mathematics, earth science, and computer science"
+  },
+  "questions": [
+    {
+      "id": "physics_001",
+      "domain": "physics",
+      "subdomain": "quantum_mechanics",
+      "question": "What is the de Broglie wavelength relation for a particle?",
+      "expected_answer": "lambda equals h over p",
+      "distractors": [
+        "lambda equals p over h",
+        "energy equals m c squared",
+        "force equals mass times acceleration"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "physics_002",
+      "domain": "physics",
+      "subdomain": "quantum_mechanics",
+      "question": "According to the Born rule, what does the square of the wavefunction magnitude represent?",
+      "expected_answer": "probability density",
+      "distractors": [
+        "total energy density",
+        "particle momentum",
+        "electric field strength"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "physics_003",
+      "domain": "physics",
+      "subdomain": "quantum_mechanics",
+      "question": "Which commutator corresponds to position and momentum in one dimension?",
+      "expected_answer": "x and p commute to i hbar",
+      "distractors": [
+        "x and p commute to zero",
+        "x and p commute to h squared",
+        "x and p commute to c"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "physics_004",
+      "domain": "physics",
+      "subdomain": "quantum_mechanics",
+      "question": "What principle limits simultaneous precision of position and momentum?",
+      "expected_answer": "heisenberg uncertainty principle",
+      "distractors": [
+        "pauli exclusion principle",
+        "equivalence principle",
+        "least action principle"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "physics_005",
+      "domain": "physics",
+      "subdomain": "relativity",
+      "question": "In special relativity, what happens to time for a fast-moving clock?",
+      "expected_answer": "time dilation",
+      "distractors": [
+        "time acceleration",
+        "time reversal",
+        "time quantization"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "physics_006",
+      "domain": "physics",
+      "subdomain": "relativity",
+      "question": "What geometric object is curved by mass-energy in general relativity?",
+      "expected_answer": "spacetime",
+      "distractors": [
+        "space only",
+        "time only",
+        "electromagnetic field"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "physics_007",
+      "domain": "physics",
+      "subdomain": "relativity",
+      "question": "What boundary of a black hole marks no return for light?",
+      "expected_answer": "event horizon",
+      "distractors": [
+        "ergosphere",
+        "photon sphere",
+        "singularity boundary"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "physics_008",
+      "domain": "physics",
+      "subdomain": "electromagnetism",
+      "question": "Which law gives divergence of electric field in terms of charge density?",
+      "expected_answer": "gauss law",
+      "distractors": [
+        "ampere law",
+        "faraday law",
+        "coulomb law"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "physics_009",
+      "domain": "physics",
+      "subdomain": "electromagnetism",
+      "question": "What is the force on charge q moving with velocity v in fields E and B called?",
+      "expected_answer": "lorentz force",
+      "distractors": [
+        "coulomb force",
+        "magnetic force",
+        "electric force"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "physics_010",
+      "domain": "physics",
+      "subdomain": "thermodynamics",
+      "question": "State the trend of entropy in an isolated system according to the second law.",
+      "expected_answer": "entropy increases",
+      "distractors": [
+        "entropy decreases",
+        "entropy stays constant",
+        "entropy oscillates"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "chemistry_001",
+      "domain": "chemistry",
+      "subdomain": "atomic_structure",
+      "question": "How many electrons can occupy an orbital with quantum number n equals 3?",
+      "expected_answer": "eighteen electrons",
+      "distractors": [
+        "eight electrons",
+        "ten electrons",
+        "twenty six electrons"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "chemistry_002",
+      "domain": "chemistry",
+      "subdomain": "atomic_structure",
+      "question": "What does the principal quantum number n determine in an atom?",
+      "expected_answer": "electron shell size and energy",
+      "distractors": [
+        "orbital shape",
+        "spin orientation",
+        "magnetic moment"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "chemistry_003",
+      "domain": "chemistry",
+      "subdomain": "bonding",
+      "question": "Which type of bond involves sharing of electron pairs between atoms?",
+      "expected_answer": "covalent bond",
+      "distractors": [
+        "ionic bond",
+        "hydrogen bond",
+        "metallic bond"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "chemistry_004",
+      "domain": "chemistry",
+      "subdomain": "bonding",
+      "question": "What is the geometry of a carbon atom with four single bonds?",
+      "expected_answer": "tetrahedral",
+      "distractors": [
+        "planar",
+        "linear",
+        "octahedral"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "chemistry_005",
+      "domain": "chemistry",
+      "subdomain": "reactions",
+      "question": "What substance is produced when an acid reacts with a base?",
+      "expected_answer": "salt and water",
+      "distractors": [
+        "gas and water",
+        "acid and salt",
+        "base and gas"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "chemistry_006",
+      "domain": "chemistry",
+      "subdomain": "reactions",
+      "question": "In an exothermic reaction, what is released to the surroundings?",
+      "expected_answer": "heat energy",
+      "distractors": [
+        "kinetic energy",
+        "potential energy",
+        "radiation"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "chemistry_007",
+      "domain": "chemistry",
+      "subdomain": "kinetics",
+      "question": "What factor increases the rate of a chemical reaction by lowering activation energy?",
+      "expected_answer": "catalyst",
+      "distractors": [
+        "inhibitor",
+        "solvent",
+        "reducer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "chemistry_008",
+      "domain": "chemistry",
+      "subdomain": "solutions",
+      "question": "What is the pH of a neutral aqueous solution at standard conditions?",
+      "expected_answer": "seven",
+      "distractors": [
+        "zero",
+        "fourteen",
+        "ten"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "chemistry_009",
+      "domain": "chemistry",
+      "subdomain": "equilibrium",
+      "question": "In a reversible reaction at equilibrium, what is the relationship between forward and reverse rates?",
+      "expected_answer": "they are equal",
+      "distractors": [
+        "forward is faster",
+        "reverse is faster",
+        "they oscillate"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "chemistry_010",
+      "domain": "chemistry",
+      "subdomain": "redox",
+      "question": "What is the term for loss of electrons in a redox reaction?",
+      "expected_answer": "oxidation",
+      "distractors": [
+        "reduction",
+        "hydration",
+        "dehydration"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "biology_001",
+      "domain": "biology",
+      "subdomain": "cell_biology",
+      "question": "What is the basic unit of life?",
+      "expected_answer": "cell",
+      "distractors": [
+        "atom",
+        "molecule",
+        "organism"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "biology_002",
+      "domain": "biology",
+      "subdomain": "cell_biology",
+      "question": "Which organelle is responsible for producing energy in a cell?",
+      "expected_answer": "mitochondrion",
+      "distractors": [
+        "ribosome",
+        "nucleus",
+        "chloroplast"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "biology_003",
+      "domain": "biology",
+      "subdomain": "genetics",
+      "question": "What is the molecule that carries genetic information in most organisms?",
+      "expected_answer": "deoxyribonucleic acid",
+      "distractors": [
+        "ribonucleic acid",
+        "protein",
+        "lipid"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "biology_004",
+      "domain": "biology",
+      "subdomain": "genetics",
+      "question": "How many DNA base pairs are in the human genome approximately?",
+      "expected_answer": "three billion base pairs",
+      "distractors": [
+        "three million base pairs",
+        "thirty billion base pairs",
+        "three hundred million base pairs"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "biology_005",
+      "domain": "biology",
+      "subdomain": "evolution",
+      "question": "What is the primary mechanism of evolution proposed by Darwin?",
+      "expected_answer": "natural selection",
+      "distractors": [
+        "intelligent design",
+        "directed mutation",
+        "lamarckism"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "biology_006",
+      "domain": "biology",
+      "subdomain": "ecology",
+      "question": "What term describes the role of an organism in its environment?",
+      "expected_answer": "ecological niche",
+      "distractors": [
+        "habitat",
+        "biome",
+        "ecosystem"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "biology_007",
+      "domain": "biology",
+      "subdomain": "physiology",
+      "question": "What do plants use to convert light energy into chemical energy?",
+      "expected_answer": "photosynthesis",
+      "distractors": [
+        "respiration",
+        "fermentation",
+        "chemosynthesis"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "biology_008",
+      "domain": "biology",
+      "subdomain": "immunology",
+      "question": "What type of white blood cell directly attacks infected cells?",
+      "expected_answer": "cytotoxic t lymphocyte",
+      "distractors": [
+        "helper t cell",
+        "b cell",
+        "macrophage"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "biology_009",
+      "domain": "biology",
+      "subdomain": "taxonomy",
+      "question": "What is the kingdom of organisms that includes humans?",
+      "expected_answer": "animalia",
+      "distractors": [
+        "plantae",
+        "fungi",
+        "protista"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "biology_010",
+      "domain": "biology",
+      "subdomain": "molecular_biology",
+      "question": "How many nucleotides are in a codon?",
+      "expected_answer": "three nucleotides",
+      "distractors": [
+        "two nucleotides",
+        "four nucleotides",
+        "five nucleotides"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "mathematics_001",
+      "domain": "mathematics",
+      "subdomain": "algebra",
+      "question": "What is the solution to the equation two x plus three equals seven?",
+      "expected_answer": "x equals two",
+      "distractors": [
+        "x equals three",
+        "x equals one",
+        "x equals four"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "mathematics_002",
+      "domain": "mathematics",
+      "subdomain": "algebra",
+      "question": "What is the standard form of a linear equation in two variables?",
+      "expected_answer": "a x plus b y equals c",
+      "distractors": [
+        "a x squared plus b x plus c",
+        "a x plus b equals y",
+        "x squared plus y squared equals r squared"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "mathematics_003",
+      "domain": "mathematics",
+      "subdomain": "geometry",
+      "question": "What is the sum of angles in a triangle?",
+      "expected_answer": "one hundred eighty degrees",
+      "distractors": [
+        "ninety degrees",
+        "three hundred sixty degrees",
+        "two hundred seventy degrees"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "mathematics_004",
+      "domain": "mathematics",
+      "subdomain": "geometry",
+      "question": "What is the area formula for a circle?",
+      "expected_answer": "pi r squared",
+      "distractors": [
+        "two pi r",
+        "four thirds pi r cubed",
+        "pi r"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "mathematics_005",
+      "domain": "mathematics",
+      "subdomain": "calculus",
+      "question": "What is the derivative of x squared?",
+      "expected_answer": "two x",
+      "distractors": [
+        "x",
+        "x cubed",
+        "two"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "mathematics_006",
+      "domain": "mathematics",
+      "subdomain": "calculus",
+      "question": "What does the definite integral represent geometrically?",
+      "expected_answer": "area under the curve",
+      "distractors": [
+        "slope of the curve",
+        "tangent to the curve",
+        "maximum value"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "mathematics_007",
+      "domain": "mathematics",
+      "subdomain": "statistics",
+      "question": "What does the standard deviation measure?",
+      "expected_answer": "spread of data from the mean",
+      "distractors": [
+        "average value",
+        "most common value",
+        "range of data"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "mathematics_008",
+      "domain": "mathematics",
+      "subdomain": "probability",
+      "question": "What is the probability of rolling a six on a fair die?",
+      "expected_answer": "one sixth",
+      "distractors": [
+        "one half",
+        "one third",
+        "one"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "mathematics_009",
+      "domain": "mathematics",
+      "subdomain": "linear_algebra",
+      "question": "What does matrix multiplication compute between two vectors?",
+      "expected_answer": "dot product",
+      "distractors": [
+        "cross product",
+        "element wise product",
+        "outer product"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "mathematics_010",
+      "domain": "mathematics",
+      "subdomain": "number_theory",
+      "question": "What is a prime number?",
+      "expected_answer": "number divisible only by one and itself",
+      "distractors": [
+        "even number",
+        "number divisible by two",
+        "composite number"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "earth_science_001",
+      "domain": "earth_science",
+      "subdomain": "geology",
+      "question": "What are the three main types of rocks?",
+      "expected_answer": "igneous sedimentary metamorphic",
+      "distractors": [
+        "hard soft mineral",
+        "crystalline amorphous granular",
+        "magmatic volcanic plutonic"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "earth_science_002",
+      "domain": "earth_science",
+      "subdomain": "geology",
+      "question": "What scale measures the hardness of minerals?",
+      "expected_answer": "mohs hardness scale",
+      "distractors": [
+        "richter scale",
+        "beaufort scale",
+        "fujita scale"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "earth_science_003",
+      "domain": "earth_science",
+      "subdomain": "mineralogy",
+      "question": "What is the most abundant mineral in Earth's crust?",
+      "expected_answer": "feldspar",
+      "distractors": [
+        "quartz",
+        "mica",
+        "calcite"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "earth_science_004",
+      "domain": "earth_science",
+      "subdomain": "meteorology",
+      "question": "What weather system has the lowest atmospheric pressure?",
+      "expected_answer": "hurricane",
+      "distractors": [
+        "thunderstorm",
+        "tornado",
+        "frontal system"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "earth_science_005",
+      "domain": "earth_science",
+      "subdomain": "oceanography",
+      "question": "What causes ocean tides?",
+      "expected_answer": "gravitational force of the moon",
+      "distractors": [
+        "ocean currents",
+        "wind patterns",
+        "earth rotation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "earth_science_006",
+      "domain": "earth_science",
+      "subdomain": "plate_tectonics",
+      "question": "What is the movement of tectonic plates called?",
+      "expected_answer": "plate tectonics",
+      "distractors": [
+        "continental drift only",
+        "seafloor spreading",
+        "subduction"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "earth_science_007",
+      "domain": "earth_science",
+      "subdomain": "climate",
+      "question": "What gas is primarily responsible for current global warming?",
+      "expected_answer": "carbon dioxide",
+      "distractors": [
+        "methane",
+        "nitrogen oxide",
+        "ozone"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "earth_science_008",
+      "domain": "earth_science",
+      "subdomain": "geology",
+      "question": "What is the layer of Earth between the crust and outer core?",
+      "expected_answer": "mantle",
+      "distractors": [
+        "lithosphere",
+        "asthenosphere",
+        "inner core"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "earth_science_009",
+      "domain": "earth_science",
+      "subdomain": "seismology",
+      "question": "What scale measures the energy released by earthquakes?",
+      "expected_answer": "richter scale",
+      "distractors": [
+        "mohs scale",
+        "beaufort scale",
+        "decibel scale"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "earth_science_010",
+      "domain": "earth_science",
+      "subdomain": "astronomy",
+      "question": "What is the closest star to Earth besides the Sun?",
+      "expected_answer": "proxima centauri",
+      "distractors": [
+        "alpha centauri a",
+        "sirius",
+        "vega"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "computer_science_001",
+      "domain": "computer_science",
+      "subdomain": "algorithms",
+      "question": "What is the time complexity of binary search?",
+      "expected_answer": "logarithmic time",
+      "distractors": [
+        "linear time",
+        "quadratic time",
+        "exponential time"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "computer_science_002",
+      "domain": "computer_science",
+      "subdomain": "data_structures",
+      "question": "What data structure uses LIFO principle?",
+      "expected_answer": "stack",
+      "distractors": [
+        "queue",
+        "linked list",
+        "array"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "computer_science_003",
+      "domain": "computer_science",
+      "subdomain": "databases",
+      "question": "What does SQL stand for?",
+      "expected_answer": "structured query language",
+      "distractors": [
+        "standard query language",
+        "simple query language",
+        "sequential query language"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "computer_science_004",
+      "domain": "computer_science",
+      "subdomain": "programming",
+      "question": "What is a function in programming?",
+      "expected_answer": "reusable block of code",
+      "distractors": [
+        "variable declaration",
+        "loop statement",
+        "conditional expression"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "computer_science_005",
+      "domain": "computer_science",
+      "subdomain": "networking",
+      "question": "What does TCP stand for?",
+      "expected_answer": "transmission control protocol",
+      "distractors": [
+        "transfer control protocol",
+        "transmission capability protocol",
+        "transfer capability protocol"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "computer_science_006",
+      "domain": "computer_science",
+      "subdomain": "security",
+      "question": "What type of encryption uses two keys?",
+      "expected_answer": "asymmetric encryption",
+      "distractors": [
+        "symmetric encryption",
+        "one time pad",
+        "substitution cipher"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "computer_science_007",
+      "domain": "computer_science",
+      "subdomain": "theory",
+      "question": "What is the Church-Turing thesis about?",
+      "expected_answer": "computability of algorithms",
+      "distractors": [
+        "complexity theory",
+        "graph theory",
+        "number theory"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "id": "computer_science_008",
+      "domain": "computer_science",
+      "subdomain": "machine_learning",
+      "question": "What is supervised learning?",
+      "expected_answer": "learning from labeled data",
+      "distractors": [
+        "learning from unlabeled data",
+        "learning by reinforcement",
+        "learning without feedback"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "computer_science_009",
+      "domain": "computer_science",
+      "subdomain": "artificial_intelligence",
+      "question": "What does AI stand for?",
+      "expected_answer": "artificial intelligence",
+      "distractors": [
+        "advanced information",
+        "automated inference",
+        "adaptive input"
+      ],
+      "difficulty": "basic"
+    },
+    {
+      "id": "computer_science_010",
+      "domain": "computer_science",
+      "subdomain": "operating_systems",
+      "question": "What is a deadlock in operating systems?",
+      "expected_answer": "circular wait for resources",
+      "distractors": [
+        "resource exhaustion",
+        "stack overflow",
+        "memory leak"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}
