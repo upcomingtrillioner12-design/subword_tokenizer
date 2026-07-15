@@ -1,8 +1,8 @@
 # Physics Research Assistant SLM - Project Status
 
-**Latest Update:** July 14, 2026  
-**Current Phase:** 4 (RAG Integration) — Task 2 ✅ **COMPLETE**  
-**Last Completed Milestone:** Phase 4 Task 2 - Retrieval Baseline (BM25 with 100% physics domain accuracy)
+**Latest Update:** July 15, 2026  
+**Current Phase:** 4 (RAG Integration) — Task 8 ✅ **COMPLETE**  
+**Last Completed Milestone:** Phase 4 Task 8 - Embedding comparison on adversarial subset (SciBERT leads p@10)
 
 ---
 
@@ -12,9 +12,17 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
 1. **Phase 1** ✅ — Pre-trained base model (35.2M params, 0.0107 eval loss)
 2. **Phase 2** ✅ — LoRA fine-tuning on physics corpus (**0.0060 eval loss, 44% improvement**)
 3. **Phase 3** ✅ — Inference, evaluation, and generation quality assessment (Tasks 1-8 complete)
-4. **Phase 4** 🚀 — RAG integration (Task 1: generation control tuning ✅, Task 2: retrieval baseline ✅)
-   - Task 3: RAG evaluation harness (in progress)
-   - Task 4+: Tool-using agents, production deployment
+4. **Phase 4** 🚀 — RAG integration (Tasks 1-8 complete ✅)
+    - Completed: retrieval baseline, evaluation harness, reranking, faithfulness, STEM expansion, adversarial evaluation, embedding comparison
+    - Next: Task 9 semantic metrics + confidence estimation
+
+### Phase 4 Snapshot (July 15, 2026)
+- STEM benchmark (60 Q, 6 domains): 100% exact-match, MRR 1.0
+- Adversarial benchmark (40 Q): 65pp drop vs STEM identified as primary gap
+- Embedding comparison on adversarial subset (20 Q):
+  - `allenai/scibert_scivocab_uncased`: p@10 = 0.100
+  - `all-mpnet-base-v2`: p@10 = 0.050
+  - `hkunlp/instructor-base`: p@10 = 0.050 (fallback mode; `InstructorEmbedding` not installed)
 
 ---
 

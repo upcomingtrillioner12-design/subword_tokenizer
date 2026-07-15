@@ -4,8 +4,8 @@
 
 ---
 title: Subword Tokenizer & SLM Training Reference
-subtitle: Phase 1-3 validated (Phase 2 loss 0.0060, Task 7 QA gain +0.125)
-date: July 13, 2026
+subtitle: Phase 1-4 validated (through Task 8 embedding comparison)
+date: July 15, 2026
 author: "Jaydip Singh (jaydip.singh@gmail.com), Linkan Kumbhar (upcomingtrillioner12@gmail.com)"
 
 ---
@@ -13,12 +13,12 @@ author: "Jaydip Singh (jaydip.singh@gmail.com), Linkan Kumbhar (upcomingtrillion
 ## 1. Executive Summary
 
 **Project**: Production-validated Subword Tokenizer + SLM Prototype Training and Evaluation  
-**Status**: Phase 4 Task 4 In Progress (July 15, 2026)  
+**Status**: Phase 4 Task 8 Complete (July 15, 2026)  
 **Key Results**:
 - **Phase 1**: 0.0107 eval loss on 6000-step TinyLM (35.2M params)
 - **Phase 2**: best LoRA eval loss **0.0060** (44% improvement vs Phase 1)
 - **Phase 3**: full 7-task evaluation suite complete (benchmark, qualitative, test set, PPL/BLEU, physics QA)
-- **Phase 4 Task 4 (new)**: end-to-end RAG generation evaluation pipeline + neural reranking integrated
+- **Phase 4 Task 8 (new)**: adversarial embedding comparison completed (SciBERT highest p@10 on subset)
 
 ### System Architecture
 
@@ -55,12 +55,14 @@ Status: **Ready for Phase 4 (RAG integration + generation control tuning)**
 
 ## 2. Recent Milestones
 
-**July 15, 2026**: Phase 4 Task 4 Kickoff (RAG generation + reranking)
-- Integrated LoRA adapter loading in inference engine for generation-time use
-- Added neural reranker module (`scripts/neural_reranker.py`) using cross-encoder scoring
-- Added end-to-end evaluation script (`scripts/run_rag_generation_evaluation.py`)
-- Added Task 4 config (`config/phase4_task4_rag_eval.yaml`)
-- Smoke test completed and reports generated in `results/rag_generation_eval/`
+**July 15, 2026**: Phase 4 Tasks 5-8 Completion (RAG evaluation expansion + adversarial embedding evaluation)
+- Completed advanced reranking/tooling/faithfulness analysis stack
+- Completed 60-question STEM benchmark (100% exact-match, MRR 1.0)
+- Completed 40-question adversarial benchmark and gap analysis
+- Ran Task 8 embedding comparison on adversarial subset:
+   - SciBERT (`allenai/scibert_scivocab_uncased`) p@10 = 0.100
+   - MPNet (`all-mpnet-base-v2`) p@10 = 0.050
+   - Instructor (`hkunlp/instructor-base`) p@10 = 0.050 (fallback mode)
 
 **July 13, 2026**: Phase 3 Completion
 - Implemented and validated Tasks 1-7 end-to-end

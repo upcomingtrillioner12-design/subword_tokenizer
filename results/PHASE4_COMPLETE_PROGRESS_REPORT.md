@@ -6,12 +6,14 @@
 - Task 5 (9a39cb5)
 - Task 6 (1c4dd54)
 - Task 7 (c22924a)
+- Task 8 prep (bd41fa2)
+- Task 8 eval run (a1eac16)
 
 ---
 
 ## Executive Summary
 
-Phase 4 has successfully built a comprehensive RAG evaluation and improvement framework, progressing from basic MC-likelihood evaluation (Task 4) through advanced reranking strategies (Task 5), expanded benchmarks (Task 6), and adversarial stress testing (Task 7).
+Phase 4 has successfully built a comprehensive RAG evaluation and improvement framework, progressing from basic MC-likelihood evaluation (Task 4) through advanced reranking strategies (Task 5), expanded benchmarks (Task 6), adversarial stress testing (Task 7), and embedding comparison (Task 8).
 
 **Key Achievements:**
 - ✅ **Advanced reranking** with 5 selectable strategies (lexical, semantic, cross-encoder, hybrid, cascade)
@@ -21,8 +23,9 @@ Phase 4 has successfully built a comprehensive RAG evaluation and improvement fr
 - ✅ **60-question STEM benchmark** across 6 domains with enhanced metrics
 - ✅ **40-question adversarial dataset** with misleading/unanswerable/near-miss challenge types
 - ✅ **65pp performance cliff identified** (100% STEM → 35% Adversarial) revealing genuine RAG challenges
+- ✅ **Task 8 embedding comparison executed** on adversarial subset (SciBERT highest p@10)
 
-**Current Status:** Framework ready for Task 8+ improvements (domain-specific embeddings, semantic metrics, confidence estimation)
+**Current Status:** Tasks 4-8 complete. Ready for Task 9 (semantic metrics + confidence estimation).
 
 ---
 
@@ -104,6 +107,26 @@ Phase 4 has successfully built a comprehensive RAG evaluation and improvement fr
 1. STEM dataset insufficient for robustness validation
 2. Problem is not retrieval/ranking (MRR=1.0 even on adversarial)
 3. Challenge is discriminating between similar answers under ambiguity
+
+### Task 8: Embedding Comparison (COMPLETED THIS SESSION)
+**Status:** ✅ COMPLETE
+
+**Deliverables:**
+- `data/phase4_task8_adversarial_subset_20qa.json`: balanced 20-question subset
+- `scripts/evaluate_embeddings.py`: multi-model embedding comparison evaluator
+- `results/rag_generation_eval/phase4_task8_embedding_eval_20260715_193001.json`: raw run output
+- `results/rag_generation_eval/phase4_task7_embedding_comparison.md`: comparison summary report
+
+**Measured Results (subset run):**
+- **SciBERT** (`allenai/scibert_scivocab_uncased`): p@5 = 0.050, p@10 = 0.100
+- **MPNet** (`all-mpnet-base-v2`): p@5 = 0.050, p@10 = 0.050
+- **Instructor** (`hkunlp/instructor-base`): p@5 = 0.050, p@10 = 0.050
+
+**Run Caveat:**
+- `InstructorEmbedding` package was not installed, so instructor model ran in fallback mode.
+
+**Key Insight:**
+- On this subset and scoring method, SciBERT provides the strongest retrieval hit rate at top-10.
 
 ---
 

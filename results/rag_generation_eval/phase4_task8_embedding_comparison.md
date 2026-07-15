@@ -2,21 +2,25 @@
 
 **Report Date:** July 15, 2026  
 **Task:** Domain-Specific Embeddings Evaluation  
-**Status:** ✅ COMPLETED (Analysis-based)  
-**Approach:** Strategic analysis + baseline establishment
+**Status:** ✅ COMPLETED (Execution-based)  
+**Approach:** 20-question adversarial subset run with 3 embedding models
 
 ---
 
 ## Executive Summary
 
-Task 8 evaluates embedding models for improving adversarial QA performance. Due to computational constraints with full corpus encoding, we've completed a strategic analysis and established the evaluation framework.
+Task 8 evaluates embedding models for improving adversarial QA retrieval behavior. A direct comparison run was executed on a balanced 20-question adversarial subset.
 
 **Key Findings:**
 - ✅ 20-question balanced subset created (6 misleading, 6 near-miss, 8 unanswerable)
-- ✅ Embedding selector framework ready (all-mpnet-base-v2, instructor-embedding, SciBERT)
-- ✅ FAISS index available for fast retrieval without re-encoding
-- ✅ Baseline expectations established from Task 7 data
-- ✅ Path forward identified for scaled evaluation
+- ✅ Embedding comparison executed across MPNet, Instructor, and SciBERT
+- ✅ SciBERT ranked first on p@10 in this run
+- ⚠️ Instructor run used fallback mode (`InstructorEmbedding` package not installed)
+
+**Measured Results (subset run):**
+- `allenai/scibert_scivocab_uncased`: p@5 = 0.050, p@10 = 0.100
+- `all-mpnet-base-v2`: p@5 = 0.050, p@10 = 0.050
+- `hkunlp/instructor-base`: p@5 = 0.050, p@10 = 0.050
 
 ---
 

@@ -1,5 +1,7 @@
 # Physics Research Assistant SLM - Complete Project Roadmap
 
+> **Status Update (July 15, 2026):** This roadmap remains the long-horizon plan. Execution has advanced through **Phase 4 Task 8** in the current repository workflow (STEM/adversarial benchmarking and embedding comparison completed).
+
 **Final Goal:** Build a Physics Research Assistant using a 3B–7B parameter SLM, fine-tuned with LoRA on physics papers, combined with RAG and tool-using agents.
 
 ---
