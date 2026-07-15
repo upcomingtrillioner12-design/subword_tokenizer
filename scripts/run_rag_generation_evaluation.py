@@ -25,6 +25,7 @@ except ImportError:
 from hybrid_retrieval import HybridRetriever
 from inference_lora import LoRAInferenceEngine, load_tokenizer
 from neural_reranker import CrossEncoderReranker
+from tool_executor import ToolExecutor
 
 
 def load_config(path: Path) -> Dict[str, Any]:
@@ -42,6 +43,7 @@ class TinyLMRAGGenerator:
     def __init__(self, cfg: Dict[str, Any]):
         model_cfg = cfg["model"]
         gen_cfg = cfg["generation"]
+        tools_cfg = cfg.get("tools", {})
 
         self.engine = LoRAInferenceEngine(
             base_checkpoint=Path(model_cfg["base_checkpoint"]),
@@ -56,14 +58,36 @@ class TinyLMRAGGenerator:
         self.temperature = float(gen_cfg.get("temperature", 1.2))
         self.top_k = gen_cfg.get("top_k", 80)
         self.top_p = gen_cfg.get("top_p", None)
+        self.prompt_mode = str(gen_cfg.get("prompt_mode", "strict")).lower()
+        self.enforce_context_overlap = bool(gen_cfg.get("enforce_context_overlap", True))
+        self.faithfulness_floor = float(gen_cfg.get("faithfulness_floor", 0.25))
+        self.tool_executor = ToolExecutor(enabled=bool(tools_cfg.get("enabled", False)))
 
-    def generate(self, query: str, context: str) -> str:
-        prompt = (
-            "You are a physics research assistant. Use ONLY the provided context to answer concisely.\n\n"
-            f"Context:\n{context}\n\n"
+    def _build_prompt(self, query: str, context: str, tool_hints: List[str]) -> str:
+        hints_text = "\n".join(f"- {h}" for h in tool_hints)
+        hints_block = f"\n\nTool Hints:\n{hints_text}" if tool_hints else ""
+
+        if self.prompt_mode == "strict":
+            return (
+                "You are a physics research assistant. Use ONLY the provided context. "
+                "If the answer is not explicitly in context, reply: 'insufficient context'.\n\n"
+                f"Context:\n{context}{hints_block}\n\n"
+                f"Question: {query}\n"
+                "Answer (short, context-grounded):"
+            )
+
+        return (
+            "You are a physics research assistant. Answer concisely using the provided context.\n\n"
+            f"Context:\n{context}{hints_block}\n\n"
             f"Question: {query}\n"
             "Answer:"
         )
+
+    def generate(self, query: str, context: str) -> str:
+        tools = self.tool_executor.run(query)
+        tool_hints = tools.get("hints", [])
+
+        prompt = self._build_prompt(query, context, tool_hints)
         text, _metrics = self.engine.generate(
             prompt=prompt,
             tokenizer=self.tokenizer,
@@ -72,18 +96,42 @@ class TinyLMRAGGenerator:
             top_k=self.top_k,
             top_p=self.top_p,
         )
-        return text.strip()
+
+        answer = text.strip()
+        if self.enforce_context_overlap:
+            faith = context_faithfulness(answer, context)
+            if faith < self.faithfulness_floor:
+                answer = extractive_fallback_answer(query, context)
+
+        return answer.strip()
 
     def score_option(self, query: str, context: str, option_text: str) -> float:
-        prompt = (
-            "You are a physics research assistant. Use ONLY the provided context.\n\n"
-            f"Context:\n{context}\n\n"
-            f"Question: {query}\n"
-            "Answer:"
-        )
+        tools = self.tool_executor.run(query)
+        tool_hints = tools.get("hints", [])
+        prompt = self._build_prompt(query, context, tool_hints)
         continuation = " " + option_text.strip()
         return self.engine.score_continuation(prompt=prompt, continuation=continuation, tokenizer=self.tokenizer)
 
+def extractive_fallback_answer(query: str, context: str) -> str:
+    import re
+
+    query_terms = set(re.findall(r"[a-zA-Z0-9_]+", query.lower()))
+    chunks = [c.strip() for c in re.split(r"[\n\.]+", context) if c.strip()]
+    if not chunks:
+        return "insufficient context"
+
+    best = ""
+    best_score = -1
+    for c in chunks:
+        c_terms = set(re.findall(r"[a-zA-Z0-9_]+", c.lower()))
+        score = len(query_terms & c_terms)
+        if score > best_score:
+            best_score = score
+            best = c
+
+    if not best:
+        return "insufficient context"
+    return best[:220]
 
 def token_f1(pred: str, gold: str) -> float:
     import re
@@ -149,6 +197,10 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
     if bool(reranker_cfg.get("enabled", True)):
         reranker = CrossEncoderReranker(
             model_name=reranker_cfg.get("model_name", "cross-encoder/ms-marco-MiniLM-L-6-v2"),
+            strategy=reranker_cfg.get("strategy", "hybrid"),
+            cross_weight=float(reranker_cfg.get("cross_weight", 0.55)),
+            semantic_weight=float(reranker_cfg.get("semantic_weight", 0.30)),
+            lexical_weight=float(reranker_cfg.get("lexical_weight", 0.15)),
             verbose=True,
         )
 
@@ -185,7 +237,12 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
         retrieved = retriever.retrieve(query, k=k_retrieve)
         final_docs = retrieved
         if reranker is not None:
-            final_docs = reranker.rerank(query, retrieved, top_n=rerank_top_n)
+            final_docs = reranker.rerank(
+                query,
+                retrieved,
+                top_n=rerank_top_n,
+                strategy=reranker_cfg.get("strategy", "hybrid"),
+            )
 
         context = build_context(final_docs, max_docs=context_docs)
         if eval_mode == "mc_likelihood" and q.get("distractors"):
@@ -231,13 +288,16 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
             "option_scores": [
                 {"option": opt, "avg_logprob": score} for opt, score in (scored_sorted or [])
             ],
+            "context": context,
             "retrieved_topk": [
                 {
                     "doc_id": d.get("doc_id"),
                     "rank": d.get("rank"),
                     "score": d.get("score"),
                     "rerank_score": d.get("rerank_score"),
+                    "rerank_components": d.get("rerank_components"),
                     "source": d.get("source"),
+                    "text": d.get("text", ""),
                 }
                 for d in final_docs[:context_docs]
             ],
