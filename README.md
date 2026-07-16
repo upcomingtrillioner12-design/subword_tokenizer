@@ -1,8 +1,8 @@
 # Physics Research Assistant SLM - Project Status
 
-**Latest Update:** July 15, 2026 20:15 UTC  
-**Current Phase:** 4 (RAG Integration) — Task 10.1 ✅ **COMPLETE** | Task 10.2 🔄 **IN PROGRESS**  
-**Last Completed Milestone:** Phase 4 Task 10.1 - Calibrated uncertainty (33.8% mean improvement, 71.1% discrimination boost)
+**Latest Update:** July 16, 2026 14:45 UTC  
+**Current Phase:** 5 (Integrated Evaluation & Ablation) — ✅ **COMPLETE**  
+**Last Completed Milestone:** Phase 5 focused ablation (2×2 reranker × iteration on 102Q, commit `b6ff2e0`)
 
 ---
 
@@ -12,26 +12,30 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
 1. **Phase 1** ✅ — Pre-trained base model (35.2M params, 0.0107 eval loss)
 2. **Phase 2** ✅ — LoRA fine-tuning on physics corpus (**0.0060 eval loss, 44% improvement**)
 3. **Phase 3** ✅ — Inference, evaluation, and generation quality assessment (Tasks 1-8 complete)
-4. **Phase 4** 🚀 — RAG integration (Tasks 1-10.1 complete ✅, Task 10.2 in progress)
-    - Completed: retrieval baseline, reranking, faithfulness, STEM (60Q 100%), adversarial (40Q 35%), embedding selection (SciBERT), semantic metrics (6), calibrated uncertainty (4-component)
-    - In Progress: Model scaling (7B baseline), cross-encoder fine-tuning, iterative retrieval loop
-    - Target: 50% on adversarial (from 35% baseline) via 3-phase improvements
+4. **Phase 4** ✅ — RAG integration complete (Tasks 1-10.2c)
+    - Completed: retrieval baseline, reranking, faithfulness, STEM (60Q), adversarial suite, embedding selection (SciBERT), semantic metrics (6), calibrated uncertainty (4-component), cross-encoder fine-tuning, iterative retrieval loop
+5. **Phase 5** ✅ — Full integration + ablation complete
+    - 102Q full benchmark: MC exact 1.0, calibrated uncertainty 0.4234, avg iterations 1.6176
+    - Focused ablation (2×2): iteration OFF/ON × original/fine-tuned reranker
+    - Runtime profile: ~25 min (no iteration), ~41 min (with iteration)
 
-### Phase 4 Snapshot (July 15, 2026 — Task 10 Checkpoint)
-- **Task 8:** Embedding comparison (20 Q adversarial subset)
-    - SciBERT winner: p@10 = 0.100 ✓
-    - Baseline (STEM 100%, Adversarial 35%)
-- **Task 9:** Semantic metrics (6 components)
-    - Semantic similarity: 1.0, BERTScore F1: 1.0, Entailment: 0.890
-    - Uncertainty baseline: 0.662 mean (0.0-0.8 range)
+### Phase 4-5 Snapshot (July 16, 2026)
 - **Task 10.1 ✅:** Calibrated uncertainty (4-component framework)
     - Mean: 0.662 → **0.438** (-33.8% improvement)
-    - Discrimination: std dev 0.073 (-71.1% improvement)
-    - High-confidence tier: 7/20 questions
-- **Task 10.2 🔄:** Model scaling roadmap
-    - Phase 10.2a: Mistral-7B baseline (expected +5pp, 40% target)
-    - Phase 10.2b: Cross-encoder fine-tuning (expected +3pp, 43% target)
-    - Phase 10.2c: Iterative retrieval loop (expected +7pp, 50% target)
+    - Discrimination: std dev 0.254 → **0.073** (-71.1% improvement)
+- **Task 10.2a ✅:** Calibration integrated into evaluation pipeline
+    - 20Q run: MC exact 1.0, avg calibrated uncertainty 0.4447
+- **Task 10.2b ✅:** Cross-encoder fine-tuning pipeline
+    - 300 STEM preference pairs (24.3% positive)
+    - Smoke test: val_loss 0.7011, val_acc 0.7667
+- **Task 10.2c ✅:** Iterative retrieval loop
+    - 10Q validation: avg iterations 1.6, trigger rate 60%
+- **Phase 5 Full Benchmark ✅:** 102Q integrated run
+    - MC exact 1.0, avg calibrated uncertainty 0.4234
+    - avg iterations 1.6176, trigger rate 61.76%
+- **Phase 5 Ablation ✅ (2×2)**
+    - Pure reranker effect isolated (iteration disabled)
+    - Fine-tuned reranker improved rerank scores but MC remained at ceiling (1.0)
 
 ---
 
