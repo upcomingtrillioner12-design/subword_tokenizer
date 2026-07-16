@@ -1,8 +1,8 @@
 # Physics Research Assistant SLM - Project Status
 
-**Latest Update:** July 15, 2026  
-**Current Phase:** 4 (RAG Integration) — Task 8 ✅ **COMPLETE**  
-**Last Completed Milestone:** Phase 4 Task 8 - Embedding comparison on adversarial subset (SciBERT leads p@10)
+**Latest Update:** July 15, 2026 20:15 UTC  
+**Current Phase:** 4 (RAG Integration) — Task 10.1 ✅ **COMPLETE** | Task 10.2 🔄 **IN PROGRESS**  
+**Last Completed Milestone:** Phase 4 Task 10.1 - Calibrated uncertainty (33.8% mean improvement, 71.1% discrimination boost)
 
 ---
 
@@ -12,17 +12,26 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
 1. **Phase 1** ✅ — Pre-trained base model (35.2M params, 0.0107 eval loss)
 2. **Phase 2** ✅ — LoRA fine-tuning on physics corpus (**0.0060 eval loss, 44% improvement**)
 3. **Phase 3** ✅ — Inference, evaluation, and generation quality assessment (Tasks 1-8 complete)
-4. **Phase 4** 🚀 — RAG integration (Tasks 1-8 complete ✅)
-    - Completed: retrieval baseline, evaluation harness, reranking, faithfulness, STEM expansion, adversarial evaluation, embedding comparison
-    - Next: Task 9 semantic metrics + confidence estimation
+4. **Phase 4** 🚀 — RAG integration (Tasks 1-10.1 complete ✅, Task 10.2 in progress)
+    - Completed: retrieval baseline, reranking, faithfulness, STEM (60Q 100%), adversarial (40Q 35%), embedding selection (SciBERT), semantic metrics (6), calibrated uncertainty (4-component)
+    - In Progress: Model scaling (7B baseline), cross-encoder fine-tuning, iterative retrieval loop
+    - Target: 50% on adversarial (from 35% baseline) via 3-phase improvements
 
-### Phase 4 Snapshot (July 15, 2026)
-- STEM benchmark (60 Q, 6 domains): 100% exact-match, MRR 1.0
-- Adversarial benchmark (40 Q): 65pp drop vs STEM identified as primary gap
-- Embedding comparison on adversarial subset (20 Q):
-  - `allenai/scibert_scivocab_uncased`: p@10 = 0.100
-  - `all-mpnet-base-v2`: p@10 = 0.050
-  - `hkunlp/instructor-base`: p@10 = 0.050 (fallback mode; `InstructorEmbedding` not installed)
+### Phase 4 Snapshot (July 15, 2026 — Task 10 Checkpoint)
+- **Task 8:** Embedding comparison (20 Q adversarial subset)
+    - SciBERT winner: p@10 = 0.100 ✓
+    - Baseline (STEM 100%, Adversarial 35%)
+- **Task 9:** Semantic metrics (6 components)
+    - Semantic similarity: 1.0, BERTScore F1: 1.0, Entailment: 0.890
+    - Uncertainty baseline: 0.662 mean (0.0-0.8 range)
+- **Task 10.1 ✅:** Calibrated uncertainty (4-component framework)
+    - Mean: 0.662 → **0.438** (-33.8% improvement)
+    - Discrimination: std dev 0.073 (-71.1% improvement)
+    - High-confidence tier: 7/20 questions
+- **Task 10.2 🔄:** Model scaling roadmap
+    - Phase 10.2a: Mistral-7B baseline (expected +5pp, 40% target)
+    - Phase 10.2b: Cross-encoder fine-tuning (expected +3pp, 43% target)
+    - Phase 10.2c: Iterative retrieval loop (expected +7pp, 50% target)
 
 ---
 
