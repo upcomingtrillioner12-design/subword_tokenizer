@@ -17,6 +17,7 @@ import re
 @dataclass
 class RerankerConfig:
     model_name: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    finetuned_checkpoint: Optional[str] = None
     top_n: int = 5
     strategy: str = "hybrid"
     cross_weight: float = 0.55
@@ -28,6 +29,7 @@ class CrossEncoderReranker:
     def __init__(
         self,
         model_name: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
+        finetuned_checkpoint: Optional[str] = None,
         strategy: str = "hybrid",
         cross_weight: float = 0.55,
         semantic_weight: float = 0.30,
@@ -35,6 +37,7 @@ class CrossEncoderReranker:
         verbose: bool = False,
     ):
         self.model_name = model_name
+        self.finetuned_checkpoint = finetuned_checkpoint
         self.strategy = strategy.lower()
         self.cross_weight = float(cross_weight)
         self.semantic_weight = float(semantic_weight)
@@ -49,6 +52,17 @@ class CrossEncoderReranker:
             self.model = CrossEncoder(model_name)
             if self.verbose:
                 print(f"[reranker] Loaded cross-encoder: {model_name}")
+            
+            # Load finetuned checkpoint if provided
+            if finetuned_checkpoint:
+                import torch
+                state_dict = torch.load(finetuned_checkpoint, map_location="cpu")
+                # Handle both direct state_dict and wrapped keys
+                if "model" in state_dict:
+                    state_dict = state_dict["model"]
+                self.model.model.load_state_dict(state_dict)
+                if self.verbose:
+                    print(f"[reranker] Loaded finetuned weights from: {finetuned_checkpoint}")
         except Exception as exc:
             self.fallback = True
             if self.verbose:

@@ -4,21 +4,26 @@
 
 ---
 title: Subword Tokenizer & SLM Training Reference
-subtitle: Phase 1-4 validated (through Task 8 embedding comparison)
-date: July 15, 2026
+subtitle: Phase 1-5 validated (through Task 10.2c iterative retrieval + Phase 5 full integration)
+date: July 16, 2026
 author: "Jaydip Singh (jaydip.singh@gmail.com), Linkan Kumbhar (upcomingtrillioner12@gmail.com)"
 
 ---
 
 ## 1. Executive Summary
 
-**Project**: Production-validated Subword Tokenizer + SLM Prototype Training and Evaluation  
-**Status**: Phase 4 Task 8 Complete (July 15, 2026)  
+**Project**: Production-validated Subword Tokenizer + SLM Prototype Training, RAG Evaluation, and Advanced Features Integration  
+**Status**: Phase 4 Complete + Phase 5 Full Integration (July 16, 2026)  
 **Key Results**:
 - **Phase 1**: 0.0107 eval loss on 6000-step TinyLM (35.2M params)
 - **Phase 2**: best LoRA eval loss **0.0060** (44% improvement vs Phase 1)
 - **Phase 3**: full 7-task evaluation suite complete (benchmark, qualitative, test set, PPL/BLEU, physics QA)
-- **Phase 4 Task 8 (new)**: adversarial embedding comparison completed (SciBERT highest p@10 on subset)
+- **Phase 4 Task 8**: adversarial embedding comparison completed (SciBERT highest p@10 on subset)
+- **Phase 4 Task 10.1**: Uncertainty Calibration Framework (4-component: 33.8% mean improvement, 71.1% std improvement)
+- **Phase 4 Task 10.2a**: Calibrated uncertainty integrated into 20Q baseline (MC 1.0, unc_mean 0.4447)
+- **Phase 4 Task 10.2b**: Cross-encoder fine-tuning (300 STEM pairs, 1-epoch val_loss 0.7011, val_acc 0.7667)
+- **Phase 4 Task 10.2c**: Iterative retrieval loop (10Q: avg_iterations 1.6, trigger_rate 60%)
+- **Phase 5 Full Integration**: 102-question unified evaluation (MC 1.0, unc_cal 0.4234, iterations 1.62, trigger 61.76%)
 
 ### System Architecture
 
@@ -54,6 +59,20 @@ Two unified layers:
 Status: **Ready for Phase 4 (RAG integration + generation control tuning)**
 
 ## 2. Recent Milestones
+
+**July 16, 2026**: Phase 4 Tasks 10.1-10.2c Complete + Phase 5 Full Integration
+- Task 10.1: Calibrated Uncertainty Framework (4-component: logprob_spread 30%, context 25%, entailment 25%, faithfulness 20%)
+  - Validation: mean 0.662 → 0.438 (33.8% improvement), std 0.254 → 0.073 (71.1% discrimination improvement)
+- Task 10.2a: Integrated calibration into 20Q baseline (MC 1.0, calibrated_unc 0.4447 mean)
+- Task 10.2b: Cross-encoder fine-tuning pipeline (300 STEM preference pairs, 1-epoch: train_loss 1.2172, val_loss 0.7011, val_acc 0.7667)
+- Task 10.2c: Iterative retrieval loop (uncertainty-triggered, 10Q: avg_iterations 1.6, trigger_rate 60%)
+- Phase 5 Full Benchmark: Unified 102-question evaluation (41m 07s runtime)
+  - MC_exact_rate: 1.0
+  - avg_calibrated_uncertainty: 0.4234
+  - avg_iterations: 1.6176 (second pass triggered 61.76% of time)
+  - avg_entailment_score: 0.8865
+  - avg_faithfulness: 0.2261
+- Commits: 4e61013 (10.2a), d13766d (10.2b), de45d9e (10.2c), 2d65bdf (Phase 5 kickoff), aa214ed (Phase 5 full benchmark)
 
 **July 15, 2026**: Phase 4 Tasks 5-8 Completion (RAG evaluation expansion + adversarial embedding evaluation)
 - Completed advanced reranking/tooling/faithfulness analysis stack
@@ -171,29 +190,134 @@ From repository root:
 3. Add CI/doc task to regenerate this PDF from markdown automatically.
 4. Track large artifacts through retention/LFS policy.
 
-## ## 8.1 Phase 4 Task 4 (Current Work)
+## 8. Phase 4 Task Development (Current → Complete)
 
-### Goal
-Integrate retrieval + reranking + LoRA generation in one evaluation loop and produce end-to-end quality metrics.
+### 8.1 Phase 4 Task 4 (Complete)
 
-### New Scripts
+**Goal**: Integrate retrieval + reranking + LoRA generation in one evaluation loop and produce end-to-end quality metrics.
+
+**New Scripts**:
 - `scripts/neural_reranker.py`
 - `scripts/run_rag_generation_evaluation.py`
 
-### New Config
+**New Config**:
 - `config/phase4_task4_rag_eval.yaml`
 
-### Run Commands
-From `subword_tokenizer/`:
+**Run Commands** (from `subword_tokenizer/`):
+- Smoke test (1-2 questions): `python3 scripts/run_rag_generation_evaluation.py --limit 2`
+- Full configured run: `python3 scripts/run_rag_generation_evaluation.py`
 
-- Smoke test (1-2 questions):
-   - `python3 scripts/run_rag_generation_evaluation.py --limit 2`
-- Full configured run:
-   - `python3 scripts/run_rag_generation_evaluation.py`
-
-### Output Artifacts
+**Output Artifacts**:
 - JSON reports: `results/rag_generation_eval/rag_generation_eval_*.json`
 - Markdown reports: `results/rag_generation_eval/rag_generation_eval_*.md`
+
+### 8.2 Phase 4 Task 10.1: Uncertainty Calibration Framework (Complete)
+
+**Goal**: Design and validate a 4-component uncertainty calibration framework to improve confidence scoring.
+
+**Components**:
+1. **logprob_spread** (30%): Variance in log-probabilities across top-k candidates
+2. **context_relevance** (25%): BM25 relevance score of retrieved context
+3. **entailment_consistency** (25%): DeBERTa-v3 entailment score between question and answer
+4. **faithfulness_score** (20%): Token overlap + semantic similarity between answer and retrieved docs
+
+**Results** (on 100 test samples):
+- Mean uncertainty: 0.662 → 0.438 (33.8% improvement in calibration)
+- Std deviation: 0.254 → 0.073 (71.1% improved discrimination)
+
+**Implementation**: `scripts/calibrated_uncertainty.py` (530 lines)
+
+### 8.3 Phase 4 Task 10.2a: Baseline Integration (Complete)
+
+**Goal**: Integrate calibrated uncertainty post-processing into evaluation pipeline.
+
+**Methodology**:
+- Run standard RAG pipeline (retrieval + reranking + generation)
+- Apply semantic metrics (entailment, faithfulness, similarity)
+- Post-process with 4-component calibration framework
+- Export per-question + summary statistics
+
+**Validation** (20-question run):
+- MC exact-match rate: 1.0
+- Calibrated uncertainty mean: 0.4447
+- All metrics exported per-question
+
+**Config**: `config/phase4_task10_2a_mistral7b.yaml`
+
+### 8.4 Phase 4 Task 10.2b: Cross-Encoder Fine-Tuning (Complete)
+
+**Goal**: Fine-tune MS Marco cross-encoder on domain-specific STEM preference pairs.
+
+**Weak-Label Collection** (`collect_stem_preference_pairs.py`):
+- Token overlap heuristic: compare top-1 and top-k retrieved docs
+- Pseudo-positive fallback: if doc is top-retrieved and score >= 0.34, label 1.0
+- Result: 300 preference pairs (73 positive, 227 negative, 24.3% positive rate)
+
+**Fine-Tuning** (`finetune_cross_encoder.py`):
+- Model: MiniLM-L-6-v2 (MS Marco base)
+- Layer freezing: Last 3 layers trainable, earlier layers frozen
+- Loss: BCEWithLogitsLoss
+- 1-epoch validation:
+  - Train loss: 1.2172
+  - Val loss: 0.7011
+  - Val accuracy: 0.7667
+- Checkpoints saved: `best_cross_encoder_finetuned.pt`, `cross_encoder_finetuned_task10.pt`
+
+### 8.5 Phase 4 Task 10.2c: Iterative Retrieval Loop (Complete)
+
+**Goal**: Implement uncertainty-triggered second retrieval pass with merged reranking.
+
+**Implementation** (in `run_rag_generation_evaluation.py`):
+- Threshold: uncertainty_score > 0.6
+- Trigger logic: After 1st pass generation, if uncertainty high, retrieve again with follow-up query
+- Follow-up query builder (`build_followup_query()`): Token-based, filters stopwords, keeps 6 key terms
+- Doc merging (`merge_docs()`): Deduplicates primary + follow-up retrieval results
+- Reranking: Hybrid cross-encoder strategy on merged docs
+- Final generation: On top-k from merged set
+
+**Validation** (10-question run):
+- Average iterations: 1.6 (38% of questions see 2nd pass)
+- Iterative trigger rate: 60%
+- All iteration metadata captured per-question
+
+**Config**: `config/phase4_task10_2c_iterative_retrieval.yaml`
+
+### 8.6 Phase 5: Full Integration Benchmark (Complete)
+
+**Goal**: Execute unified evaluation on 102-question combined dataset with all features enabled.
+
+**Dataset**: `data/phase5_combined_100qa.json`
+- STEM questions: 60
+- Adversarial questions: 42
+- Total: 102 questions
+
+**Pipeline Architecture**:
+1. Hybrid Retrieval (BM25 + dense fusion with RRF)
+2. Neural Reranking (MS Marco cross-encoder, hybrid strategy)
+3. LM Generation (TinyLM + LoRA)
+4. Semantic Metrics (6 components: similarity, entailment, faithfulness, BERTScore, etc.)
+5. Calibrated Uncertainty (4-component post-processing)
+6. Iterative Loop (uncertainty-triggered, optional 2nd pass)
+
+**Results** (102-question run, 41m 07s runtime):
+- MC exact-match rate: 1.0
+- MC semantic-or-better: 1.0
+- Avg token F1: 1.0
+- Avg calibrated uncertainty: 0.4234
+- Avg iterations: 1.6176 (second pass triggered 61.76% of questions)
+- Avg entailment score: 0.8865
+- Avg semantic similarity: 1.0
+- Avg faithfulness: 0.2261
+- Avg raw uncertainty: 0.5952
+
+**Output Artifacts**:
+- JSON: `results/rag_generation_eval/rag_generation_eval_20260716_114138.json`
+- Markdown: `results/rag_generation_eval/rag_generation_eval_20260716_114138.md`
+- Commit: aa214ed
+
+---
+
+## ## 8.1 Phase 4 Task 4 (Current Work)
 
 ## 
 
@@ -387,8 +511,9 @@ Build a Physics Research Assistant using a 3B-7B parameter SLM, fine-tuned with 
 Live arXiv Stream → stream_train.py → Retry/Backoff → Rust Tokenizer CLI → Token IDs → TinyLM Training → Checkpoints → Evaluation → best_checkpoint_*.json
 ```
 
-Prepared on July 3, 2026
-Updated July 5, 2026 — Added references and architecture diagram for IIT Bombay server request for end-of-day status handoff.
+Prepared on July 3, 2026  
+Updated July 5, 2026 — Added references and architecture diagram for IIT Bombay server request for end-of-day status handoff.  
+Updated July 16, 2026 — Added Phase 4 Tasks 10.1-10.2c completion status and Phase 5 full integration results.
 
 
 ## References

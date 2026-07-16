@@ -235,6 +235,7 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
     if bool(reranker_cfg.get("enabled", True)):
         reranker = CrossEncoderReranker(
             model_name=reranker_cfg.get("model_name", "cross-encoder/ms-marco-MiniLM-L-6-v2"),
+            finetuned_checkpoint=reranker_cfg.get("finetuned_checkpoint", None),
             strategy=reranker_cfg.get("strategy", "hybrid"),
             cross_weight=float(reranker_cfg.get("cross_weight", 0.55)),
             semantic_weight=float(reranker_cfg.get("semantic_weight", 0.30)),
