@@ -100,10 +100,23 @@ class CrossEncoderFineTuner:
     
     def _freeze_early_layers(self):
         """Freeze all but last 3 layers to prevent catastrophic forgetting."""
-        total_layers = len(list(self.model.transformer.layer))
+        # Support BERT/Roberta/DistilBERT style internals
+        if hasattr(self.model, "bert") and hasattr(self.model.bert, "encoder"):
+            layers = self.model.bert.encoder.layer
+        elif hasattr(self.model, "roberta") and hasattr(self.model.roberta, "encoder"):
+            layers = self.model.roberta.encoder.layer
+        elif hasattr(self.model, "distilbert") and hasattr(self.model.distilbert, "transformer"):
+            layers = self.model.distilbert.transformer.layer
+        elif hasattr(self.model, "transformer") and hasattr(self.model.transformer, "layer"):
+            layers = self.model.transformer.layer
+        else:
+            logger.warning("Could not find encoder layers; skipping layer freezing")
+            return
+
+        total_layers = len(list(layers))
         freeze_until = max(0, total_layers - 3)
         
-        for i, layer in enumerate(self.model.transformer.layer):
+        for i, layer in enumerate(layers):
             if i < freeze_until:
                 for param in layer.parameters():
                     param.requires_grad = False
@@ -427,6 +440,11 @@ def main():
         help="Path to save preference pairs"
     )
     parser.add_argument(
+        "--pairs-file",
+        default="data/cross_encoder_stem_preference_pairs.json",
+        help="Path to pre-collected preference pairs JSON (used if exists)"
+    )
+    parser.add_argument(
         "--epochs",
         type=int,
         default=3,
@@ -454,15 +472,21 @@ def main():
     
     logging.basicConfig(level=logging.INFO)
     
-    # Step 1: Collect preference pairs
+    # Step 1: Load or collect preference pairs
     logger.info("=" * 70)
-    logger.info("STEP 1: Collect Preference Pairs from STEM Benchmark")
+    logger.info("STEP 1: Prepare Preference Pairs from STEM Benchmark")
     logger.info("=" * 70)
-    pairs = collect_preference_pairs_from_stem(
-        args.questions,
-        "data/retrieval/",
-        args.output_pairs
-    )
+    pairs_path = Path(args.pairs_file)
+    if pairs_path.exists():
+        logger.info(f"Loading existing preference pairs: {pairs_path}")
+        pairs = json.loads(pairs_path.read_text(encoding="utf-8"))
+    else:
+        logger.info("No pre-collected pairs found; collecting from retrieval pipeline")
+        pairs = collect_preference_pairs_from_stem(
+            args.questions,
+            "data/retrieval/",
+            args.output_pairs
+        )
     
     # Step 2: Fine-tune cross-encoder
     logger.info("\n" + "=" * 70)

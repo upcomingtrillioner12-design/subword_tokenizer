@@ -1,0 +1,82 @@
+# Phase 4 Task 10.2b: Cross-Encoder Fine-Tuning Configuration
+# Goal: Fine-tune MS Marco reranker on STEM domain preference pairs
+# Expected: +5-10pp retrieval precision improvement
+# Date: July 16, 2026
+
+task: "phase4_task10_2b_finetuning_xencoder"
+description: "Cross-encoder fine-tuning on STEM benchmark preference pairs (expected +2-3pp accuracy)"
+
+# Model (1.3B baseline, same as before)
+model:
+  base_checkpoint: /Users/jdsingh/slm_v0/checkpoints/production_sml_v1.pt
+  lora_checkpoint: /Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt
+  tokenizer_model: /Users/jdsingh/slm_v0/model_32k.json
+  device: auto
+  dtype: float32
+
+# Retrieval (unchanged: SciBERT from Task 8/9)
+retrieval:
+  bm25_index: /Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/bm25_index.json
+  dense_index: /Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index.faiss
+  dense_metadata: /Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index_metadata.jsonl
+  embedding_model: allenai/scibert_scivocab_uncased
+  fusion_method: rrf
+  alpha: 0.5
+  k_retrieve: 10
+  context_docs: 4
+
+# Reranking: NOTE - Using ORIGINAL cross-encoder (will switch to fine-tuned after training)
+reranker:
+  enabled: true
+  model_name: cross-encoder/ms-marco-MiniLM-L-6-v2
+  strategy: hybrid
+  top_n: 6
+  cross_weight: 0.55
+  semantic_weight: 0.30
+  lexical_weight: 0.15
+
+# Generation (unchanged)
+generation:
+  max_tokens: 48
+  temperature: 0.9
+  top_k: 50
+  top_p: 0.95
+  prompt_mode: strict
+  enforce_context_overlap: true
+  faithfulness_floor: 0.25
+
+# Tools
+tools:
+  enabled: true
+
+# Semantic metrics (unchanged)
+semantic_metrics:
+  enabled: true
+  embedding_model: all-mpnet-base-v2
+  nli_model: MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
+  max_tokens_for_bertscore: 80
+
+# Calibrated uncertainty (from Task 10.1)
+calibrated_uncertainty:
+  enabled: true
+  logprob_spread_weight: 0.30
+  context_weight: 0.25
+  entailment_weight: 0.25
+  faithfulness_weight: 0.20
+  calibration_slope: 0.9
+  calibration_offset: 0.1
+
+# Evaluation config
+evaluation:
+  dataset: /Users/jdsingh/slm_v0/subword_tokenizer/data/phase4_task8_adversarial_subset_20qa.json
+  mode: mc_likelihood
+  max_questions: 20
+  output_dir: /Users/jdsingh/slm_v0/subword_tokenizer/results/rag_generation_eval
+  enable_enhanced_metrics: true
+  enable_semantic_metrics: true
+
+# Metadata
+experiment:
+  name: "Task 10.2b: Baseline with Original Cross-Encoder (Pre-Fine-tuning)"
+  phase: "Pre-fine-tuning baseline"
+  notes: "This config establishes baseline before cross-encoder fine-tuning. After fine-tuning, will create phase4_task10_2b_finetuned.yaml with fine-tuned model checkpoint."
