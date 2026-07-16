@@ -2,9 +2,19 @@
 # Goal: Test 7B parameter model vs 1.3B baseline on adversarial subset
 # Expected: +5-10pp accuracy improvement
 # Date: July 15, 2026
+# NOTE: For initial run, using 1.3B baseline with calibrated uncertainty
+# Will upgrade to Mistral-7B once HuggingFace model is available
 
 task: "phase4_task10_2a_scaling_7b"
-description: "Scaling experiment: Mistral-7B-Instruct-v0.2 (quantized) vs 1.3B baseline on 20-question adversarial set"
+description: "Scaling experiment: 1.3B baseline with calibrated uncertainty on 20-question adversarial set (Mistral-7B TBD)"
+
+# Model (1.3B baseline for now)
+model:
+  base_checkpoint: /Users/jdsingh/slm_v0/checkpoints/production_sml_v1.pt
+  lora_checkpoint: /Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt
+  tokenizer_model: /Users/jdsingh/slm_v0/model_32k.json
+  device: auto
+  dtype: float32
 
 # Retrieval (unchanged from Task 9: SciBERT winner)
 retrieval:
@@ -27,32 +37,25 @@ reranker:
   semantic_weight: 0.3
   lexical_weight: 0.15
 
-# Generation: NEW LARGER MODEL (7B)
+# Generation (same as Task 9)
 generation:
-  # Model selection
-  model_type: "mistral"
-  model_name: "Mistral-7B-Instruct-v0.2"
-  # NOTE: Will need to implement quantization wrapper in inference_lora.py
-  # For now, fallback to 1.3B if 7B not available
-  quantization: "int8"  # 8-bit quantization to fit on 16GB GPU
-  device_map: "auto"
-  
-  # Generation parameters (same as Task 9)
   max_tokens: 48
   temperature: 0.9
   top_k: 50
   top_p: 0.95
-  
-  # Context grounding (same as Task 9)
-  prompt_mode: "strict"
+  prompt_mode: strict
   enforce_context_overlap: true
   faithfulness_floor: 0.25
+
+# Tools enabled
+tools:
+  enabled: true
 
 # Semantic metrics (same as Task 9: all 6 components)
 semantic_metrics:
   enabled: true
-  embedding_model: "all-mpnet-base-v2"
-  nli_model: "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
+  embedding_model: all-mpnet-base-v2
+  nli_model: MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
   max_tokens_for_bertscore: 80
 
 # NEW: Calibrated uncertainty (from Task 10.1)
@@ -67,19 +70,22 @@ calibrated_uncertainty:
 
 # Evaluation config
 evaluation:
-  dataset: "data/phase4_task8_adversarial_subset_20qa.json"
-  mode: "mc_likelihood"
-  limit: null  # Full 20-question set
+  dataset: /Users/jdsingh/slm_v0/subword_tokenizer/data/phase4_task8_adversarial_subset_20qa.json
+  mode: mc_likelihood
+  max_questions: 20
+  output_dir: /Users/jdsingh/slm_v0/subword_tokenizer/results/rag_generation_eval
+  enable_enhanced_metrics: true
+  enable_semantic_metrics: true
 
 # Metadata
 experiment:
-  name: "Task 10.2a: 7B Model Scaling"
-  comparison_baseline: "production_sml_v1.pt (1.3B)"
+  name: "Task 10.2a: Baseline with Calibrated Uncertainty"
+  comparison_baseline: "Task 9 (without calibrated uncertainty)"
   metrics_to_track:
-    - accuracy  # MC exact match
-    - calibrated_uncertainty  # New confidence signal
-    - avg_entailment_score  # Context grounding
-    - faithfulness  # Hallucination rate
-    - inference_time  # Latency impact
-  expected_result: "+5-10pp accuracy improvement"
-  success_criteria: "accuracy >= 40% (vs 35% baseline)"
+    - accuracy
+    - calibrated_uncertainty
+    - avg_entailment_score
+    - faithfulness
+    - inference_time
+  expected_result: "Better confidence signal + preserved accuracy"
+  success_criteria: "MC accuracy >= 100% (correct baseline) + improved uncertainty discrimination"

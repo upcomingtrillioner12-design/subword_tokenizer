@@ -381,6 +381,45 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
         },
         "results": per_q,
     }
+
+    # Apply calibrated uncertainty post-processing if enabled
+    if cfg.get("calibrated_uncertainty", {}).get("enabled", False):
+        try:
+            from calibrated_uncertainty import CalibratedUncertaintyEvaluator, CalibratedUncertaintyConfig
+            cal_cfg_dict = cfg.get("calibrated_uncertainty", {})
+            cal_cfg = CalibratedUncertaintyConfig(
+                logprob_spread_weight=float(cal_cfg_dict.get("logprob_spread_weight", 0.30)),
+                context_weight=float(cal_cfg_dict.get("context_weight", 0.25)),
+                entailment_weight=float(cal_cfg_dict.get("entailment_weight", 0.25)),
+                faithfulness_weight=float(cal_cfg_dict.get("faithfulness_weight", 0.20)),
+                calibration_slope=float(cal_cfg_dict.get("calibration_slope", 0.9)),
+                calibration_offset=float(cal_cfg_dict.get("calibration_offset", 0.1)),
+            )
+            evaluator = CalibratedUncertaintyEvaluator(cal_cfg)
+            
+            calibrated_uncertainty_scores = []
+            for result in report["results"]:
+                metrics = result["metrics"]
+                option_scores = result.get("option_scores", [])
+                calibration = evaluator.calibrate(metrics, option_scores)
+                result["calibration"] = calibration
+                result["metrics"]["calibrated_uncertainty"] = calibration["calibrated_uncertainty"]
+                calibrated_uncertainty_scores.append(calibration["calibrated_uncertainty"])
+            
+            # Update summary with calibrated metrics
+            if calibrated_uncertainty_scores:
+                report["summary"]["avg_calibrated_uncertainty"] = avg(calibrated_uncertainty_scores)
+                report["summary"]["calibrated_uncertainty_range"] = [
+                    min(calibrated_uncertainty_scores),
+                    max(calibrated_uncertainty_scores),
+                ]
+                report["metadata"]["calibrated_uncertainty"] = {
+                    "enabled": True,
+                    "num_calibrated": len(calibrated_uncertainty_scores),
+                }
+        except Exception as e:
+            print(f"Warning: Calibrated uncertainty processing failed: {e}")
+    
     return report
 
 
