@@ -1,0 +1,1499 @@
+{
+  "metadata": {
+    "task": "phase4_task4_rag_generation_eval",
+    "timestamp": "2026-07-16 10:44:42",
+    "num_questions": 10,
+    "elapsed_seconds": 268.66917883299175,
+    "retrieval": {
+      "bm25_index": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/bm25_index.json",
+      "dense_index": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index.faiss",
+      "dense_metadata": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index_metadata.jsonl",
+      "embedding_model": "allenai/scibert_scivocab_uncased",
+      "fusion_method": "rrf",
+      "alpha": 0.5,
+      "k_retrieve": 10,
+      "context_docs": 4
+    },
+    "reranker": {
+      "enabled": true,
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "strategy": "hybrid",
+      "top_n": 6,
+      "cross_weight": 0.55,
+      "semantic_weight": 0.3,
+      "lexical_weight": 0.15,
+      "active": true,
+      "fallback": false
+    },
+    "generation": {
+      "max_tokens": 48,
+      "temperature": 0.9,
+      "top_k": 50,
+      "top_p": 0.95,
+      "prompt_mode": "strict",
+      "enforce_context_overlap": true,
+      "faithfulness_floor": 0.25
+    },
+    "semantic_metrics": {
+      "enabled": true,
+      "embedding_model": "all-mpnet-base-v2",
+      "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+      "max_tokens_for_bertscore": 80,
+      "active": true,
+      "init_errors": []
+    },
+    "iterative_retrieval": {
+      "enabled": true,
+      "max_iterations": 2,
+      "uncertainty_threshold": 0.6,
+      "followup_k_retrieve": 12
+    },
+    "model": {
+      "base_checkpoint": "/Users/jdsingh/slm_v0/checkpoints/production_sml_v1.pt",
+      "lora_checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt",
+      "tokenizer_model": "/Users/jdsingh/slm_v0/model_32k.json"
+    },
+    "calibrated_uncertainty": {
+      "enabled": true,
+      "num_calibrated": 10
+    }
+  },
+  "summary": {
+    "avg_token_f1": 1.0,
+    "avg_contains_expected": 1.0,
+    "avg_faithfulness": 0.2833333333333333,
+    "avg_semantic_similarity": 1.000000035762787,
+    "avg_bertscore_f1": 1.0000000178813935,
+    "avg_entailment_score": 0.8930186616256833,
+    "avg_factual_consistency": 0.8930186616256833,
+    "avg_numeric_unit_consistency": 0.3,
+    "avg_uncertainty_score": 0.604,
+    "avg_iterations": 1.6,
+    "iterative_trigger_rate": 0.6,
+    "mc_exact_rate": 1.0,
+    "mc_semantic_or_better_rate": 1.0,
+    "avg_calibrated_uncertainty": 0.41368638133455216,
+    "calibrated_uncertainty_range": [
+      0.343,
+      0.5098638133455207
+    ]
+  },
+  "results": [
+    {
+      "id": "adv_physics_001",
+      "category": "unknown",
+      "query": "What is Planck's constant value in SI units (J\u00b7s)?",
+      "expected_answer": "6.62607015 \u00d7 10^-34",
+      "generated_answer": "6.62607015 \u00d7 10^-34",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0,
+        "entailment_score": 0.925626315176487,
+        "factual_consistency": 0.925626315176487,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.4780000000000001
+      },
+      "option_scores": [
+        {
+          "option": "6.62607015 \u00d7 10^-34",
+          "avg_logprob": -15.595630645751953
+        },
+        {
+          "option": "6.62607015 \u00d7 10^-33",
+          "avg_logprob": -15.595630645751953
+        },
+        {
+          "option": "6.62607015 \u00d7 10^-35",
+          "avg_logprob": -15.595630645751953
+        },
+        {
+          "option": "6.62607015 \u00d7 10^-36",
+          "avg_logprob": -15.595630645751953
+        },
+        {
+          "option": "6.626 \u00d7 10^-34",
+          "avg_logprob": -15.595630645751953
+        }
+      ],
+      "context": "[1] source=frankenstein.txt\ndiscovered unworthiness of one beloved and so was disposed to set a greater value on tried worth there was a show of gratitude and worship in his attachment to my mother differing wholly from the doting fondness of age for it was inspired by reverence for her virtues and a desire to be the means of in some degree recompensing her for the sorrows she had endured but which gave inexpressible grace to his behaviour to her everything was made to yield to her wishes and her convenience he strove to shelter her as a fair exotic is sheltered by the gardener from every rougher wind and to surround her with all that could tend to excite pleasurable emotion in her soft and benevolent mind her health and even the tranquillity of her hitherto constant spirit had been shaken by what she had gone through during the two years that had elapsed previous to their marriage my father had gradually relinquished all his public functions and immediately after their union they sought the pleasant climate of italy and the change of scene and interest attendant on a tour through that land of wonders as a restorative for her weakened frame from italy they visited germany and france i their eldest child was born at naples and as an infant accompanied\n\n[2] source=moby_dick.txt\nonly four published outlines of the great sperm whale colnett s huggins s frederick cuvier s and beale s in the previous chapter colnett and cuvier have been referred to huggins s is far better than theirs but by great odds beale s is the best all beale s drawings of this whale are good excepting the middle figure in the picture of three whales in various attitudes capping his second chapter his frontispiece boats attacking sperm whales though no doubt calculated to excite the civil scepticism of some parlor men is admirably correct and life like in its general effect some of the sperm whale drawings in j ross browne are pretty correct in contour but they are wretchedly engraved that is not his fault though of the right whale the best outline pictures are in scoresby but they are drawn on too small a scale to convey a desirable impression he has but one picture of whaling scenes and this is a sad deficiency because it is by such pictures only when at all well done that you can derive anything like a truthful idea of the living whale as seen by his living hunters but taken for all in all by far the finest though in some details not the most correct presentations of whales and whaling\n\n[3] source=moby_dick.txt\njohn bull is poor ireland but a fast fish what to that apostolic lancer brother jonathan is texas but a fast fish and concerning all these is not possession the whole of the law but if the doctrine of fast fish be pretty generally applicable the kindred doctrine of loose fish is still more widely so that is internationally and universally applicable what was america in 1492 but a loose fish in which columbus struck the spanish standard by way of waifing it for his royal master and mistress what was poland to the czar what greece to the turk what india to england what at last will mexico be to the united states all loose fish what are the rights of man and the liberties of the world but loose fish what all men s minds and opinions but loose fish what is the principle of religious belief in them but a loose fish what to the ostentatious smuggling verbalists are the thoughts of thinkers but loose fish what is the great globe itself but a loose fish and what are you reader but a loose fish and a fast fish too chapter 90 heads or tails de balena vero sufficit si rex habeat caput et regina caudam _bracton l 3 c 3 _ latin from the books of\n\n[4] source=shakespeare.txt\ni know not sdeath the rabble should have first unroof d the city ere so prevail d with me it will in time win upon power and throw forth greater themes for insurrection s arguing menenius this is strange marcius go get you home you fragments messenger where s caius marcius marcius here what s the matter messenger the news is sir the volsces are in arms marcius i am glad on t then we shall ha means to vent our musty superfluity see our best elders first senator marcius tis true that you have lately told us the volsces are in arms marcius they have a leader tullus aufidius that will put you to t i sin in envying his nobility and were i any thing but what i am i would wish me only he cominius you have fought together marcius were half to half the world by the ears and he upon my party i ld revolt to make only my wars with him he is a lion that i am proud to hunt first senator then worthy marcius attend upon cominius to these wars cominius it is your former promise marcius sir it is and i am constant titus lartius thou shalt see me once more strike at tullus face what art thou stiff stand st",
+      "iteration_count": 2,
+      "iterative_triggered": true,
+      "iteration_trace": [
+        {
+          "followup_query": "What is Planck's constant value in SI units (J\u00b7s)? planck constant source frankenstein discovered unworthiness supporting evidence",
+          "trigger_uncertainty": 0.8,
+          "retrieved_followup_docs": 6
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 35,
+          "rank": 1,
+          "score": 0.016129032258064516,
+          "rerank_score": 0.784408766965956,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.02381983174495004,
+            "cross_encoder": -11.120794296264648,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "discovered unworthiness of one beloved and so was disposed to set a greater value on tried worth there was a show of gratitude and worship in his attachment to my mother differing wholly from the doting fondness of age for it was inspired by reverence for her virtues and a desire to be the means of in some degree recompensing her for the sorrows she had endured but which gave inexpressible grace to his behaviour to her everything was made to yield to her wishes and her convenience he strove to shelter her as a fair exotic is sheltered by the gardener from every rougher wind and to surround her with all that could tend to excite pleasurable emotion in her soft and benevolent mind her health and even the tranquillity of her hitherto constant spirit had been shaken by what she had gone through during the two years that had elapsed previous to their marriage my father had gradually relinquished all his public functions and immediately after their union they sought the pleasant climate of italy and the change of scene and interest attendant on a tour through that land of wonders as a restorative for her weakened frame from italy they visited germany and france i their eldest child was born at naples and as an infant accompanied"
+        },
+        {
+          "doc_id": 3099,
+          "rank": 2,
+          "score": 0.015625,
+          "rerank_score": 0.5071142319452185,
+          "rerank_components": {
+            "lexical": 4.0,
+            "semantic": 0.033105533762420876,
+            "cross_encoder": -11.254514694213867,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "only four published outlines of the great sperm whale colnett s huggins s frederick cuvier s and beale s in the previous chapter colnett and cuvier have been referred to huggins s is far better than theirs but by great odds beale s is the best all beale s drawings of this whale are good excepting the middle figure in the picture of three whales in various attitudes capping his second chapter his frontispiece boats attacking sperm whales though no doubt calculated to excite the civil scepticism of some parlor men is admirably correct and life like in its general effect some of the sperm whale drawings in j ross browne are pretty correct in contour but they are wretchedly engraved that is not his fault though of the right whale the best outline pictures are in scoresby but they are drawn on too small a scale to convey a desirable impression he has but one picture of whaling scenes and this is a sad deficiency because it is by such pictures only when at all well done that you can derive anything like a truthful idea of the living whale as seen by his living hunters but taken for all in all by far the finest though in some details not the most correct presentations of whales and whaling"
+        },
+        {
+          "doc_id": 3374,
+          "rank": 3,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.48712589257743744,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.06662560279035715,
+            "cross_encoder": -11.396154403686523,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "john bull is poor ireland but a fast fish what to that apostolic lancer brother jonathan is texas but a fast fish and concerning all these is not possession the whole of the law but if the doctrine of fast fish be pretty generally applicable the kindred doctrine of loose fish is still more widely so that is internationally and universally applicable what was america in 1492 but a loose fish in which columbus struck the spanish standard by way of waifing it for his royal master and mistress what was poland to the czar what greece to the turk what india to england what at last will mexico be to the united states all loose fish what are the rights of man and the liberties of the world but loose fish what all men s minds and opinions but loose fish what is the principle of religious belief in them but a loose fish what to the ostentatious smuggling verbalists are the thoughts of thinkers but loose fish what is the great globe itself but a loose fish and what are you reader but a loose fish and a fast fish too chapter 90 heads or tails de balena vero sufficit si rex habeat caput et regina caudam _bracton l 3 c 3 _ latin from the books of"
+        },
+        {
+          "doc_id": 4156,
+          "rank": 4,
+          "score": 0.014705882352941176,
+          "rerank_score": 0.44302621248193874,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.03429785117073046,
+            "cross_encoder": -11.332414627075195,
+            "strategy": "hybrid"
+          },
+          "source": "shakespeare.txt",
+          "text": "i know not sdeath the rabble should have first unroof d the city ere so prevail d with me it will in time win upon power and throw forth greater themes for insurrection s arguing menenius this is strange marcius go get you home you fragments messenger where s caius marcius marcius here what s the matter messenger the news is sir the volsces are in arms marcius i am glad on t then we shall ha means to vent our musty superfluity see our best elders first senator marcius tis true that you have lately told us the volsces are in arms marcius they have a leader tullus aufidius that will put you to t i sin in envying his nobility and were i any thing but what i am i would wish me only he cominius you have fought together marcius were half to half the world by the ears and he upon my party i ld revolt to make only my wars with him he is a lion that i am proud to hunt first senator then worthy marcius attend upon cominius to these wars cominius it is your former promise marcius sir it is and i am constant titus lartius thou shalt see me once more strike at tullus face what art thou stiff stand st"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.4780000000000001,
+        "baseline_uncertainty": 0.8,
+        "adjustment": -0.32199999999999995,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.925626315176487,
+            "factual_consistency": 0.925626315176487,
+            "entailment_avg": 0.925626315176487,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.0,
+            "threshold": 0.15,
+            "uncertainty": 0.75
+          }
+        },
+        "combined_uncertainty": 0.42000000000000004
+      }
+    },
+    {
+      "id": "adv_physics_002",
+      "category": "unknown",
+      "query": "What is the speed of sound in air at 20\u00b0C in m/s?",
+      "expected_answer": "343",
+      "generated_answer": "343",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0000001192092896,
+        "entailment_score": 0.9569315811619162,
+        "factual_consistency": 0.9569315811619162,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.4780000000000001
+      },
+      "option_scores": [
+        {
+          "option": "343",
+          "avg_logprob": -8.854785788804293
+        },
+        {
+          "option": "330",
+          "avg_logprob": -8.854785788804293
+        },
+        {
+          "option": "344",
+          "avg_logprob": -8.854785788804293
+        },
+        {
+          "option": "340",
+          "avg_logprob": -8.854785788804293
+        },
+        {
+          "option": "3430",
+          "avg_logprob": -8.854785788804293
+        }
+      ],
+      "context": "[1] source=frankenstein.txt\nof sound sense and real information combined it is true with a repulsive physiognomy and manners but not on that account the less valuable in m waldman i found a true friend his gentleness was never tinged by dogmatism and his instructions were given with an air of frankness and good nature that banished every idea of pedantry in a thousand ways he smoothed for me the path of knowledge and made the most abstruse inquiries clear and facile to my apprehension my application was at first fluctuating and uncertain it gained strength as i proceeded and soon became so ardent and eager that the stars often disappeared in the light of morning whilst i was yet engaged in my laboratory as i applied so closely it may be easily conceived that my progress was rapid my ardour was indeed the astonishment of the students and my proficiency that of the masters professor krempe often asked me with a sly smile how cornelius agrippa went on whilst m waldman expressed the most heartfelt exultation in my progress two years passed in this manner during which i paid no visit to geneva but was engaged heart and soul in the pursuit of some discoveries which i hoped to make none but those who have experienced them can conceive of the enticements\n\n[2] source=moby_dick.txt\nendless pains and sorrows there which none but they that feel can tell oh i was plunging to despair in black distress i called my god when i could scarce believe him mine he bowed his ear to my complaints no more the whale did me confine with speed he flew to my relief as on a radiant dolphin borne awful yet bright as lightning shone the face of my deliverer god my song for ever shall record that terrible that joyful hour i give the glory to my god his all the mercy and the power nearly all joined in singing this hymn which swelled high above the howling of the storm a brief pause ensued the preacher slowly turned over the leaves of the bible and at last folding his hand down upon the proper page said beloved shipmates clinch the last verse of the first chapter of jonah and god had prepared a great fish to swallow up jonah shipmates this book containing only four chapters four yarns is one of the smallest strands in the mighty cable of the scriptures yet what depths of the soul does jonah s deep sealine sound what a pregnant lesson to us is this prophet what a noble thing is that canticle in the fish s belly how billow like\n\n[3] source=moby_dick.txt\nwhale watching these sprinklings and spoutings that all this should be and yet that down to this blessed minute fifteen and a quarter minutes past one o clock p m of this sixteenth day of december a d 1851 it should still remain a problem whether these spoutings are after all really water or nothing but vapor this is surely a noteworthy thing let us then look at this matter along with some interesting items contingent every one knows that by the peculiar cunning of their gills the finny tribes in general breathe the air which at all times is combined with the element in which they swim hence a herring or a cod might live a century and never once raise its head above the surface but owing to his marked internal structure which gives him regular lungs like a human being s the whale can only live by inhaling the disengaged air in the open atmosphere wherefore the necessity for his periodical visits to the upper world but he cannot in any degree breathe through his mouth for in his ordinary attitude the sperm whale s mouth is buried at least eight feet beneath the surface and what is still more his windpipe has no connexion with his mouth no he breathes through his spiracle alone and this\n\n[4] source=tale_two_cities.txt\nmen or all of these men were disposed to spare him which is a large supposition for what is his life or any man s to them i doubt if they durst spare him after the demonstration in the court and so do i i heard the fall of the axe in that sound mr lorry leaned his arm upon the door post and bowed his face upon it don t despond said carton very gently don t grieve i encouraged doctor manette in this idea because i felt that it might one day be consolatory to her otherwise she might think his life was wantonly thrown away or wasted and that might trouble her yes yes yes returned mr lorry drying his eyes you are right but he will perish there is no real hope yes he will perish there is no real hope echoed carton and walked with a settled step down stairs chapter xii darkness sydney carton paused in the street not quite decided where to go at tellson s banking house at nine he said with a musing face shall i do well in the mean time to show myself i think so it is best that these people should know there is such a man as i here it is a sound precaution and may",
+      "iteration_count": 2,
+      "iterative_triggered": true,
+      "iteration_trace": [
+        {
+          "followup_query": "What is the speed of sound in air at 20\u00b0C in m/s? speed sound source frankenstein sense real supporting evidence",
+          "trigger_uncertainty": 0.8,
+          "retrieved_followup_docs": 6
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 69,
+          "rank": 1,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.9020185393573099,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.08621167271874985,
+            "cross_encoder": -11.102558135986328,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "of sound sense and real information combined it is true with a repulsive physiognomy and manners but not on that account the less valuable in m waldman i found a true friend his gentleness was never tinged by dogmatism and his instructions were given with an air of frankness and good nature that banished every idea of pedantry in a thousand ways he smoothed for me the path of knowledge and made the most abstruse inquiries clear and facile to my apprehension my application was at first fluctuating and uncertain it gained strength as i proceeded and soon became so ardent and eager that the stars often disappeared in the light of morning whilst i was yet engaged in my laboratory as i applied so closely it may be easily conceived that my progress was rapid my ardour was indeed the astonishment of the students and my proficiency that of the masters professor krempe often asked me with a sly smile how cornelius agrippa went on whilst m waldman expressed the most heartfelt exultation in my progress two years passed in this manner during which i paid no visit to geneva but was engaged heart and soul in the pursuit of some discoveries which i hoped to make none but those who have experienced them can conceive of the enticements"
+        },
+        {
+          "doc_id": 2621,
+          "rank": 2,
+          "score": 0.015151515151515152,
+          "rerank_score": 0.7201164744330467,
+          "rerank_components": {
+            "lexical": 9.0,
+            "semantic": 0.09206633649547342,
+            "cross_encoder": -11.171015739440918,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "endless pains and sorrows there which none but they that feel can tell oh i was plunging to despair in black distress i called my god when i could scarce believe him mine he bowed his ear to my complaints no more the whale did me confine with speed he flew to my relief as on a radiant dolphin borne awful yet bright as lightning shone the face of my deliverer god my song for ever shall record that terrible that joyful hour i give the glory to my god his all the mercy and the power nearly all joined in singing this hymn which swelled high above the howling of the storm a brief pause ensued the preacher slowly turned over the leaves of the bible and at last folding his hand down upon the proper page said beloved shipmates clinch the last verse of the first chapter of jonah and god had prepared a great fish to swallow up jonah shipmates this book containing only four chapters four yarns is one of the smallest strands in the mighty cable of the scriptures yet what depths of the soul does jonah s deep sealine sound what a pregnant lesson to us is this prophet what a noble thing is that canticle in the fish s belly how billow like"
+        },
+        {
+          "doc_id": 3312,
+          "rank": 3,
+          "score": 0.014492753623188406,
+          "rerank_score": 0.4236683627324582,
+          "rerank_components": {
+            "lexical": 9.0,
+            "semantic": 0.08475615858461716,
+            "cross_encoder": -11.22887134552002,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "whale watching these sprinklings and spoutings that all this should be and yet that down to this blessed minute fifteen and a quarter minutes past one o clock p m of this sixteenth day of december a d 1851 it should still remain a problem whether these spoutings are after all really water or nothing but vapor this is surely a noteworthy thing let us then look at this matter along with some interesting items contingent every one knows that by the peculiar cunning of their gills the finny tribes in general breathe the air which at all times is combined with the element in which they swim hence a herring or a cod might live a century and never once raise its head above the surface but owing to his marked internal structure which gives him regular lungs like a human being s the whale can only live by inhaling the disengaged air in the open atmosphere wherefore the necessity for his periodical visits to the upper world but he cannot in any degree breathe through his mouth for in his ordinary attitude the sperm whale s mouth is buried at least eight feet beneath the surface and what is still more his windpipe has no connexion with his mouth no he breathes through his spiracle alone and this"
+        },
+        {
+          "doc_id": 2429,
+          "rank": 4,
+          "score": 0.014492753623188406,
+          "rerank_score": 0.41524393613690086,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.07175568786443329,
+            "cross_encoder": -11.192642211914062,
+            "strategy": "hybrid"
+          },
+          "source": "tale_two_cities.txt",
+          "text": "men or all of these men were disposed to spare him which is a large supposition for what is his life or any man s to them i doubt if they durst spare him after the demonstration in the court and so do i i heard the fall of the axe in that sound mr lorry leaned his arm upon the door post and bowed his face upon it don t despond said carton very gently don t grieve i encouraged doctor manette in this idea because i felt that it might one day be consolatory to her otherwise she might think his life was wantonly thrown away or wasted and that might trouble her yes yes yes returned mr lorry drying his eyes you are right but he will perish there is no real hope yes he will perish there is no real hope echoed carton and walked with a settled step down stairs chapter xii darkness sydney carton paused in the street not quite decided where to go at tellson s banking house at nine he said with a musing face shall i do well in the mean time to show myself i think so it is best that these people should know there is such a man as i here it is a sound precaution and may"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.4780000000000001,
+        "baseline_uncertainty": 0.8,
+        "adjustment": -0.32199999999999995,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.9569315811619162,
+            "factual_consistency": 0.9569315811619162,
+            "entailment_avg": 0.9569315811619162,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.0,
+            "threshold": 0.15,
+            "uncertainty": 0.75
+          }
+        },
+        "combined_uncertainty": 0.42000000000000004
+      }
+    },
+    {
+      "id": "adv_biology_001",
+      "category": "unknown",
+      "query": "How many nucleotides are in a complete turn of the DNA double helix?",
+      "expected_answer": "10",
+      "generated_answer": "10",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0,
+        "entailment_score": 0.7193841189146042,
+        "factual_consistency": 0.7193841189146042,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.5098638133455207
+      },
+      "option_scores": [
+        {
+          "option": "10",
+          "avg_logprob": -8.064722245559096
+        },
+        {
+          "option": "10.5",
+          "avg_logprob": -8.064722245559096
+        },
+        {
+          "option": "10.0 (but with caveat about B-form)",
+          "avg_logprob": -8.064722245559096
+        },
+        {
+          "option": "11",
+          "avg_logprob": -8.064722245559096
+        },
+        {
+          "option": "9",
+          "avg_logprob": -8.064722245559096
+        }
+      ],
+      "context": "[1] source=pride_prejudice.txt\nwas likely to be hardened in all her folly and assurance by a situation of such double danger as a watering place and a camp upon the whole therefore she found what has been sometimes found before that an event to which she had looked forward with impatient desire did not in taking place bring all the satisfaction she had promised herself it was consequently necessary to name some other period for the commencement of actual felicity to have some other point on which her wishes and hopes might be fixed and by again enjoying the pleasure of anticipation console herself for the present and prepare for another disappointment her tour to the lakes was now the object of her happiest thoughts it was her best consolation for all the uncomfortable hours which the discontentedness of her mother and kitty made inevitable and could she have included jane in the scheme every part of it would have been perfect but it is fortunate thought she that i have something to wish for were the whole arrangement complete my disappointment would be certain but here by carrying with me one ceaseless source of regret in my sister s absence i may reasonably hope to have all my expectations of pleasure realized a scheme of which every part promises delight can never\n\n[2] source=moby_dick.txt\nsecure his oar turn round on his centre half way seize his harpoon from the crotch and with what little strength may remain he essays to pitch it somehow into the whale no wonder taking the whole fleet of whalemen in a body that out of fifty fair chances for a dart not five are successful no wonder that so many hapless harpooneers are madly cursed and disrated no wonder that some of them actually burst their blood vessels in the boat no wonder that some sperm whalemen are absent four years with four barrels no wonder that to many ship owners whaling is but a losing concern for it is the harpooneer that makes the voyage and if you take the breath out of his body how can you expect to find it there when most wanted again if the dart be successful then at the second critical instant that is when the whale starts to run the boatheader and harpooneer likewise start to running fore and aft to the imminent jeopardy of themselves and every one else it is then they change places and the headsman the chief officer of the little craft takes his proper station in the bows of the boat now i care not who maintains the contrary but all this is both foolish and\n\n[3] source=tom_sawyer.txt\nseen during the first half hour a procession of villagers filed through judge thatcher s house seized the saved ones and kissed them squeezed mrs thatcher s hand tried to speak but couldn t and drifted out raining tears all over the place aunt polly s happiness was complete and mrs thatcher s nearly so it would be complete however as soon as the messenger dispatched with the great news to the cave should get the word to her husband tom lay upon a sofa with an eager auditory about him and told the history of the wonderful adventure putting in many striking additions to adorn it withal and closed with a description of how he left becky and went on an exploring expedition how he followed two avenues as far as his kite line would reach how he followed a third to the fullest stretch of the kite line and was about to turn back when he glimpsed a far off speck that looked like daylight dropped the line and groped toward it pushed his head and shoulders through a small hole and saw the broad mississippi rolling by and if it had only happened to be night he would not have seen that speck of daylight and would not have explored that passage any more he told how\n\n[4] source=sherlock.txt\nlike a coster s orange barrow i should not have thought there were so many in the whole country as were brought together by that single advertisement every shade of colour they were straw lemon orange brick irish setter liver clay but as spaulding said there were not many who had the real vivid flame coloured tint when i saw how many were waiting i would have given it up in despair but spaulding would not hear of it how he did it i could not imagine but he pushed and pulled and butted until he got me through the crowd and right up to the steps which led to the office there was a double stream upon the stair some going up in hope and some coming back dejected but we wedged in as well as we could and soon found ourselves in the office your experience has been a most entertaining one remarked holmes as his client paused and refreshed his memory with a huge pinch of snuff pray continue your very interesting statement there was nothing in the office but a couple of wooden chairs and a deal table behind which sat a small man with a head that was even redder than mine he said a few words to each candidate as he came up and",
+      "iteration_count": 2,
+      "iterative_triggered": true,
+      "iteration_trace": [
+        {
+          "followup_query": "How many nucleotides are in a complete turn of the DNA double helix? many nucleotides complete turn double helix supporting evidence",
+          "trigger_uncertainty": 0.8,
+          "retrieved_followup_docs": 6
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 863,
+          "rank": 1,
+          "score": 0.014925373134328358,
+          "rerank_score": 0.7184307003098942,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.05575316569594526,
+            "cross_encoder": -11.180304527282715,
+            "strategy": "hybrid"
+          },
+          "source": "pride_prejudice.txt",
+          "text": "was likely to be hardened in all her folly and assurance by a situation of such double danger as a watering place and a camp upon the whole therefore she found what has been sometimes found before that an event to which she had looked forward with impatient desire did not in taking place bring all the satisfaction she had promised herself it was consequently necessary to name some other period for the commencement of actual felicity to have some other point on which her wishes and hopes might be fixed and by again enjoying the pleasure of anticipation console herself for the present and prepare for another disappointment her tour to the lakes was now the object of her happiest thoughts it was her best consolation for all the uncomfortable hours which the discontentedness of her mother and kitty made inevitable and could she have included jane in the scheme every part of it would have been perfect but it is fortunate thought she that i have something to wish for were the whole arrangement complete my disappointment would be certain but here by carrying with me one ceaseless source of regret in my sister s absence i may reasonably hope to have all my expectations of pleasure realized a scheme of which every part promises delight can never"
+        },
+        {
+          "doc_id": 3143,
+          "rank": 2,
+          "score": 0.015384615384615385,
+          "rerank_score": 0.5524897364030201,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.0821978806632325,
+            "cross_encoder": -11.258222579956055,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "secure his oar turn round on his centre half way seize his harpoon from the crotch and with what little strength may remain he essays to pitch it somehow into the whale no wonder taking the whole fleet of whalemen in a body that out of fifty fair chances for a dart not five are successful no wonder that so many hapless harpooneers are madly cursed and disrated no wonder that some of them actually burst their blood vessels in the boat no wonder that some sperm whalemen are absent four years with four barrels no wonder that to many ship owners whaling is but a losing concern for it is the harpooneer that makes the voyage and if you take the breath out of his body how can you expect to find it there when most wanted again if the dart be successful then at the second critical instant that is when the whale starts to run the boatheader and harpooneer likewise start to running fore and aft to the imminent jeopardy of themselves and every one else it is then they change places and the headsman the chief officer of the little craft takes his proper station in the bows of the boat now i care not who maintains the contrary but all this is both foolish and"
+        },
+        {
+          "doc_id": 4105,
+          "rank": 3,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.5508514300444785,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.07123600922413363,
+            "cross_encoder": -11.246654510498047,
+            "strategy": "hybrid"
+          },
+          "source": "tom_sawyer.txt",
+          "text": "seen during the first half hour a procession of villagers filed through judge thatcher s house seized the saved ones and kissed them squeezed mrs thatcher s hand tried to speak but couldn t and drifted out raining tears all over the place aunt polly s happiness was complete and mrs thatcher s nearly so it would be complete however as soon as the messenger dispatched with the great news to the cave should get the word to her husband tom lay upon a sofa with an eager auditory about him and told the history of the wonderful adventure putting in many striking additions to adorn it withal and closed with a description of how he left becky and went on an exploring expedition how he followed two avenues as far as his kite line would reach how he followed a third to the fullest stretch of the kite line and was about to turn back when he glimpsed a far off speck that looked like daylight dropped the line and groped toward it pushed his head and shoulders through a small hole and saw the broad mississippi rolling by and if it had only happened to be night he would not have seen that speck of daylight and would not have explored that passage any more he told how"
+        },
+        {
+          "doc_id": 1198,
+          "rank": 4,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.5349081991385606,
+          "rerank_components": {
+            "lexical": 7.0,
+            "semantic": 0.06327831813738945,
+            "cross_encoder": -11.231725692749023,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "like a coster s orange barrow i should not have thought there were so many in the whole country as were brought together by that single advertisement every shade of colour they were straw lemon orange brick irish setter liver clay but as spaulding said there were not many who had the real vivid flame coloured tint when i saw how many were waiting i would have given it up in despair but spaulding would not hear of it how he did it i could not imagine but he pushed and pulled and butted until he got me through the crowd and right up to the steps which led to the office there was a double stream upon the stair some going up in hope and some coming back dejected but we wedged in as well as we could and soon found ourselves in the office your experience has been a most entertaining one remarked holmes as his client paused and refreshed his memory with a huge pinch of snuff pray continue your very interesting statement there was nothing in the office but a couple of wooden chairs and a deal table behind which sat a small man with a head that was even redder than mine he said a few words to each candidate as he came up and"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.5098638133455207,
+        "baseline_uncertainty": 0.8,
+        "adjustment": -0.2901361866544794,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.7193841189146042,
+            "factual_consistency": 0.7193841189146042,
+            "entailment_avg": 0.7193841189146042,
+            "threshold": 0.85,
+            "uncertainty": 0.14161694820231407
+          },
+          "faithfulness": {
+            "faithfulness": 0.0,
+            "threshold": 0.15,
+            "uncertainty": 0.75
+          }
+        },
+        "combined_uncertainty": 0.45540423705057853
+      }
+    },
+    {
+      "id": "adv_math_002",
+      "category": "unknown",
+      "query": "What is the determinant of the matrix [[2, 3], [4, 5]]?",
+      "expected_answer": "-2",
+      "generated_answer": "-2",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 1.0,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 0.9999998807907104,
+        "entailment_score": 0.8694017227739096,
+        "factual_consistency": 0.8694017227739096,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.343
+      },
+      "option_scores": [
+        {
+          "option": "-2",
+          "avg_logprob": -14.12216854095459
+        },
+        {
+          "option": "2",
+          "avg_logprob": -14.12216854095459
+        },
+        {
+          "option": "-2 (but calculate as 2*5 - 3*4)",
+          "avg_logprob": -14.12216854095459
+        },
+        {
+          "option": "10",
+          "avg_logprob": -14.12216854095459
+        },
+        {
+          "option": "-10",
+          "avg_logprob": -14.12216854095459
+        }
+      ],
+      "context": "[1] source=frankenstein.txt\nstart of the project gutenberg ebook 84 frankenstein or the modern prometheus by mary wollstonecraft godwin shelley contents letter 1 letter 2 letter 3 letter 4 chapter 1 chapter 2 chapter 3 chapter 4 chapter 5 chapter 6 chapter 7 chapter 8 chapter 9 chapter 10 chapter 11 chapter 12 chapter 13 chapter 14 chapter 15 chapter 16 chapter 17 chapter 18 chapter 19 chapter 20 chapter 21 chapter 22 chapter 23 chapter 24 letter 1 _to mrs saville england _ st petersburgh dec 11th 17 you will rejoice to hear that no disaster has accompanied the commencement of an enterprise which you have regarded with such evil forebodings i arrived here yesterday and my first task is to assure my dear sister of my welfare and increasing confidence in the success of my undertaking i am already far north of london and as i walk in the streets of petersburgh i feel a cold northern breeze play upon my cheeks which braces my nerves and fills me with delight do you understand this feeling this breeze which has travelled from the regions towards which i am advancing gives me a foretaste of those icy climes inspirited by this wind of promise my daydreams become more fervent and vivid i try in vain to be persuaded that the pole is\n\n[2] source=sherlock.txt\nmay choose to give you a second opportunity to receive the work electronically in lieu of a refund if the second copy is also defective you may demand a refund in writing without further opportunities to fix the problem 1 f 4 except for the limited right of replacement or refund set forth in paragraph 1 f 3 this work is provided to you as is with no other warranties of any kind express or implied including but not limited to warranties of merchantability or fitness for any purpose 1 f 5 some states do not allow disclaimers of certain implied warranties or the exclusion or limitation of certain types of damages if any disclaimer or limitation set forth in this agreement violates the law of the state applicable to this agreement the agreement shall be interpreted to make the maximum disclaimer or limitation permitted by the applicable state law the invalidity or unenforceability of any provision of this agreement shall not void the remaining provisions 1 f 6 indemnity you agree to indemnify and hold the foundation the trademark owner any agent or employee of the foundation anyone providing copies of project gutenberg electronic works in accordance with this agreement and any volunteers associated with the production promotion and distribution of project gutenberg electronic works harmless from all liability\n\n[3] source=pride_prejudice.txt\ndella cruscans of their own day and perhaps do look to the della cruscans of this _ _and after all what is the good of seeking for the reason of charm it is there there were better sense in the sad mechanic exercise of determining the reason of its absence where it is not in the novels of the last hundred years there are vast numbers of young ladies with whom it might be a pleasure to fall in love there are at least five with whom as it seems to me no man of taste and spirit can help doing so their names are in chronological order elizabeth bennet diana vernon argemone lavington beatrix esmond and barbara grant i should have been most in love with beatrix and argemone i should i think for mere occasional companionship have preferred diana and barbara but to live with and to marry i do not know that any one of the four can come into competition with elizabeth _ _george saintsbury _ illustration list of illustrations page frontispiece iv title page v dedication vii heading to preface ix heading to list of illustrations xxv heading to chapter i 1 he came down to see the place 2 mr and mrs bennet 5 i hope mr bingley will like it 6 i m\n\n[4] source=sherlock.txt\nit is posted with permission of the copyright holder the work can be copied and distributed to anyone in the united states without paying any fees or charges if you are redistributing or providing access to a work with the phrase project gutenberg associated with or appearing on the work you must comply either with the requirements of paragraphs 1 e 1 through 1 e 7 or obtain permission for the use of the work and the project gutenberg trademark as set forth in paragraphs 1 e 8 or 1 e 9 1 e 3 if an individual project gutenberg electronic work is posted with the permission of the copyright holder your use and distribution must comply with both paragraphs 1 e 1 through 1 e 7 and any additional terms imposed by the copyright holder additional terms will be linked to the project gutenberg license for all works posted with the permission of the copyright holder found at the beginning of this work 1 e 4 do not unlink or detach or remove the full project gutenberg license terms from this work or any files containing a part of this work or any other work associated with project gutenberg 1 e 5 do not copy display perform distribute or redistribute this electronic work or any part of this electronic",
+      "iteration_count": 2,
+      "iterative_triggered": true,
+      "iteration_trace": [
+        {
+          "followup_query": "What is the determinant of the matrix [[2, 3], [4, 5]]? determinant matrix source frankenstein start project supporting evidence",
+          "trigger_uncertainty": 0.8,
+          "retrieved_followup_docs": 6
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 0,
+          "rank": 1,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.7000000000000001,
+          "rerank_components": {
+            "lexical": 7.0,
+            "semantic": 0.042679236984686654,
+            "cross_encoder": -10.254310607910156,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "start of the project gutenberg ebook 84 frankenstein or the modern prometheus by mary wollstonecraft godwin shelley contents letter 1 letter 2 letter 3 letter 4 chapter 1 chapter 2 chapter 3 chapter 4 chapter 5 chapter 6 chapter 7 chapter 8 chapter 9 chapter 10 chapter 11 chapter 12 chapter 13 chapter 14 chapter 15 chapter 16 chapter 17 chapter 18 chapter 19 chapter 20 chapter 21 chapter 22 chapter 23 chapter 24 letter 1 _to mrs saville england _ st petersburgh dec 11th 17 you will rejoice to hear that no disaster has accompanied the commencement of an enterprise which you have regarded with such evil forebodings i arrived here yesterday and my first task is to assure my dear sister of my welfare and increasing confidence in the success of my undertaking i am already far north of london and as i walk in the streets of petersburgh i feel a cold northern breeze play upon my cheeks which braces my nerves and fills me with delight do you understand this feeling this breeze which has travelled from the regions towards which i am advancing gives me a foretaste of those icy climes inspirited by this wind of promise my daydreams become more fervent and vivid i try in vain to be persuaded that the pole is"
+        },
+        {
+          "doc_id": 1736,
+          "rank": 2,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.5495953165545155,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.11150848058231151,
+            "cross_encoder": -10.96865177154541,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "may choose to give you a second opportunity to receive the work electronically in lieu of a refund if the second copy is also defective you may demand a refund in writing without further opportunities to fix the problem 1 f 4 except for the limited right of replacement or refund set forth in paragraph 1 f 3 this work is provided to you as is with no other warranties of any kind express or implied including but not limited to warranties of merchantability or fitness for any purpose 1 f 5 some states do not allow disclaimers of certain implied warranties or the exclusion or limitation of certain types of damages if any disclaimer or limitation set forth in this agreement violates the law of the state applicable to this agreement the agreement shall be interpreted to make the maximum disclaimer or limitation permitted by the applicable state law the invalidity or unenforceability of any provision of this agreement shall not void the remaining provisions 1 f 6 indemnity you agree to indemnify and hold the foundation the trademark owner any agent or employee of the foundation anyone providing copies of project gutenberg electronic works in accordance with this agreement and any volunteers associated with the production promotion and distribution of project gutenberg electronic works harmless from all liability"
+        },
+        {
+          "doc_id": 443,
+          "rank": 3,
+          "score": 0.014925373134328358,
+          "rerank_score": 0.5361255510573912,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.11187715011302576,
+            "cross_encoder": -10.995641708374023,
+            "strategy": "hybrid"
+          },
+          "source": "pride_prejudice.txt",
+          "text": "della cruscans of their own day and perhaps do look to the della cruscans of this _ _and after all what is the good of seeking for the reason of charm it is there there were better sense in the sad mechanic exercise of determining the reason of its absence where it is not in the novels of the last hundred years there are vast numbers of young ladies with whom it might be a pleasure to fall in love there are at least five with whom as it seems to me no man of taste and spirit can help doing so their names are in chronological order elizabeth bennet diana vernon argemone lavington beatrix esmond and barbara grant i should have been most in love with beatrix and argemone i should i think for mere occasional companionship have preferred diana and barbara but to live with and to marry i do not know that any one of the four can come into competition with elizabeth _ _george saintsbury _ illustration list of illustrations page frontispiece iv title page v dedication vii heading to preface ix heading to list of illustrations xxv heading to chapter i 1 he came down to see the place 2 mr and mrs bennet 5 i hope mr bingley will like it 6 i m"
+        },
+        {
+          "doc_id": 1730,
+          "rank": 4,
+          "score": 0.015625,
+          "rerank_score": 0.45185006982973963,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.10411395909964836,
+            "cross_encoder": -11.086310386657715,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "it is posted with permission of the copyright holder the work can be copied and distributed to anyone in the united states without paying any fees or charges if you are redistributing or providing access to a work with the phrase project gutenberg associated with or appearing on the work you must comply either with the requirements of paragraphs 1 e 1 through 1 e 7 or obtain permission for the use of the work and the project gutenberg trademark as set forth in paragraphs 1 e 8 or 1 e 9 1 e 3 if an individual project gutenberg electronic work is posted with the permission of the copyright holder your use and distribution must comply with both paragraphs 1 e 1 through 1 e 7 and any additional terms imposed by the copyright holder additional terms will be linked to the project gutenberg license for all works posted with the permission of the copyright holder found at the beginning of this work 1 e 4 do not unlink or detach or remove the full project gutenberg license terms from this work or any files containing a part of this work or any other work associated with project gutenberg 1 e 5 do not copy display perform distribute or redistribute this electronic work or any part of this electronic"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.343,
+        "baseline_uncertainty": 0.8,
+        "adjustment": -0.457,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.8694017227739096,
+            "factual_consistency": 0.8694017227739096,
+            "entailment_avg": 0.8694017227739096,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 1.0,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.27
+      }
+    },
+    {
+      "id": "adv_cs_001",
+      "category": "unknown",
+      "query": "What is the time complexity of merge sort in the worst case?",
+      "expected_answer": "O(n log n)",
+      "generated_answer": "O(n log n)",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.3333333333333333,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 0.9999996423721313,
+        "entailment_score": 0.8532740943133831,
+        "factual_consistency": 0.8532740943133831,
+        "numeric_unit_consistency": 1.0,
+        "uncertainty_score": 0.2,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.343
+      },
+      "option_scores": [
+        {
+          "option": "O(n log n)",
+          "avg_logprob": -8.925370794138871
+        },
+        {
+          "option": "O(n^2)",
+          "avg_logprob": -8.925370794138871
+        },
+        {
+          "option": "O(n log n) with O(n) space",
+          "avg_logprob": -8.925370794138871
+        },
+        {
+          "option": "O(n)",
+          "avg_logprob": -8.925370794138871
+        },
+        {
+          "option": "O(log n)",
+          "avg_logprob": -8.925370794138871
+        }
+      ],
+      "context": "[1] source=tale_two_cities.txt\nsaid mr lorry but that very circumstance would be alarming when we remember how identified he is with his son in law that s true mr lorry acknowledged with his troubled hand at his chin and his troubled eyes on carton in short said sydney this is a desperate time when desperate games are played for desperate stakes let the doctor play the winning game i will play the losing one no man s life here is worth purchase any one carried home by the people to day may be condemned tomorrow now the stake i have resolved to play for in case of the worst is a friend in the conciergerie and the friend i purpose to myself to win is mr barsad you need have good cards sir said the spy i ll run them over i ll see what i hold mr lorry you know what a brute i am i wish you d give me a little brandy it was put before him and he drank off a glassful drank off another glassful pushed the bottle thoughtfully away mr barsad he went on in the tone of one who really was looking over a hand at cards sheep of the prisons emissary of republican committees now turnkey now prisoner always spy and secret informer so much\n\n[2] source=pride_prejudice.txt\nlast at longbourn heard in what manner he spoke of the man who had behaved with such forbearance and liberality towards him and there are other circumstances which i am not at liberty which it is not worth while to relate but his lies about the whole pemberley family are endless from what he said of miss darcy i was thoroughly prepared to see a proud reserved disagreeable girl yet he knew to the contrary himself he must know that she was as amiable and unpretending as we have found her but does lydia know nothing of this can she be ignorant of what you and jane seem so well to understand oh yes that that is the worst of all till i was in kent and saw so much both of mr darcy and his relation colonel fitzwilliam i was ignorant of the truth myself and when i returned home the shire was to leave meryton in a week or fortnight s time as that was the case neither jane to whom i related the whole nor i thought it necessary to make our knowledge public for of what use could it apparently be to anyone that the good opinion which all the neighbourhood had of him should then be overthrown and even when it was settled that lydia\n\n[3] source=shakespeare.txt\nis the worst thing about him good then if his face be the worst thing about him how could master froth do the constable s wife any harm i would know that of your honour escalus he s in the right constable what say you to it elbow first an it like you the house is a respected house next this is a respected fellow and his mistress is a respected woman pompey by this hand sir his wife is a more respected person than any of us all elbow varlet thou liest thou liest wicked varlet the time has yet to come that she was ever respected with man woman or child pompey sir she was respected with him before he married with her escalus which is the wiser here justice or iniquity is this true elbow o thou caitiff o thou varlet o thou wicked hannibal i respected with her before i was married to her if ever i was respected with her or she with me let not your worship think me the poor duke s officer prove this thou wicked hannibal or i ll have mine action of battery on thee escalus if he took you a box o the ear you might have your action of slander too elbow marry i thank your good worship\n\n[4] source=sherlock.txt\nand some wear only on one side now you remark in this note of yours mr windibank that in every case there is some little slurring over of the e and a slight defect in the tail of the r there are fourteen other characteristics but those are the more obvious we do all our correspondence with this machine at the office and no doubt it is a little worn our visitor answered glancing keenly at holmes with his bright little eyes and now i will show you what is really a very interesting study mr windibank holmes continued i think of writing another little monograph some of these days on the typewriter and its relation to crime it is a subject to which i have devoted some little attention i have here four letters which purport to come from the missing man they are all typewritten in each case not only are the e s slurred and the r s tailless but you will observe if you care to use my magnifying lens that the fourteen other characteristics to which i have alluded are there as well mr windibank sprang out of his chair and picked up his hat i cannot waste time over this sort of fantastic talk mr holmes he said if you can catch the man",
+      "iteration_count": 1,
+      "iterative_triggered": false,
+      "iteration_trace": [],
+      "retrieved_topk": [
+        {
+          "doc_id": 2350,
+          "rank": 1,
+          "score": 0.016129032258064516,
+          "rerank_score": 0.9501059718216586,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.09830964378223776,
+            "cross_encoder": -10.463947296142578,
+            "strategy": "hybrid"
+          },
+          "source": "tale_two_cities.txt",
+          "text": "said mr lorry but that very circumstance would be alarming when we remember how identified he is with his son in law that s true mr lorry acknowledged with his troubled hand at his chin and his troubled eyes on carton in short said sydney this is a desperate time when desperate games are played for desperate stakes let the doctor play the winning game i will play the losing one no man s life here is worth purchase any one carried home by the people to day may be condemned tomorrow now the stake i have resolved to play for in case of the worst is a friend in the conciergerie and the friend i purpose to myself to win is mr barsad you need have good cards sir said the spy i ll run them over i ll see what i hold mr lorry you know what a brute i am i wish you d give me a little brandy it was put before him and he drank off a glassful drank off another glassful pushed the bottle thoughtfully away mr barsad he went on in the tone of one who really was looking over a hand at cards sheep of the prisons emissary of republican committees now turnkey now prisoner always spy and secret informer so much"
+        },
+        {
+          "doc_id": 943,
+          "rank": 2,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.5924708915583348,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.09719658669941242,
+            "cross_encoder": -11.12559700012207,
+            "strategy": "hybrid"
+          },
+          "source": "pride_prejudice.txt",
+          "text": "last at longbourn heard in what manner he spoke of the man who had behaved with such forbearance and liberality towards him and there are other circumstances which i am not at liberty which it is not worth while to relate but his lies about the whole pemberley family are endless from what he said of miss darcy i was thoroughly prepared to see a proud reserved disagreeable girl yet he knew to the contrary himself he must know that she was as amiable and unpretending as we have found her but does lydia know nothing of this can she be ignorant of what you and jane seem so well to understand oh yes that that is the worst of all till i was in kent and saw so much both of mr darcy and his relation colonel fitzwilliam i was ignorant of the truth myself and when i returned home the shire was to leave meryton in a week or fortnight s time as that was the case neither jane to whom i related the whole nor i thought it necessary to make our knowledge public for of what use could it apparently be to anyone that the good opinion which all the neighbourhood had of him should then be overthrown and even when it was settled that lydia"
+        },
+        {
+          "doc_id": 5051,
+          "rank": 3,
+          "score": 0.015625,
+          "rerank_score": 0.4831300024001333,
+          "rerank_components": {
+            "lexical": 7.0,
+            "semantic": 0.08619981730760412,
+            "cross_encoder": -11.157434463500977,
+            "strategy": "hybrid"
+          },
+          "source": "shakespeare.txt",
+          "text": "is the worst thing about him good then if his face be the worst thing about him how could master froth do the constable s wife any harm i would know that of your honour escalus he s in the right constable what say you to it elbow first an it like you the house is a respected house next this is a respected fellow and his mistress is a respected woman pompey by this hand sir his wife is a more respected person than any of us all elbow varlet thou liest thou liest wicked varlet the time has yet to come that she was ever respected with man woman or child pompey sir she was respected with him before he married with her escalus which is the wiser here justice or iniquity is this true elbow o thou caitiff o thou varlet o thou wicked hannibal i respected with her before i was married to her if ever i was respected with her or she with me let not your worship think me the poor duke s officer prove this thou wicked hannibal or i ll have mine action of battery on thee escalus if he took you a box o the ear you might have your action of slander too elbow marry i thank your good worship"
+        },
+        {
+          "doc_id": 1266,
+          "rank": 4,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.4369137069414821,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.10401159072786763,
+            "cross_encoder": -11.466010093688965,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "and some wear only on one side now you remark in this note of yours mr windibank that in every case there is some little slurring over of the e and a slight defect in the tail of the r there are fourteen other characteristics but those are the more obvious we do all our correspondence with this machine at the office and no doubt it is a little worn our visitor answered glancing keenly at holmes with his bright little eyes and now i will show you what is really a very interesting study mr windibank holmes continued i think of writing another little monograph some of these days on the typewriter and its relation to crime it is a subject to which i have devoted some little attention i have here four letters which purport to come from the missing man they are all typewritten in each case not only are the e s slurred and the r s tailless but you will observe if you care to use my magnifying lens that the fourteen other characteristics to which i have alluded are there as well mr windibank sprang out of his chair and picked up his hat i cannot waste time over this sort of fantastic talk mr holmes he said if you can catch the man"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.343,
+        "baseline_uncertainty": 0.2,
+        "adjustment": 0.14300000000000002,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.8532740943133831,
+            "factual_consistency": 0.8532740943133831,
+            "entailment_avg": 0.8532740943133831,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.3333333333333333,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.27
+      }
+    },
+    {
+      "id": "adv_physics_003",
+      "category": "unknown",
+      "query": "What is the magnetic field produced by a long straight wire carrying current I at distance r?",
+      "expected_answer": "B = \u03bc\u2080I / (2\u03c0r)",
+      "generated_answer": "B = \u03bc\u2080I / (2\u03c0r)",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.5,
+        "semantic_similarity": 1.0000001192092896,
+        "bertscore_f1": 0.9999998211860657,
+        "entailment_score": 0.903005698043853,
+        "factual_consistency": 0.903005698043853,
+        "numeric_unit_consistency": 1.0,
+        "uncertainty_score": 0.15999999999999998,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.343
+      },
+      "option_scores": [
+        {
+          "option": "B = \u03bc\u2080I / (2\u03c0r)",
+          "avg_logprob": -15.56627082824707
+        },
+        {
+          "option": "B = \u03bc\u2080I / \u03c0r",
+          "avg_logprob": -15.56627082824707
+        },
+        {
+          "option": "B = \u03bc\u2080I / (2r)",
+          "avg_logprob": -15.56627082824707
+        },
+        {
+          "option": "B = \u03bc\u2080I / (2\u03c0r\u00b2)",
+          "avg_logprob": -15.56627082824707
+        },
+        {
+          "option": "B = \u03bc\u2080I * 2\u03c0r",
+          "avg_logprob": -15.56627082824707
+        }
+      ],
+      "context": "[1] source=moby_dick.txt\nchina some high aloft in the rigging as if striving to get a still better seaward peep but these are all landsmen of week days pent up in lath and plaster tied to counters nailed to benches clinched to desks how then is this are the green fields gone what do they here but look here come more crowds pacing straight for the water and seemingly bound for a dive strange nothing will content them but the extremest limit of the land loitering under the shady lee of yonder warehouses will not suffice no they must get just as nigh the water as they possibly can without falling in and there they stand miles of them leagues inlanders all they come from lanes and alleys streets and avenues north east south and west yet here they all unite tell me does the magnetic virtue of the needles of the compasses of all those ships attract them thither once more say you are in the country in some high land of lakes take almost any path you please and ten to one it carries you down in a dale and leaves you there by a pool in the stream there is magic in it let the most absent minded of men be plunged in his deepest reveries stand that man on\n\n[2] source=tom_sawyer.txt\nlong as a bank note and had fringed ends his boot toes were turned sharply up in the fashion of the day like sleigh runners an effect patiently and laboriously produced by the young men by sitting with their toes pressed against a wall for hours together mr walters was very earnest of mien and very sincere and honest at heart and he held sacred things and places in such reverence and so separated them from worldly matters that unconsciously to himself his sunday school voice had acquired a peculiar intonation which was wholly absent on week days he began after this fashion now children i want you all to sit up just as straight and pretty as you can and give me all your attention for a minute or two there that is it that is the way good little boys and girls should do i see one little girl who is looking out of the window i am afraid she thinks i am out there somewhere perhaps up in one of the trees making a speech to the little birds applausive titter i want to tell you how good it makes me feel to see so many bright clean little faces assembled in a place like this learning to do right and be good and so forth and\n\n[3] source=moby_dick.txt\nnothing to what at last met our eyes it is sometimes the custom when fast to a whale more than commonly powerful and alert to seek to hamstring him as it were by sundering or maiming his gigantic tail tendon it is done by darting a short handled cutting spade to which is attached a rope for hauling it back again a whale wounded as we afterwards learned in this part but not effectually as it seemed had broken away from the boat carrying along with him half of the harpoon line and in the extraordinary agony of the wound he was now dashing among the revolving circles like the lone mounted desperado arnold at the battle of saratoga carrying dismay wherever he went but agonizing as was the wound of this whale and an appalling spectacle enough any way yet the peculiar horror with which he seemed to inspire the rest of the herd was owing to a cause which at first the intervening distance obscured from us but at length we perceived that by one of the unimaginable accidents of the fishery this whale had become entangled in the harpoon line that he towed he had also run away with the cutting spade in him and while the free end of the rope attached to that weapon had\n\n[4] source=tom_sawyer.txt\nthe eclat that came with it in due course the superintendent stood up in front of the pulpit with a closed hymn book in his hand and his forefinger inserted between its leaves and commanded attention when a sunday school superintendent makes his customary little speech a hymn book in the hand is as necessary as is the inevitable sheet of music in the hand of a singer who stands forward on the platform and sings a solo at a concert though why is a mystery for neither the hymn book nor the sheet of music is ever referred to by the sufferer this superintendent was a slim creature of thirty five with a sandy goatee and short sandy hair he wore a stiff standing collar whose upper edge almost reached his ears and whose sharp points curved forward abreast the corners of his mouth a fence that compelled a straight lookout ahead and a turning of the whole body when a side view was required his chin was propped on a spreading cravat which was as broad and as long as a bank note and had fringed ends his boot toes were turned sharply up in the fashion of the day like sleigh runners an effect patiently and laboriously produced by the young men by sitting with their toes",
+      "iteration_count": 1,
+      "iterative_triggered": false,
+      "iteration_trace": [],
+      "retrieved_topk": [
+        {
+          "doc_id": 2539,
+          "rank": 1,
+          "score": 0.015151515151515152,
+          "rerank_score": 0.8406596830787301,
+          "rerank_components": {
+            "lexical": 7.0,
+            "semantic": 0.04840281162964388,
+            "cross_encoder": -11.122262954711914,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "china some high aloft in the rigging as if striving to get a still better seaward peep but these are all landsmen of week days pent up in lath and plaster tied to counters nailed to benches clinched to desks how then is this are the green fields gone what do they here but look here come more crowds pacing straight for the water and seemingly bound for a dive strange nothing will content them but the extremest limit of the land loitering under the shady lee of yonder warehouses will not suffice no they must get just as nigh the water as they possibly can without falling in and there they stand miles of them leagues inlanders all they come from lanes and alleys streets and avenues north east south and west yet here they all unite tell me does the magnetic virtue of the needles of the compasses of all those ships attract them thither once more say you are in the country in some high land of lakes take almost any path you please and ten to one it carries you down in a dale and leaves you there by a pool in the stream there is magic in it let the most absent minded of men be plunged in his deepest reveries stand that man on"
+        },
+        {
+          "doc_id": 3786,
+          "rank": 2,
+          "score": 0.015384615384615385,
+          "rerank_score": 0.6376604063030242,
+          "rerank_components": {
+            "lexical": 9.0,
+            "semantic": 0.05265922759011961,
+            "cross_encoder": -11.281618118286133,
+            "strategy": "hybrid"
+          },
+          "source": "tom_sawyer.txt",
+          "text": "long as a bank note and had fringed ends his boot toes were turned sharply up in the fashion of the day like sleigh runners an effect patiently and laboriously produced by the young men by sitting with their toes pressed against a wall for hours together mr walters was very earnest of mien and very sincere and honest at heart and he held sacred things and places in such reverence and so separated them from worldly matters that unconsciously to himself his sunday school voice had acquired a peculiar intonation which was wholly absent on week days he began after this fashion now children i want you all to sit up just as straight and pretty as you can and give me all your attention for a minute or two there that is it that is the way good little boys and girls should do i see one little girl who is looking out of the window i am afraid she thinks i am out there somewhere perhaps up in one of the trees making a speech to the little birds applausive titter i want to tell you how good it makes me feel to see so many bright clean little faces assembled in a place like this learning to do right and be good and so forth and"
+        },
+        {
+          "doc_id": 3356,
+          "rank": 3,
+          "score": 0.016129032258064516,
+          "rerank_score": 0.5133220890781073,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.06288291750727952,
+            "cross_encoder": -11.366453170776367,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "nothing to what at last met our eyes it is sometimes the custom when fast to a whale more than commonly powerful and alert to seek to hamstring him as it were by sundering or maiming his gigantic tail tendon it is done by darting a short handled cutting spade to which is attached a rope for hauling it back again a whale wounded as we afterwards learned in this part but not effectually as it seemed had broken away from the boat carrying along with him half of the harpoon line and in the extraordinary agony of the wound he was now dashing among the revolving circles like the lone mounted desperado arnold at the battle of saratoga carrying dismay wherever he went but agonizing as was the wound of this whale and an appalling spectacle enough any way yet the peculiar horror with which he seemed to inspire the rest of the herd was owing to a cause which at first the intervening distance obscured from us but at length we perceived that by one of the unimaginable accidents of the fishery this whale had become entangled in the harpoon line that he towed he had also run away with the cutting spade in him and while the free end of the rope attached to that weapon had"
+        },
+        {
+          "doc_id": 3785,
+          "rank": 4,
+          "score": 0.014705882352941176,
+          "rerank_score": 0.4895763133286003,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.06571105738120368,
+            "cross_encoder": -11.388617515563965,
+            "strategy": "hybrid"
+          },
+          "source": "tom_sawyer.txt",
+          "text": "the eclat that came with it in due course the superintendent stood up in front of the pulpit with a closed hymn book in his hand and his forefinger inserted between its leaves and commanded attention when a sunday school superintendent makes his customary little speech a hymn book in the hand is as necessary as is the inevitable sheet of music in the hand of a singer who stands forward on the platform and sings a solo at a concert though why is a mystery for neither the hymn book nor the sheet of music is ever referred to by the sufferer this superintendent was a slim creature of thirty five with a sandy goatee and short sandy hair he wore a stiff standing collar whose upper edge almost reached his ears and whose sharp points curved forward abreast the corners of his mouth a fence that compelled a straight lookout ahead and a turning of the whole body when a side view was required his chin was propped on a spreading cravat which was as broad and as long as a bank note and had fringed ends his boot toes were turned sharply up in the fashion of the day like sleigh runners an effect patiently and laboriously produced by the young men by sitting with their toes"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.343,
+        "baseline_uncertainty": 0.15999999999999998,
+        "adjustment": 0.18300000000000005,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0000001192092896,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.903005698043853,
+            "factual_consistency": 0.903005698043853,
+            "entailment_avg": 0.903005698043853,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.5,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.27
+      }
+    },
+    {
+      "id": "adv_chemistry_001",
+      "category": "unknown",
+      "query": "What is the molecular weight of ethanol (C2H5OH) in g/mol?",
+      "expected_answer": "46.07",
+      "generated_answer": "46.07",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "semantic_similarity": 1.0000001192092896,
+        "bertscore_f1": 1.0000001192092896,
+        "entailment_score": 0.8856434870511294,
+        "factual_consistency": 0.8856434870511294,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.4780000000000001
+      },
+      "option_scores": [
+        {
+          "option": "46.07",
+          "avg_logprob": -15.416863918304443
+        },
+        {
+          "option": "46.07 \u00d7 2 (92.14)",
+          "avg_logprob": -15.416863918304443
+        },
+        {
+          "option": "45.07",
+          "avg_logprob": -15.416863918304443
+        },
+        {
+          "option": "47.07",
+          "avg_logprob": -15.416863918304443
+        },
+        {
+          "option": "44.07",
+          "avg_logprob": -15.416863918304443
+        }
+      ],
+      "context": "[1] source=moby_dick.txt\nbest for it is but reasonable to presume that the longer the stricken whale stays under water the more he is exhausted because owing to the enormous surface of him in a full grown sperm whale something less than 2000 square feet the pressure of the water is immense we all know what an astonishing atmospheric weight we ourselves stand up under even here above ground in the air how vast then the burden of a whale bearing on his back a column of two hundred fathoms of ocean it must at least equal the weight of fifty atmospheres one whaleman has estimated it at the weight of twenty line of battle ships with all their guns and stores and men on board as the three boats lay there on that gently rolling sea gazing down into its eternal blue noon and as not a single groan or cry of any sort nay not so much as a ripple or a bubble came up from its depths what landsman would have thought that beneath all that silence and placidity the utmost monster of the seas was writhing and wrenching in agony not eight inches of perpendicular rope were visible at the bows seems it credible that by three such thin threads the great leviathan was suspended like the big weight\n\n[2] source=moby_dick.txt\nthan the skin of a new born child but no more of this assuming the blubber to be the skin of the whale then when this skin as in the case of a very large sperm whale will yield the bulk of one hundred barrels of oil and when it is considered that in quantity or rather weight that oil in its expressed state is only three fourths and not the entire substance of the coat some idea may hence be had of the enormousness of that animated mass a mere part of whose mere integument yields such a lake of liquid as that reckoning ten barrels to the ton you have ten tons for the net weight of only three quarters of the stuff of the whale s skin in life the visible surface of the sperm whale is not the least among the many marvels he presents almost invariably it is all over obliquely crossed and re crossed with numberless straight marks in thick array something like those in the finest italian line engravings but these marks do not seem to be impressed upon the isinglass substance above mentioned but seem to be seen through it as if they were engraved upon the body itself nor is this all in some instances to the quick observant eye those\n\n[3] source=frankenstein.txt\nmy father and here i named my cousin she most of all said ernest requires consolation she accused herself of having caused the death of my brother and that made her very wretched but since the murderer has been discovered the murderer discovered good god how can that be who could attempt to pursue him it is impossible one might as well try to overtake the winds or confine a mountain stream with a straw i saw him too he was free last night i do not know what you mean replied my brother in accents of wonder but to us the discovery we have made completes our misery no one would believe it at first and even now elizabeth will not be convinced notwithstanding all the evidence indeed who would credit that justine moritz who was so amiable and fond of all the family could suddenly become so capable of so frightful so appalling a crime justine moritz poor poor girl is she the accused but it is wrongfully every one knows that no one believes it surely ernest no one did at first but several circumstances came out that have almost forced conviction upon us and her own behaviour has been so confused as to add to the evidence of facts a weight that i fear leaves no\n\n[4] source=frankenstein.txt\nno one did at first but several circumstances came out that have almost forced conviction upon us and her own behaviour has been so confused as to add to the evidence of facts a weight that i fear leaves no hope for doubt but she will be tried today and you will then hear all he then related that the morning on which the murder of poor william had been discovered justine had been taken ill and confined to her bed for several days during this interval one of the servants happening to examine the apparel she had worn on the night of the murder had discovered in her pocket the picture of my mother which had been judged to be the temptation of the murderer the servant instantly showed it to one of the others who without saying a word to any of the family went to a magistrate and upon their deposition justine was apprehended on being charged with the fact the poor girl confirmed the suspicion in a great measure by her extreme confusion of manner this was a strange tale but it did not shake my faith and i replied earnestly you are all mistaken i know the murderer justine poor good justine is innocent at that instant my father entered i saw unhappiness deeply impressed",
+      "iteration_count": 2,
+      "iterative_triggered": true,
+      "iteration_trace": [
+        {
+          "followup_query": "What is the molecular weight of ethanol (C2H5OH) in g/mol? molecular weight ethanol c2h5oh source moby_dick supporting evidence",
+          "trigger_uncertainty": 0.8,
+          "retrieved_followup_docs": 6
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 3284,
+          "rank": 1,
+          "score": 0.015625,
+          "rerank_score": 1.0,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.10612756302852396,
+            "cross_encoder": -11.191109657287598,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "best for it is but reasonable to presume that the longer the stricken whale stays under water the more he is exhausted because owing to the enormous surface of him in a full grown sperm whale something less than 2000 square feet the pressure of the water is immense we all know what an astonishing atmospheric weight we ourselves stand up under even here above ground in the air how vast then the burden of a whale bearing on his back a column of two hundred fathoms of ocean it must at least equal the weight of fifty atmospheres one whaleman has estimated it at the weight of twenty line of battle ships with all their guns and stores and men on board as the three boats lay there on that gently rolling sea gazing down into its eternal blue noon and as not a single groan or cry of any sort nay not so much as a ripple or a bubble came up from its depths what landsman would have thought that beneath all that silence and placidity the utmost monster of the seas was writhing and wrenching in agony not eight inches of perpendicular rope were visible at the bows seems it credible that by three such thin threads the great leviathan was suspended like the big weight"
+        },
+        {
+          "doc_id": 3180,
+          "rank": 2,
+          "score": 0.014492753623188406,
+          "rerank_score": 0.8631104370019776,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.10139982082986276,
+            "cross_encoder": -11.20986270904541,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "than the skin of a new born child but no more of this assuming the blubber to be the skin of the whale then when this skin as in the case of a very large sperm whale will yield the bulk of one hundred barrels of oil and when it is considered that in quantity or rather weight that oil in its expressed state is only three fourths and not the entire substance of the coat some idea may hence be had of the enormousness of that animated mass a mere part of whose mere integument yields such a lake of liquid as that reckoning ten barrels to the ton you have ten tons for the net weight of only three quarters of the stuff of the whale s skin in life the visible surface of the sperm whale is not the least among the many marvels he presents almost invariably it is all over obliquely crossed and re crossed with numberless straight marks in thick array something like those in the finest italian line engravings but these marks do not seem to be impressed upon the isinglass substance above mentioned but seem to be seen through it as if they were engraved upon the body itself nor is this all in some instances to the quick observant eye those"
+        },
+        {
+          "doc_id": 126,
+          "rank": 3,
+          "score": 0.016129032258064516,
+          "rerank_score": 0.5207578539137129,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.04889677106894145,
+            "cross_encoder": -11.267338752746582,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "my father and here i named my cousin she most of all said ernest requires consolation she accused herself of having caused the death of my brother and that made her very wretched but since the murderer has been discovered the murderer discovered good god how can that be who could attempt to pursue him it is impossible one might as well try to overtake the winds or confine a mountain stream with a straw i saw him too he was free last night i do not know what you mean replied my brother in accents of wonder but to us the discovery we have made completes our misery no one would believe it at first and even now elizabeth will not be convinced notwithstanding all the evidence indeed who would credit that justine moritz who was so amiable and fond of all the family could suddenly become so capable of so frightful so appalling a crime justine moritz poor poor girl is she the accused but it is wrongfully every one knows that no one believes it surely ernest no one did at first but several circumstances came out that have almost forced conviction upon us and her own behaviour has been so confused as to add to the evidence of facts a weight that i fear leaves no"
+        },
+        {
+          "doc_id": 127,
+          "rank": 4,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.5188326911609089,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.060646250233380335,
+            "cross_encoder": -11.264938354492188,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "no one did at first but several circumstances came out that have almost forced conviction upon us and her own behaviour has been so confused as to add to the evidence of facts a weight that i fear leaves no hope for doubt but she will be tried today and you will then hear all he then related that the morning on which the murder of poor william had been discovered justine had been taken ill and confined to her bed for several days during this interval one of the servants happening to examine the apparel she had worn on the night of the murder had discovered in her pocket the picture of my mother which had been judged to be the temptation of the murderer the servant instantly showed it to one of the others who without saying a word to any of the family went to a magistrate and upon their deposition justine was apprehended on being charged with the fact the poor girl confirmed the suspicion in a great measure by her extreme confusion of manner this was a strange tale but it did not shake my faith and i replied earnestly you are all mistaken i know the murderer justine poor good justine is innocent at that instant my father entered i saw unhappiness deeply impressed"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.4780000000000001,
+        "baseline_uncertainty": 0.8,
+        "adjustment": -0.32199999999999995,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0000001192092896,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.8856434870511294,
+            "factual_consistency": 0.8856434870511294,
+            "entailment_avg": 0.8856434870511294,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.0,
+            "threshold": 0.15,
+            "uncertainty": 0.75
+          }
+        },
+        "combined_uncertainty": 0.42000000000000004
+      }
+    },
+    {
+      "id": "adv_math_001",
+      "category": "unknown",
+      "query": "What is the derivative of f(x) = x^3 + 2x^2 - 5x + 1?",
+      "expected_answer": "3x^2 + 4x - 5",
+      "generated_answer": "3x^2 + 4x - 5",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.5,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0000001192092896,
+        "entailment_score": 0.9104387130588293,
+        "factual_consistency": 0.9104387130588293,
+        "numeric_unit_consistency": 1.0,
+        "uncertainty_score": 0.48,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.343
+      },
+      "option_scores": [
+        {
+          "option": "3x^2 + 4x - 5",
+          "avg_logprob": -7.80881994284573
+        },
+        {
+          "option": "3x^2 + 4x + 5",
+          "avg_logprob": -7.80881994284573
+        },
+        {
+          "option": "3x^2 + 2x - 5",
+          "avg_logprob": -7.80881994284573
+        },
+        {
+          "option": "x^2 + 4x - 5",
+          "avg_logprob": -7.80881994284573
+        },
+        {
+          "option": "3x^3 + 4x - 5",
+          "avg_logprob": -7.80881994284573
+        }
+      ],
+      "context": "[1] source=sherlock.txt\nmay choose to give you a second opportunity to receive the work electronically in lieu of a refund if the second copy is also defective you may demand a refund in writing without further opportunities to fix the problem 1 f 4 except for the limited right of replacement or refund set forth in paragraph 1 f 3 this work is provided to you as is with no other warranties of any kind express or implied including but not limited to warranties of merchantability or fitness for any purpose 1 f 5 some states do not allow disclaimers of certain implied warranties or the exclusion or limitation of certain types of damages if any disclaimer or limitation set forth in this agreement violates the law of the state applicable to this agreement the agreement shall be interpreted to make the maximum disclaimer or limitation permitted by the applicable state law the invalidity or unenforceability of any provision of this agreement shall not void the remaining provisions 1 f 6 indemnity you agree to indemnify and hold the foundation the trademark owner any agent or employee of the foundation anyone providing copies of project gutenberg electronic works in accordance with this agreement and any volunteers associated with the production promotion and distribution of project gutenberg electronic works harmless from all liability\n\n[2] source=sherlock.txt\nfor damages costs and expenses including legal fees you agree that you have no remedies for negligence strict liability breach of warranty or breach of contract except those provided in paragraph 1 f 3 you agree that the foundation the trademark owner and any distributor under this agreement will not be liable to you for actual direct indirect consequential punitive or incidental damages even if you give notice of the possibility of such damage 1 f 3 limited right of replacement or refund if you discover a defect in this electronic work within 90 days of receiving it you can receive a refund of the money if any you paid for it by sending a written explanation to the person you received the work from if you received the work on a physical medium you must return the medium with your written explanation the person or entity that provided you with the defective work may elect to provide a replacement copy in lieu of a refund if you received the work electronically the person or entity providing it to you may choose to give you a second opportunity to receive the work electronically in lieu of a refund if the second copy is also defective you may demand a refund in writing without further opportunities to fix the problem 1\n\n[3] source=sherlock.txt\nmust obtain permission in writing from the project gutenberg literary archive foundation the manager of the project gutenberg trademark contact the foundation as set forth in section 3 below 1 f 1 f 1 project gutenberg volunteers and employees expend considerable effort to identify do copyright research on transcribe and proofread works not protected by u s copyright law in creating the project gutenberg collection despite these efforts project gutenberg electronic works and the medium on which they may be stored may contain defects such as but not limited to incomplete inaccurate or corrupt data transcription errors a copyright or other intellectual property infringement a defective or damaged disk or other medium a computer virus or computer codes that damage or cannot be read by your equipment 1 f 2 limited warranty disclaimer of damages except for the right of replacement or refund described in paragraph 1 f 3 the project gutenberg literary archive foundation the owner of the project gutenberg trademark and any other party distributing a project gutenberg electronic work under this agreement disclaim all liability to you for damages costs and expenses including legal fees you agree that you have no remedies for negligence strict liability breach of warranty or breach of contract except those provided in paragraph 1 f 3 you agree that the foundation the\n\n[4] source=sherlock.txt\nlong as all references to project gutenberg are removed of course we hope that you will support the project gutenberg mission of promoting free access to electronic works by freely sharing project gutenberg works in compliance with the terms of this agreement for keeping the project gutenberg name associated with the work you can easily comply with the terms of this agreement by keeping this work in the same format with its attached full project gutenberg license when you share it without charge with others 1 d the copyright laws of the place where you are located also govern what you can do with this work copyright laws in most countries are in a constant state of change if you are outside the united states check the laws of your country in addition to the terms of this agreement before downloading copying displaying performing distributing or creating derivative works based on this work or any other project gutenberg work the foundation makes no representations concerning the copyright status of any work in any country other than the united states 1 e unless you have removed all references to project gutenberg 1 e 1 the following sentence with active links to or other immediate access to the full project gutenberg license must appear prominently whenever any copy of a project gutenberg",
+      "iteration_count": 1,
+      "iterative_triggered": false,
+      "iteration_trace": [],
+      "retrieved_topk": [
+        {
+          "doc_id": 1736,
+          "rank": 1,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.9941771997235073,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.06819732391638836,
+            "cross_encoder": -8.056350708007812,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "may choose to give you a second opportunity to receive the work electronically in lieu of a refund if the second copy is also defective you may demand a refund in writing without further opportunities to fix the problem 1 f 4 except for the limited right of replacement or refund set forth in paragraph 1 f 3 this work is provided to you as is with no other warranties of any kind express or implied including but not limited to warranties of merchantability or fitness for any purpose 1 f 5 some states do not allow disclaimers of certain implied warranties or the exclusion or limitation of certain types of damages if any disclaimer or limitation set forth in this agreement violates the law of the state applicable to this agreement the agreement shall be interpreted to make the maximum disclaimer or limitation permitted by the applicable state law the invalidity or unenforceability of any provision of this agreement shall not void the remaining provisions 1 f 6 indemnity you agree to indemnify and hold the foundation the trademark owner any agent or employee of the foundation anyone providing copies of project gutenberg electronic works in accordance with this agreement and any volunteers associated with the production promotion and distribution of project gutenberg electronic works harmless from all liability"
+        },
+        {
+          "doc_id": 1735,
+          "rank": 2,
+          "score": 0.015625,
+          "rerank_score": 0.8525514515564829,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.049200284940599366,
+            "cross_encoder": -8.186131477355957,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "for damages costs and expenses including legal fees you agree that you have no remedies for negligence strict liability breach of warranty or breach of contract except those provided in paragraph 1 f 3 you agree that the foundation the trademark owner and any distributor under this agreement will not be liable to you for actual direct indirect consequential punitive or incidental damages even if you give notice of the possibility of such damage 1 f 3 limited right of replacement or refund if you discover a defect in this electronic work within 90 days of receiving it you can receive a refund of the money if any you paid for it by sending a written explanation to the person you received the work from if you received the work on a physical medium you must return the medium with your written explanation the person or entity that provided you with the defective work may elect to provide a replacement copy in lieu of a refund if you received the work electronically the person or entity providing it to you may choose to give you a second opportunity to receive the work electronically in lieu of a refund if the second copy is also defective you may demand a refund in writing without further opportunities to fix the problem 1"
+        },
+        {
+          "doc_id": 1734,
+          "rank": 3,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.8124934307655328,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.03807073873013685,
+            "cross_encoder": -8.024041175842285,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "must obtain permission in writing from the project gutenberg literary archive foundation the manager of the project gutenberg trademark contact the foundation as set forth in section 3 below 1 f 1 f 1 project gutenberg volunteers and employees expend considerable effort to identify do copyright research on transcribe and proofread works not protected by u s copyright law in creating the project gutenberg collection despite these efforts project gutenberg electronic works and the medium on which they may be stored may contain defects such as but not limited to incomplete inaccurate or corrupt data transcription errors a copyright or other intellectual property infringement a defective or damaged disk or other medium a computer virus or computer codes that damage or cannot be read by your equipment 1 f 2 limited warranty disclaimer of damages except for the right of replacement or refund described in paragraph 1 f 3 the project gutenberg literary archive foundation the owner of the project gutenberg trademark and any other party distributing a project gutenberg electronic work under this agreement disclaim all liability to you for damages costs and expenses including legal fees you agree that you have no remedies for negligence strict liability breach of warranty or breach of contract except those provided in paragraph 1 f 3 you agree that the foundation the"
+        },
+        {
+          "doc_id": 1728,
+          "rank": 4,
+          "score": 0.014925373134328358,
+          "rerank_score": 0.5371749623388883,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.06630049975562294,
+            "cross_encoder": -10.110495567321777,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "long as all references to project gutenberg are removed of course we hope that you will support the project gutenberg mission of promoting free access to electronic works by freely sharing project gutenberg works in compliance with the terms of this agreement for keeping the project gutenberg name associated with the work you can easily comply with the terms of this agreement by keeping this work in the same format with its attached full project gutenberg license when you share it without charge with others 1 d the copyright laws of the place where you are located also govern what you can do with this work copyright laws in most countries are in a constant state of change if you are outside the united states check the laws of your country in addition to the terms of this agreement before downloading copying displaying performing distributing or creating derivative works based on this work or any other project gutenberg work the foundation makes no representations concerning the copyright status of any work in any country other than the united states 1 e unless you have removed all references to project gutenberg 1 e 1 the following sentence with active links to or other immediate access to the full project gutenberg license must appear prominently whenever any copy of a project gutenberg"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.343,
+        "baseline_uncertainty": 0.48,
+        "adjustment": -0.13699999999999996,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.9104387130588293,
+            "factual_consistency": 0.9104387130588293,
+            "entailment_avg": 0.9104387130588293,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.5,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.27
+      }
+    },
+    {
+      "id": "adv_earth_science_002",
+      "category": "unknown",
+      "query": "What is the highest temperature ever recorded on Earth's surface?",
+      "expected_answer": "54.0\u00b0C",
+      "generated_answer": "54.0\u00b0C",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "semantic_similarity": 1.0000001192092896,
+        "bertscore_f1": 1.000000238418579,
+        "entailment_score": 0.9664211356081068,
+        "factual_consistency": 0.9664211356081068,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.4,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.4780000000000001
+      },
+      "option_scores": [
+        {
+          "option": "54.0\u00b0C",
+          "avg_logprob": -12.917018413543701
+        },
+        {
+          "option": "54.4\u00b0C",
+          "avg_logprob": -12.917018413543701
+        },
+        {
+          "option": "53.9\u00b0C",
+          "avg_logprob": -12.917018413543701
+        },
+        {
+          "option": "55.0\u00b0C",
+          "avg_logprob": -12.917018413543701
+        },
+        {
+          "option": "52.0\u00b0C",
+          "avg_logprob": -12.917018413543701
+        }
+      ],
+      "context": "[1] source=frankenstein.txt\nplaced his hated hands before my eyes which i flung from me with violence thus i take from thee a sight which you abhor still thou canst listen to me and grant me thy compassion by the virtues that i once possessed i demand this from you hear my tale it is long and strange and the temperature of this place is not fitting to your fine sensations come to the hut upon the mountain the sun is yet high in the heavens before it descends to hide itself behind your snowy precipices and illuminate another world you will have heard my story and can decide on you it rests whether i quit for ever the neighbourhood of man and lead a harmless life or become the scourge of your fellow creatures and the author of your own speedy ruin as he said this he led the way across the ice i followed my heart was full and i did not answer him but as i proceeded i weighed the various arguments that he had used and determined at least to listen to his tale i was partly urged by curiosity and compassion confirmed my resolution i had hitherto supposed him to be the murderer of my brother and i eagerly sought a confirmation or denial of this opinion for\n\n[2] source=tale_two_cities.txt\ncourt was all bestrewn with herbs and sprinkled with vinegar as a precaution against gaol air and gaol fever over the prisoner s head there was a mirror to throw the light down upon him crowds of the wicked and the wretched had been reflected in it and had passed from its surface and this earth s together haunted in a most ghastly manner that abominable place would have been if the glass could ever have rendered back its reflections as the ocean is one day to give up its dead some passing thought of the infamy and disgrace for which it had been reserved may have struck the prisoner s mind be that as it may a change in his position making him conscious of a bar of light across his face he looked up and when he saw the glass his face flushed and his right hand pushed the herbs away it happened that the action turned his face to that side of the court which was on his left about on a level with his eyes there sat in that corner of the judge s bench two persons upon whom his look immediately rested so immediately and so much to the changing of his aspect that all the eyes that were turned upon him turned to them\n\n[3] source=frankenstein.txt\nwith other families i distinctly discerned how peculiarly fortunate my lot was and gratitude assisted the development of filial love my temper was sometimes violent and my passions vehement but by some law in my temperature they were turned not towards childish pursuits but to an eager desire to learn and not to learn all things indiscriminately i confess that neither the structure of languages nor the code of governments nor the politics of various states possessed attractions for me it was the secrets of heaven and earth that i desired to learn and whether it was the outward substance of things or the inner spirit of nature and the mysterious soul of man that occupied me still my inquiries were directed to the metaphysical or in its highest sense the physical secrets of the world meanwhile clerval occupied himself so to speak with the moral relations of things the busy stage of life the virtues of heroes and the actions of men were his theme and his hope and his dream was to become one among those whose names are recorded in story as the gallant and adventurous benefactors of our species the saintly soul of elizabeth shone like a shrine dedicated lamp in our peaceful home her sympathy was ours her smile her soft voice the sweet glance\n\n[4] source=moby_dick.txt\nevinces his gallantry by falling in the rear and covering the flight of his ladies in truth this gentleman is a luxurious ottoman swimming about over the watery world surroundingly accompanied by all the solaces and endearments of the harem the contrast between this ottoman and his concubines is striking because while he is always of the largest leviathanic proportions the ladies even at full growth are not more than one third of the bulk of an average sized male they are comparatively delicate indeed i dare say not to exceed half a dozen yards round the waist nevertheless it cannot be denied that upon the whole they are hereditarily entitled to _en bon point_ it is very curious to watch this harem and its lord in their indolent ramblings like fashionables they are for ever on the move in leisurely search of variety you meet them on the line in time for the full flower of the equatorial feeding season having just returned perhaps from spending the summer in the northern seas and so cheating summer of all unpleasant weariness and warmth by the time they have lounged up and down the promenade of the equator awhile they start for the oriental waters in anticipation of the cool season there and so evade the other excessive temperature of the",
+      "iteration_count": 1,
+      "iterative_triggered": false,
+      "iteration_trace": [],
+      "retrieved_topk": [
+        {
+          "doc_id": 172,
+          "rank": 1,
+          "score": 0.014492753623188406,
+          "rerank_score": 0.779504218167352,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.04648758564820664,
+            "cross_encoder": -10.131799697875977,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "placed his hated hands before my eyes which i flung from me with violence thus i take from thee a sight which you abhor still thou canst listen to me and grant me thy compassion by the virtues that i once possessed i demand this from you hear my tale it is long and strange and the temperature of this place is not fitting to your fine sensations come to the hut upon the mountain the sun is yet high in the heavens before it descends to hide itself behind your snowy precipices and illuminate another world you will have heard my story and can decide on you it rests whether i quit for ever the neighbourhood of man and lead a harmless life or become the scourge of your fellow creatures and the author of your own speedy ruin as he said this he led the way across the ice i followed my heart was full and i did not answer him but as i proceeded i weighed the various arguments that he had used and determined at least to listen to his tale i was partly urged by curiosity and compassion confirmed my resolution i had hitherto supposed him to be the murderer of my brother and i eagerly sought a confirmation or denial of this opinion for"
+        },
+        {
+          "doc_id": 1866,
+          "rank": 2,
+          "score": 0.015625,
+          "rerank_score": 0.5168691368780342,
+          "rerank_components": {
+            "lexical": 7.0,
+            "semantic": 0.05171482338470444,
+            "cross_encoder": -10.917695999145508,
+            "strategy": "hybrid"
+          },
+          "source": "tale_two_cities.txt",
+          "text": "court was all bestrewn with herbs and sprinkled with vinegar as a precaution against gaol air and gaol fever over the prisoner s head there was a mirror to throw the light down upon him crowds of the wicked and the wretched had been reflected in it and had passed from its surface and this earth s together haunted in a most ghastly manner that abominable place would have been if the glass could ever have rendered back its reflections as the ocean is one day to give up its dead some passing thought of the infamy and disgrace for which it had been reserved may have struck the prisoner s mind be that as it may a change in his position making him conscious of a bar of light across his face he looked up and when he saw the glass his face flushed and his right hand pushed the herbs away it happened that the action turned his face to that side of the court which was on his left about on a level with his eyes there sat in that corner of the judge s bench two persons upon whom his look immediately rested so immediately and so much to the changing of his aspect that all the eyes that were turned upon him turned to them"
+        },
+        {
+          "doc_id": 44,
+          "rank": 3,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.44277658822270854,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.05097232559068816,
+            "cross_encoder": -10.857185363769531,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "with other families i distinctly discerned how peculiarly fortunate my lot was and gratitude assisted the development of filial love my temper was sometimes violent and my passions vehement but by some law in my temperature they were turned not towards childish pursuits but to an eager desire to learn and not to learn all things indiscriminately i confess that neither the structure of languages nor the code of governments nor the politics of various states possessed attractions for me it was the secrets of heaven and earth that i desired to learn and whether it was the outward substance of things or the inner spirit of nature and the mysterious soul of man that occupied me still my inquiries were directed to the metaphysical or in its highest sense the physical secrets of the world meanwhile clerval occupied himself so to speak with the moral relations of things the busy stage of life the virtues of heroes and the actions of men were his theme and his hope and his dream was to become one among those whose names are recorded in story as the gallant and adventurous benefactors of our species the saintly soul of elizabeth shone like a shrine dedicated lamp in our peaceful home her sympathy was ours her smile her soft voice the sweet glance"
+        },
+        {
+          "doc_id": 3361,
+          "rank": 4,
+          "score": 0.014925373134328358,
+          "rerank_score": 0.442771884210508,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.06683195696412218,
+            "cross_encoder": -11.044753074645996,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "evinces his gallantry by falling in the rear and covering the flight of his ladies in truth this gentleman is a luxurious ottoman swimming about over the watery world surroundingly accompanied by all the solaces and endearments of the harem the contrast between this ottoman and his concubines is striking because while he is always of the largest leviathanic proportions the ladies even at full growth are not more than one third of the bulk of an average sized male they are comparatively delicate indeed i dare say not to exceed half a dozen yards round the waist nevertheless it cannot be denied that upon the whole they are hereditarily entitled to _en bon point_ it is very curious to watch this harem and its lord in their indolent ramblings like fashionables they are for ever on the move in leisurely search of variety you meet them on the line in time for the full flower of the equatorial feeding season having just returned perhaps from spending the summer in the northern seas and so cheating summer of all unpleasant weariness and warmth by the time they have lounged up and down the promenade of the equator awhile they start for the oriental waters in anticipation of the cool season there and so evade the other excessive temperature of the"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.4780000000000001,
+        "baseline_uncertainty": 0.4,
+        "adjustment": 0.07800000000000007,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0000001192092896,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.9664211356081068,
+            "factual_consistency": 0.9664211356081068,
+            "entailment_avg": 0.9664211356081068,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.0,
+            "threshold": 0.15,
+            "uncertainty": 0.75
+          }
+        },
+        "combined_uncertainty": 0.42000000000000004
+      }
+    },
+    {
+      "id": "adv_physics_004",
+      "category": "unknown",
+      "query": "What is the gravitational acceleration at Earth's surface?",
+      "expected_answer": "9.81 m/s\u00b2",
+      "generated_answer": "9.81 m/s\u00b2",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.5,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.000000238418579,
+        "entailment_score": 0.9400597501546144,
+        "factual_consistency": 0.9400597501546144,
+        "numeric_unit_consistency": 0.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.343
+      },
+      "option_scores": [
+        {
+          "option": "9.81 m/s\u00b2",
+          "avg_logprob": -7.676856675418094
+        },
+        {
+          "option": "9.8 m/s\u00b2",
+          "avg_logprob": -7.676856675418094
+        },
+        {
+          "option": "10 m/s\u00b2",
+          "avg_logprob": -7.676856675418094
+        },
+        {
+          "option": "9.71 m/s\u00b2",
+          "avg_logprob": -7.676856675418094
+        },
+        {
+          "option": "9.91 m/s\u00b2",
+          "avg_logprob": -7.676856675418094
+        }
+      ],
+      "context": "[1] source=tale_two_cities.txt\nseemed to have got a bite there was a screwing and complaining sound down below and their bent figures were strained as if by a weight by slow degrees the weight broke away the earth upon it and came to the surface young jerry very well knew what it would be but when he saw it and saw his honoured parent about to wrench it open he was so frightened being new to the sight that he made off again and never stopped until he had run a mile or more he would not have stopped then for anything less necessary than breath it being a spectral sort of race that he ran and one highly desirable to get to the end of he had a strong idea that the coffin he had seen was running after him and pictured as hopping on behind him bolt upright upon its narrow end always on the point of overtaking him and hopping on at his side perhaps taking his arm it was a pursuer to shun it was an inconsistent and ubiquitous fiend too for while it was making the whole night behind him dreadful he darted out into the roadway to avoid dark alleys fearful of its coming hopping out of them like a dropsical boy s kite without tail and\n\n[2] source=moby_dick.txt\nas when the first thin delicate ice is just forming in water a large whale s case generally yields about five hundred gallons of sperm though from unavoidable circumstances considerable of it is spilled leaks and dribbles away or is otherwise irrevocably lost in the ticklish business of securing what you can i know not with what fine and costly material the heidelburgh tun was coated within but in superlative richness that coating could not possibly have compared with the silken pearl coloured membrane like the lining of a fine pelisse forming the inner surface of the sperm whale s case it will have been seen that the heidelburgh tun of the sperm whale embraces the entire length of the entire top of the head and since as has been elsewhere set forth the head embraces one third of the whole length of the creature then setting that length down at eighty feet for a good sized whale you have more than twenty six feet for the depth of the tun when it is lengthwise hoisted up and down against a ship s side as in decapitating the whale the operator s instrument is brought close to the spot where an entrance is subsequently forced into the spermaceti magazine he has therefore to be uncommonly heedful lest a careless untimely\n\n[3] source=moby_dick.txt\nwhale watching these sprinklings and spoutings that all this should be and yet that down to this blessed minute fifteen and a quarter minutes past one o clock p m of this sixteenth day of december a d 1851 it should still remain a problem whether these spoutings are after all really water or nothing but vapor this is surely a noteworthy thing let us then look at this matter along with some interesting items contingent every one knows that by the peculiar cunning of their gills the finny tribes in general breathe the air which at all times is combined with the element in which they swim hence a herring or a cod might live a century and never once raise its head above the surface but owing to his marked internal structure which gives him regular lungs like a human being s the whale can only live by inhaling the disengaged air in the open atmosphere wherefore the necessity for his periodical visits to the upper world but he cannot in any degree breathe through his mouth for in his ordinary attitude the sperm whale s mouth is buried at least eight feet beneath the surface and what is still more his windpipe has no connexion with his mouth no he breathes through his spiracle alone and this\n\n[4] source=moby_dick.txt\nare certain valves or flood gates in many of their veins whereby when wounded the blood is in some degree at least instantly shut off in certain directions not so with the whale one of whose peculiarities it is to have an entire non valvular structure of the blood vessels so that when pierced even by so small a point as a harpoon a deadly drain is at once begun upon his whole arterial system and when this is heightened by the extraordinary pressure of water at a great distance below the surface his life may be said to pour from him in incessant streams yet so vast is the quantity of blood in him and so distant and numerous its interior fountains that he will keep thus bleeding and bleeding for a considerable period even as in a drought a river will flow whose source is in the well springs of far off and undiscernible hills even now when the boats pulled upon this whale and perilously drew over his swaying flukes and the lances were darted into him they were followed by steady jets from the new made wound which kept continually playing while the natural spout hole in his head was only at intervals however rapid sending its affrighted moisture into the air from this last vent",
+      "iteration_count": 2,
+      "iterative_triggered": true,
+      "iteration_trace": [
+        {
+          "followup_query": "What is the gravitational acceleration at Earth's surface? gravitational acceleration earth surface source tale_two_cities supporting evidence",
+          "trigger_uncertainty": 0.8,
+          "retrieved_followup_docs": 6
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 2065,
+          "rank": 1,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.7000000000000001,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.03542531172112767,
+            "cross_encoder": -10.809178352355957,
+            "strategy": "hybrid"
+          },
+          "source": "tale_two_cities.txt",
+          "text": "seemed to have got a bite there was a screwing and complaining sound down below and their bent figures were strained as if by a weight by slow degrees the weight broke away the earth upon it and came to the surface young jerry very well knew what it would be but when he saw it and saw his honoured parent about to wrench it open he was so frightened being new to the sight that he made off again and never stopped until he had run a mile or more he would not have stopped then for anything less necessary than breath it being a spectral sort of race that he ran and one highly desirable to get to the end of he had a strong idea that the coffin he had seen was running after him and pictured as hopping on behind him bolt upright upon its narrow end always on the point of overtaking him and hopping on at his side perhaps taking his arm it was a pursuer to shun it was an inconsistent and ubiquitous fiend too for while it was making the whole night behind him dreadful he darted out into the roadway to avoid dark alleys fearful of its coming hopping out of them like a dropsical boy s kite without tail and"
+        },
+        {
+          "doc_id": 3250,
+          "rank": 2,
+          "score": 0.014705882352941176,
+          "rerank_score": 0.5442746544551215,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.07362018095856021,
+            "cross_encoder": -11.241703987121582,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "as when the first thin delicate ice is just forming in water a large whale s case generally yields about five hundred gallons of sperm though from unavoidable circumstances considerable of it is spilled leaks and dribbles away or is otherwise irrevocably lost in the ticklish business of securing what you can i know not with what fine and costly material the heidelburgh tun was coated within but in superlative richness that coating could not possibly have compared with the silken pearl coloured membrane like the lining of a fine pelisse forming the inner surface of the sperm whale s case it will have been seen that the heidelburgh tun of the sperm whale embraces the entire length of the entire top of the head and since as has been elsewhere set forth the head embraces one third of the whole length of the creature then setting that length down at eighty feet for a good sized whale you have more than twenty six feet for the depth of the tun when it is lengthwise hoisted up and down against a ship s side as in decapitating the whale the operator s instrument is brought close to the spot where an entrance is subsequently forced into the spermaceti magazine he has therefore to be uncommonly heedful lest a careless untimely"
+        },
+        {
+          "doc_id": 3312,
+          "rank": 3,
+          "score": 0.016129032258064516,
+          "rerank_score": 0.5198049612049558,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.0723958996206432,
+            "cross_encoder": -11.256591796875,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "whale watching these sprinklings and spoutings that all this should be and yet that down to this blessed minute fifteen and a quarter minutes past one o clock p m of this sixteenth day of december a d 1851 it should still remain a problem whether these spoutings are after all really water or nothing but vapor this is surely a noteworthy thing let us then look at this matter along with some interesting items contingent every one knows that by the peculiar cunning of their gills the finny tribes in general breathe the air which at all times is combined with the element in which they swim hence a herring or a cod might live a century and never once raise its head above the surface but owing to his marked internal structure which gives him regular lungs like a human being s the whale can only live by inhaling the disengaged air in the open atmosphere wherefore the necessity for his periodical visits to the upper world but he cannot in any degree breathe through his mouth for in his ordinary attitude the sperm whale s mouth is buried at least eight feet beneath the surface and what is still more his windpipe has no connexion with his mouth no he breathes through his spiracle alone and this"
+        },
+        {
+          "doc_id": 3287,
+          "rank": 4,
+          "score": 0.015384615384615385,
+          "rerank_score": 0.45330606631854437,
+          "rerank_components": {
+            "lexical": 4.0,
+            "semantic": 0.07528459085986501,
+            "cross_encoder": -11.196319580078125,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "are certain valves or flood gates in many of their veins whereby when wounded the blood is in some degree at least instantly shut off in certain directions not so with the whale one of whose peculiarities it is to have an entire non valvular structure of the blood vessels so that when pierced even by so small a point as a harpoon a deadly drain is at once begun upon his whole arterial system and when this is heightened by the extraordinary pressure of water at a great distance below the surface his life may be said to pour from him in incessant streams yet so vast is the quantity of blood in him and so distant and numerous its interior fountains that he will keep thus bleeding and bleeding for a considerable period even as in a drought a river will flow whose source is in the well springs of far off and undiscernible hills even now when the boats pulled upon this whale and perilously drew over his swaying flukes and the lances were darted into him they were followed by steady jets from the new made wound which kept continually playing while the natural spout hole in his head was only at intervals however rapid sending its affrighted moisture into the air from this last vent"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.343,
+        "baseline_uncertainty": 0.8,
+        "adjustment": -0.457,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 5,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.9400597501546144,
+            "factual_consistency": 0.9400597501546144,
+            "entailment_avg": 0.9400597501546144,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.5,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.27
+      }
+    }
+  ]
+}

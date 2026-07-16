@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import time
 from pathlib import Path
 from typing import Any, Dict, List
@@ -27,6 +28,42 @@ from inference_lora import LoRAInferenceEngine, load_tokenizer
 from neural_reranker import CrossEncoderReranker
 from semantic_metrics import SemanticMetricsEvaluator
 from tool_executor import ToolExecutor
+
+
+STOPWORDS = {
+    "what", "which", "when", "where", "who", "whom", "whose", "why", "how", "the", "a", "an",
+    "is", "are", "was", "were", "be", "been", "being", "in", "on", "at", "to", "for", "of",
+    "and", "or", "with", "from", "by", "as", "that", "this", "these", "those", "value", "units",
+}
+
+
+def build_followup_query(query: str, answer: str, context: str, max_terms: int = 6) -> str:
+    tokens = re.findall(r"[a-zA-Z0-9_]+", f"{query} {answer} {context[:400]}")
+    kept: List[str] = []
+    seen = set()
+    for t in tokens:
+        tt = t.lower()
+        if len(tt) < 4 or tt in STOPWORDS or tt in seen or tt.isdigit():
+            continue
+        seen.add(tt)
+        kept.append(tt)
+        if len(kept) >= max_terms:
+            break
+    if not kept:
+        return query
+    return f"{query} {' '.join(kept)} supporting evidence"
+
+
+def merge_docs(primary: List[Dict[str, Any]], secondary: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    merged: List[Dict[str, Any]] = []
+    seen = set()
+    for d in primary + secondary:
+        key = (d.get("doc_id"), d.get("chunk_id"), d.get("text", "")[:120])
+        if key in seen:
+            continue
+        seen.add(key)
+        merged.append(d)
+    return merged
 
 
 def load_config(path: Path) -> Dict[str, Any]:
@@ -239,8 +276,15 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
     factual_consistency_scores: List[float] = []
     numeric_unit_scores: List[float] = []
     uncertainty_scores: List[float] = []
+    iteration_counts: List[float] = []
+    iterative_triggered = 0
 
     eval_mode = str(eval_cfg.get("mode", "generation")).lower()
+    iterative_cfg = cfg.get("iterative_retrieval", {})
+    iterative_enabled = bool(iterative_cfg.get("enabled", False))
+    max_iterations = int(iterative_cfg.get("max_iterations", 2))
+    uncertainty_threshold = float(iterative_cfg.get("uncertainty_threshold", 0.6))
+    followup_k_retrieve = int(iterative_cfg.get("followup_k_retrieve", k_retrieve))
 
     for i, q in enumerate(questions, start=1):
         query = q["question"]
@@ -266,8 +310,6 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
             rank_expected = next((idx + 1 for idx, (opt, _) in enumerate(scored_sorted) if opt == expected), 999)
             mc_exact = 1.0 if rank_expected == 1 else 0.0
             mc_semantic = 1.0 if rank_expected <= 2 else 0.0
-            mc_exact_scores.append(mc_exact)
-            mc_semantic_scores.append(mc_semantic)
         else:
             answer = generator.generate(query, context)
             scored_sorted = None
@@ -281,6 +323,64 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
 
         sem = semantic_eval.evaluate(answer, expected, context)
 
+        iteration_count = 1
+        iteration_trace: List[Dict[str, Any]] = []
+        if iterative_enabled and max_iterations > 1 and sem["uncertainty_score"] > uncertainty_threshold:
+            iterative_triggered += 1
+            followup_query = build_followup_query(query, answer, context)
+            retrieved_followup = retriever.retrieve(followup_query, k=followup_k_retrieve)
+            followup_docs = retrieved_followup
+            if reranker is not None:
+                followup_docs = reranker.rerank(
+                    followup_query,
+                    retrieved_followup,
+                    top_n=rerank_top_n,
+                    strategy=reranker_cfg.get("strategy", "hybrid"),
+                )
+
+            merged_docs = merge_docs(final_docs, followup_docs)
+            final_docs = merged_docs
+            if reranker is not None:
+                final_docs = reranker.rerank(
+                    query,
+                    merged_docs,
+                    top_n=rerank_top_n,
+                    strategy=reranker_cfg.get("strategy", "hybrid"),
+                )
+
+            context = build_context(final_docs, max_docs=context_docs)
+            if eval_mode == "mc_likelihood" and q.get("distractors"):
+                options = [expected] + list(q.get("distractors", []))
+                scored = [(opt, generator.score_option(query, context, opt)) for opt in options]
+                scored_sorted = sorted(scored, key=lambda x: x[1], reverse=True)
+                answer = scored_sorted[0][0]
+                rank_expected = next((idx + 1 for idx, (opt, _) in enumerate(scored_sorted) if opt == expected), 999)
+                mc_exact = 1.0 if rank_expected == 1 else 0.0
+                mc_semantic = 1.0 if rank_expected <= 2 else 0.0
+            else:
+                answer = generator.generate(query, context)
+                scored_sorted = None
+                rank_expected = None
+                mc_exact = None
+                mc_semantic = None
+
+            f1 = token_f1(answer, expected)
+            contains_expected = 1.0 if expected.lower() in answer.lower() else 0.0
+            faith = context_faithfulness(answer, context)
+            sem = semantic_eval.evaluate(answer, expected, context)
+            iteration_count = 2
+            iteration_trace.append(
+                {
+                    "followup_query": followup_query,
+                    "trigger_uncertainty": float(sem.get("uncertainty_score", 0.0)),
+                    "retrieved_followup_docs": len(followup_docs),
+                }
+            )
+
+        if mc_exact is not None:
+            mc_exact_scores.append(mc_exact)
+            mc_semantic_scores.append(0.0 if mc_semantic is None else mc_semantic)
+
         f1_scores.append(f1)
         contain_scores.append(contains_expected)
         faithful_scores.append(faith)
@@ -290,6 +390,7 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
         factual_consistency_scores.append(sem["factual_consistency"])
         numeric_unit_scores.append(sem["numeric_unit_consistency"])
         uncertainty_scores.append(sem["uncertainty_score"])
+        iteration_counts.append(float(iteration_count))
 
         row = {
             "id": q.get("id", f"q_{i:03d}"),
@@ -315,6 +416,9 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
                 {"option": opt, "avg_logprob": score} for opt, score in (scored_sorted or [])
             ],
             "context": context,
+            "iteration_count": iteration_count,
+            "iterative_triggered": iteration_count > 1,
+            "iteration_trace": iteration_trace,
             "retrieved_topk": [
                 {
                     "doc_id": d.get("doc_id"),
@@ -360,6 +464,12 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
                 "active": semantic_eval.active,
                 "init_errors": semantic_eval.init_errors,
             },
+            "iterative_retrieval": {
+                "enabled": iterative_enabled,
+                "max_iterations": max_iterations,
+                "uncertainty_threshold": uncertainty_threshold,
+                "followup_k_retrieve": followup_k_retrieve,
+            },
             "model": {
                 "base_checkpoint": cfg["model"]["base_checkpoint"],
                 "lora_checkpoint": cfg["model"]["lora_checkpoint"],
@@ -376,6 +486,8 @@ def evaluate(cfg: Dict[str, Any], limit: int | None = None) -> Dict[str, Any]:
             "avg_factual_consistency": avg(factual_consistency_scores),
             "avg_numeric_unit_consistency": avg(numeric_unit_scores),
             "avg_uncertainty_score": avg(uncertainty_scores),
+            "avg_iterations": avg(iteration_counts),
+            "iterative_trigger_rate": (iterative_triggered / len(questions)) if questions else 0.0,
             "mc_exact_rate": avg(mc_exact_scores),
             "mc_semantic_or_better_rate": avg(mc_semantic_scores),
         },
@@ -452,6 +564,8 @@ def save_report(report: Dict[str, Any], out_dir: Path) -> None:
     lines.append(f"| avg_factual_consistency | {report['summary'].get('avg_factual_consistency', 0.0):.4f} |")
     lines.append(f"| avg_numeric_unit_consistency | {report['summary'].get('avg_numeric_unit_consistency', 0.0):.4f} |")
     lines.append(f"| avg_uncertainty_score | {report['summary'].get('avg_uncertainty_score', 0.0):.4f} |")
+    lines.append(f"| avg_iterations | {report['summary'].get('avg_iterations', 1.0):.4f} |")
+    lines.append(f"| iterative_trigger_rate | {report['summary'].get('iterative_trigger_rate', 0.0):.4f} |")
     lines.append(f"| mc_exact_rate | {report['summary'].get('mc_exact_rate', 0.0):.4f} |")
     lines.append(
         f"| mc_semantic_or_better_rate | {report['summary'].get('mc_semantic_or_better_rate', 0.0):.4f} |"
@@ -467,7 +581,7 @@ def save_report(report: Dict[str, Any], out_dir: Path) -> None:
         lines.append(f"- Expected: {row['expected_answer']}")
         lines.append(f"- Generated: {row['generated_answer']}")
         lines.append(
-            f"- Metrics: f1={row['metrics']['token_f1']:.3f}, contains={row['metrics']['contains_expected']:.1f}, faith={row['metrics']['faithfulness']:.3f}, sem={row['metrics'].get('semantic_similarity', 0.0):.3f}, entail={row['metrics'].get('entailment_score', 0.0):.3f}, unc={row['metrics'].get('uncertainty_score', 0.0):.3f}"
+            f"- Metrics: f1={row['metrics']['token_f1']:.3f}, contains={row['metrics']['contains_expected']:.1f}, faith={row['metrics']['faithfulness']:.3f}, sem={row['metrics'].get('semantic_similarity', 0.0):.3f}, entail={row['metrics'].get('entailment_score', 0.0):.3f}, unc={row['metrics'].get('uncertainty_score', 0.0):.3f}, iter={row.get('iteration_count', 1)}"
         )
         lines.append("")
 
