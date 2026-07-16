@@ -190,6 +190,94 @@ From repository root:
 3. Add CI/doc task to regenerate this PDF from markdown automatically.
 4. Track large artifacts through retention/LFS policy.
 
+## 8.A Publication Checklist + 2-Week Execution Plan (July 17–30, 2026)
+
+### Publication Checklist (Current State)
+
+**Completed**
+- [x] End-to-end architecture documented (tokenizer + TinyLM + LoRA + RAG + calibration + iteration)
+- [x] Core benchmark completed on 102 questions
+- [x] Controlled ablation completed (2×2 reranker × iteration)
+- [x] Artifactized outputs (`results/rag_generation_eval/*.json|*.md`)
+- [x] Roadmap and reference docs synchronized
+
+**Remaining for submission quality**
+- [ ] Hard benchmark extension (target 300–500 additional questions)
+- [ ] Multi-seed significance runs (n=3 minimum)
+- [ ] Strongly-labeled reranker training set (target 1000+ pairs)
+- [ ] Human evaluation (faithfulness/helpfulness audit)
+- [ ] Final figures/tables package + reproducibility checklist
+
+### Execution Plan (Mapped Directly to Existing Files/Scripts)
+
+#### Week 1 — Dataset & Statistical Rigor
+
+1. **Hard benchmark expansion**
+    - **Input baseline**: `data/phase5_combined_100qa.json`
+    - **Execution script**: `scripts/run_rag_generation_evaluation.py`
+    - **Deliverable**: `data/phase5_combined_hard_500qa.json`
+    - **Acceptance**: at least one primary metric below ceiling to enable separation
+
+2. **Multi-seed pipeline (n=3) across all major configs**
+    - **Configs**:
+       - `config/phase5_full_integration_eval.yaml`
+       - `config/phase5_finetuned_cross_encoder_eval.yaml`
+       - `config/phase5_ablation_no_iter_original.yaml`
+       - `config/phase5_ablation_no_iter_finetuned.yaml`
+    - **Deliverables**:
+       - `results/rag_generation_eval/seed_runs/`
+       - `results/publication/stat_sig_summary.md`
+    - **Acceptance**: confidence intervals + ranking stability
+
+3. **Reranker data scaling (weak→strong labels)**
+    - **Current scripts**:
+       - `scripts/collect_stem_preference_pairs.py`
+       - `scripts/finetune_cross_encoder.py`
+    - **Deliverables**:
+       - `data/stem_preference_pairs_1000.jsonl`
+       - `checkpoints/cross_encoder_finetuned_task10_v2.pt`
+    - **Acceptance**: improved non-ceiling metric over `cross_encoder_finetuned_task10.pt`
+
+#### Week 2 — Human Eval, Figures, Submission Pack
+
+4. **Human evaluation protocol (100 sample adjudicated set)**
+    - **Input result sets**:
+       - `results/rag_generation_eval/rag_generation_eval_20260716_114138.json`
+       - `results/rag_generation_eval/rag_generation_eval_20260716_125406.json`
+    - **Deliverables**:
+       - `results/human_eval/human_eval_template.csv`
+       - `results/human_eval/human_eval_summary.md`
+    - **Acceptance**: inter-rater notes + tie-break protocol documented
+
+5. **Publication figures/tables generation**
+    - **Source reports**:
+       - `results/PHASE_5_ANALYSIS.md`
+       - `results/PHASE_5_ABLATION_STUDY.md`
+    - **Deliverables**:
+       - `results/publication/figures/`
+       - `results/publication/tables/`
+    - **Acceptance**: all claims in abstract backed by figure/table references
+
+6. **Submission readiness package (arXiv-first)**
+    - **Base docs**:
+       - `doc/project_reference.md`
+       - `PROJECT_ROADMAP.md`
+    - **Deliverables**:
+       - `results/publication/paper_outline.md`
+       - `results/publication/reproducibility_checklist.md`
+       - `results/publication/limitations_and_ethics.md`
+    - **Acceptance**: clean reproducibility trace from config → run → artifact
+
+### Go/No-Go Criteria for Submission
+
+**Go** when all are satisfied:
+1. Hard benchmark completed with non-ceiling differentiation
+2. Multi-seed statistics confirm ranking stability
+3. Fine-tuned reranker shows measurable gain on at least one hard metric
+4. Human evaluation pack complete
+
+**No-Go** if benchmark remains saturated (MC exact near 1.0 everywhere) without harder split.
+
 ## 8. Phase 4 Task Development (Current → Complete)
 
 ### 8.1 Phase 4 Task 4 (Complete)

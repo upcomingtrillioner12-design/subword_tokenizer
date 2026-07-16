@@ -39,6 +39,81 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
 
 ---
 
+## Publication Checklist + 2-Week Execution Plan (Mapped to Existing Files)
+
+### A. Publication Checklist
+
+- [x] End-to-end system implemented (tokenizer → LM → RAG → reranker → calibration → iteration)
+- [x] Core ablations completed (2×2 reranker × iteration)
+- [x] Reproducible configs and result artifacts available
+- [ ] Harder benchmark set (beyond 102Q ceiling)
+- [ ] Statistical significance across multiple seeds/runs
+- [ ] Strongly-labeled reranker dataset (target: 1000+ pairs)
+- [ ] Human evaluation protocol (faithfulness/helpfulness)
+- [ ] Final paper figures/tables + reproducibility appendix
+
+### B. 2-Week Plan (July 17–30, 2026)
+
+#### Week 1 — Data + Evaluation Rigour
+
+1. **Build harder benchmark extension (target +300 to +500 questions)**
+     - Extend from: `data/phase5_combined_100qa.json`
+     - Script base: `scripts/run_rag_generation_evaluation.py`
+     - Output target: `data/phase5_combined_hard_500qa.json`
+
+2. **Run multi-seed evaluation (n=3) for significance bands**
+     - Configs to reuse:
+         - `config/phase5_full_integration_eval.yaml`
+         - `config/phase5_finetuned_cross_encoder_eval.yaml`
+         - `config/phase5_ablation_no_iter_original.yaml`
+         - `config/phase5_ablation_no_iter_finetuned.yaml`
+     - Output target: `results/rag_generation_eval/seed_runs/`
+
+3. **Strengthen reranker labels (target 1000+ pairs)**
+     - Existing pipeline:
+         - `scripts/collect_stem_preference_pairs.py`
+         - `scripts/finetune_cross_encoder.py`
+     - Output targets:
+         - `data/stem_preference_pairs_1000.jsonl`
+         - `checkpoints/cross_encoder_finetuned_task10_v2.pt`
+
+#### Week 2 — Analysis + Paper Package
+
+4. **Human evaluation protocol (100-sample audit)**
+     - Inputs:
+         - `results/rag_generation_eval/rag_generation_eval_20260716_114138.json`
+         - `results/rag_generation_eval/rag_generation_eval_20260716_125406.json`
+     - Output target:
+         - `results/human_eval/human_eval_template.csv`
+         - `results/human_eval/human_eval_summary.md`
+
+5. **Finalize publication figures and tables**
+     - Sources:
+         - `results/PHASE_5_ANALYSIS.md`
+         - `results/PHASE_5_ABLATION_STUDY.md`
+     - Output target:
+         - `results/publication/figures/`
+         - `results/publication/tables/`
+
+6. **Draft submission package (arXiv-ready)**
+     - Primary references:
+         - `doc/project_reference.md`
+         - `PROJECT_ROADMAP.md`
+     - Output target:
+         - `results/publication/paper_outline.md`
+         - `results/publication/reproducibility_checklist.md`
+
+### C. Submission Gate (Go/No-Go)
+
+- **Go** if all are true:
+    1. Hard benchmark >300 questions completed
+    2. Multi-seed runs show stable ranking across configs
+    3. Fine-tuned reranker shows measurable gain on at least one non-ceiling metric
+    4. Human eval completed with adjudication notes
+- **No-Go** if benchmark still saturates at 1.0 on primary metric without harder split.
+
+---
+
 ## Phase 2 Results Summary
 
 ### Best Checkpoint: `lora_adapter_step9000.pt`
