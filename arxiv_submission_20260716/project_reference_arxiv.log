@@ -431,10 +431,6 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `project_reference_arxiv.out' has not changed
 .
 (rerunfilecheck)             Checksum: DCB3DC08F73A21469A33D6AA8C58D8BF;8171.
@@ -455,7 +451,7 @@ blic/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share
 lmr6.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/f
 onts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on project_reference_arxiv.pdf (16 pages, 331507 bytes).
+Output written on project_reference_arxiv.pdf (16 pages, 331508 bytes).
 PDF statistics:
  468 PDF objects out of 1000 (max. 8388607)
  419 compressed objects within 5 object streams
