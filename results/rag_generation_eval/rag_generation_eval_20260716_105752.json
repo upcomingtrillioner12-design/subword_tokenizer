@@ -1,0 +1,759 @@
+{
+  "metadata": {
+    "task": "phase4_task4_rag_generation_eval",
+    "timestamp": "2026-07-16 10:57:52",
+    "num_questions": 5,
+    "elapsed_seconds": 80.55733370799862,
+    "retrieval": {
+      "bm25_index": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/bm25_index.json",
+      "dense_index": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index.faiss",
+      "dense_metadata": "/Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index_metadata.jsonl",
+      "embedding_model": "allenai/scibert_scivocab_uncased",
+      "fusion_method": "rrf",
+      "alpha": 0.5,
+      "k_retrieve": 10,
+      "context_docs": 4
+    },
+    "reranker": {
+      "enabled": true,
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "strategy": "hybrid",
+      "top_n": 6,
+      "cross_weight": 0.55,
+      "semantic_weight": 0.3,
+      "lexical_weight": 0.15,
+      "active": true,
+      "fallback": false
+    },
+    "generation": {
+      "max_tokens": 48,
+      "temperature": 0.9,
+      "top_k": 50,
+      "top_p": 0.95,
+      "prompt_mode": "strict",
+      "enforce_context_overlap": true,
+      "faithfulness_floor": 0.25
+    },
+    "semantic_metrics": {
+      "enabled": true,
+      "embedding_model": "all-mpnet-base-v2",
+      "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+      "max_tokens_for_bertscore": 80,
+      "active": true,
+      "init_errors": []
+    },
+    "iterative_retrieval": {
+      "enabled": true,
+      "max_iterations": 2,
+      "uncertainty_threshold": 0.6,
+      "followup_k_retrieve": 12
+    },
+    "model": {
+      "base_checkpoint": "/Users/jdsingh/slm_v0/checkpoints/production_sml_v1.pt",
+      "lora_checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/best_lora_adapter.pt",
+      "tokenizer_model": "/Users/jdsingh/slm_v0/model_32k.json"
+    },
+    "calibrated_uncertainty": {
+      "enabled": true,
+      "num_calibrated": 5
+    }
+  },
+  "summary": {
+    "avg_token_f1": 1.0,
+    "avg_contains_expected": 1.0,
+    "avg_faithfulness": 0.29238095238095235,
+    "avg_semantic_similarity": 1.0000000476837159,
+    "avg_bertscore_f1": 1.0000001668930054,
+    "avg_entailment_score": 0.884245234746486,
+    "avg_factual_consistency": 0.884245234746486,
+    "avg_numeric_unit_consistency": 1.0,
+    "avg_uncertainty_score": 0.45638095238095244,
+    "avg_iterations": 1.2,
+    "iterative_trigger_rate": 0.2,
+    "mc_exact_rate": 1.0,
+    "mc_semantic_or_better_rate": 1.0,
+    "avg_calibrated_uncertainty": 0.37452289436656944,
+    "calibrated_uncertainty_range": [
+      0.343,
+      0.4780000000000001
+    ]
+  },
+  "results": [
+    {
+      "id": "physics_001",
+      "category": "stem",
+      "query": "What is the de Broglie wavelength relation for a particle?",
+      "expected_answer": "lambda equals h over p",
+      "generated_answer": "lambda equals h over p",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.2,
+        "semantic_similarity": 1.0000001192092896,
+        "bertscore_f1": 1.0000001192092896,
+        "entailment_score": 0.9668077473528683,
+        "factual_consistency": 0.9668077473528683,
+        "numeric_unit_consistency": 1.0,
+        "uncertainty_score": 0.32000000000000006,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.343
+      },
+      "option_scores": [
+        {
+          "option": "lambda equals h over p",
+          "avg_logprob": -8.365034997463226
+        },
+        {
+          "option": "lambda equals p over h",
+          "avg_logprob": -8.365034997463226
+        },
+        {
+          "option": "energy equals m c squared",
+          "avg_logprob": -8.365034997463226
+        },
+        {
+          "option": "force equals mass times acceleration",
+          "avg_logprob": -8.365034997463226
+        }
+      ],
+      "context": "[1] source=moby_dick.txt\nor so much as in any way inhaling a particle of air for remember he has no gills how is this between his ribs and on each side of his spine he is supplied with a remarkable involved cretan labyrinth of vermicelli like vessels which vessels when he quits the surface are completely distended with oxygenated blood so that for an hour or more a thousand fathoms in the sea he carries a surplus stock of vitality in him just as the camel crossing the waterless desert carries a surplus supply of drink for future use in its four supplementary stomachs the anatomical fact of this labyrinth is indisputable and that the supposition founded upon it is reasonable and true seems the more cogent to me when i consider the otherwise inexplicable obstinacy of that leviathan in _having his spoutings out_ as the fishermen phrase it this is what i mean if unmolested upon rising to the surface the sperm whale will continue there for a period of time exactly uniform with all his other unmolested risings say he stays eleven minutes and jets seventy times that is respires seventy breaths then whenever he rises again he will be sure to have his seventy breaths over again to a minute now if after he fetches a few breaths you alarm\n\n[2] source=moby_dick.txt\ndey don t hear one word no use a preachin to such dam g uttons as you call em till dare bellies is full and dare bellies is bottomless and when dey do get em full dey wont hear you den for den dey sink in de sea go fast to sleep on de coral and can t hear not ing at all no more for eber and eber upon my soul i am about of the same opinion so give the benediction fleece and i ll away to my supper upon this fleece holding both hands over the fishy mob raised his shrill voice and cried cussed fellow critters kick up de damndest row as ever you can fill your dam bellies till dey bust and den die now cook said stubb resuming his supper at the capstan stand just where you stood before there over against me and pay particular attention all dention said fleece again stooping over upon his tongs in the desired position well said stubb helping himself freely meanwhile i shall now go back to the subject of this steak in the first place how old are you cook what dat do wid de teak said the old black testily silence how old are you cook bout ninety dey say he gloomily muttered and you\n\n[3] source=pride_prejudice.txt\nof love and from the whole of his behaviour to miss de bourgh she derived this comfort for miss bingley that he might have been just as likely to marry _her_ had she been his relation lady catherine continued her remarks on elizabeth s performance mixing with them many instructions on execution and taste elizabeth received them with all the forbearance of civility and at the request of the gentlemen remained at the instrument till her ladyship s carriage was ready to take them all home illustration chapter xxxii illustration elizabeth was sitting by herself the next morning and writing to jane while mrs collins and maria were gone on business into the village when she was startled by a ring at the door the certain signal of a visitor as she had heard no carriage she thought it not unlikely to be lady catherine and under that apprehension was putting away her half finished letter that she might escape all impertinent questions when the door opened and to her very great surprise mr darcy and mr darcy only entered the room he seemed astonished too on finding her alone and apologized for his intrusion by letting her know that he had understood all the ladies to be within they then sat down and when her inquiries after rosings were\n\n[4] source=moby_dick.txt\ndat wicked natur dat is de pint you is sharks sartin but if you gobern de shark in you why den you be angel for all angel is not ing more dan de shark well goberned now look here bred ren just try wonst to be cibil a helping yourselbs from dat whale don t be tearin de blubber out your neighbour s mout i say is not one shark dood right as toder to dat whale and by gor none on you has de right to dat whale dat whale belong to some one else i know some o you has berry brig mout brigger dan oders but den de brig mouts sometimes has de small bellies so dat de brigness of de mout is not to swaller wid but to bit off de blubber for de small fry ob sharks dat can t get into de scrouge to help demselves well done old fleece cried stubb that s christianity go on no use goin on de dam willains will keep a scougin and slappin each oder massa stubb dey don t hear one word no use a preachin to such dam g uttons as you call em till dare bellies is full and dare bellies is bottomless and when dey do get em full dey wont hear you",
+      "iteration_count": 1,
+      "iterative_triggered": false,
+      "iteration_trace": [],
+      "retrieved_topk": [
+        {
+          "doc_id": 3314,
+          "rank": 1,
+          "score": 0.014492753623188406,
+          "rerank_score": 0.9625000000000001,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.06233329095402714,
+            "cross_encoder": -11.010475158691406,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "or so much as in any way inhaling a particle of air for remember he has no gills how is this between his ribs and on each side of his spine he is supplied with a remarkable involved cretan labyrinth of vermicelli like vessels which vessels when he quits the surface are completely distended with oxygenated blood so that for an hour or more a thousand fathoms in the sea he carries a surplus stock of vitality in him just as the camel crossing the waterless desert carries a surplus supply of drink for future use in its four supplementary stomachs the anatomical fact of this labyrinth is indisputable and that the supposition founded upon it is reasonable and true seems the more cogent to me when i consider the otherwise inexplicable obstinacy of that leviathan in _having his spoutings out_ as the fishermen phrase it this is what i mean if unmolested upon rising to the surface the sperm whale will continue there for a period of time exactly uniform with all his other unmolested risings say he stays eleven minutes and jets seventy times that is respires seventy breaths then whenever he rises again he will be sure to have his seventy breaths over again to a minute now if after he fetches a few breaths you alarm"
+        },
+        {
+          "doc_id": 3159,
+          "rank": 2,
+          "score": 0.014925373134328358,
+          "rerank_score": 0.39905979686264964,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.039906812996561895,
+            "cross_encoder": -11.336201667785645,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "dey don t hear one word no use a preachin to such dam g uttons as you call em till dare bellies is full and dare bellies is bottomless and when dey do get em full dey wont hear you den for den dey sink in de sea go fast to sleep on de coral and can t hear not ing at all no more for eber and eber upon my soul i am about of the same opinion so give the benediction fleece and i ll away to my supper upon this fleece holding both hands over the fishy mob raised his shrill voice and cried cussed fellow critters kick up de damndest row as ever you can fill your dam bellies till dey bust and den die now cook said stubb resuming his supper at the capstan stand just where you stood before there over against me and pay particular attention all dention said fleece again stooping over upon his tongs in the desired position well said stubb helping himself freely meanwhile i shall now go back to the subject of this steak in the first place how old are you cook what dat do wid de teak said the old black testily silence how old are you cook bout ninety dey say he gloomily muttered and you"
+        },
+        {
+          "doc_id": 756,
+          "rank": 3,
+          "score": 0.015151515151515152,
+          "rerank_score": 0.3846297807014211,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.035390235756891444,
+            "cross_encoder": -11.299405097961426,
+            "strategy": "hybrid"
+          },
+          "source": "pride_prejudice.txt",
+          "text": "of love and from the whole of his behaviour to miss de bourgh she derived this comfort for miss bingley that he might have been just as likely to marry _her_ had she been his relation lady catherine continued her remarks on elizabeth s performance mixing with them many instructions on execution and taste elizabeth received them with all the forbearance of civility and at the request of the gentlemen remained at the instrument till her ladyship s carriage was ready to take them all home illustration chapter xxxii illustration elizabeth was sitting by herself the next morning and writing to jane while mrs collins and maria were gone on business into the village when she was startled by a ring at the door the certain signal of a visitor as she had heard no carriage she thought it not unlikely to be lady catherine and under that apprehension was putting away her half finished letter that she might escape all impertinent questions when the door opened and to her very great surprise mr darcy and mr darcy only entered the room he seemed astonished too on finding her alone and apologized for his intrusion by letting her know that he had understood all the ladies to be within they then sat down and when her inquiries after rosings were"
+        },
+        {
+          "doc_id": 3158,
+          "rank": 4,
+          "score": 0.015625,
+          "rerank_score": 0.3458095409355833,
+          "rerank_components": {
+            "lexical": 4.0,
+            "semantic": 0.05394467902051727,
+            "cross_encoder": -11.380486488342285,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "dat wicked natur dat is de pint you is sharks sartin but if you gobern de shark in you why den you be angel for all angel is not ing more dan de shark well goberned now look here bred ren just try wonst to be cibil a helping yourselbs from dat whale don t be tearin de blubber out your neighbour s mout i say is not one shark dood right as toder to dat whale and by gor none on you has de right to dat whale dat whale belong to some one else i know some o you has berry brig mout brigger dan oders but den de brig mouts sometimes has de small bellies so dat de brigness of de mout is not to swaller wid but to bit off de blubber for de small fry ob sharks dat can t get into de scrouge to help demselves well done old fleece cried stubb that s christianity go on no use goin on de dam willains will keep a scougin and slappin each oder massa stubb dey don t hear one word no use a preachin to such dam g uttons as you call em till dare bellies is full and dare bellies is bottomless and when dey do get em full dey wont hear you"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.343,
+        "baseline_uncertainty": 0.32000000000000006,
+        "adjustment": 0.022999999999999965,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 4,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0000001192092896,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.9668077473528683,
+            "factual_consistency": 0.9668077473528683,
+            "entailment_avg": 0.9668077473528683,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.2,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.27
+      }
+    },
+    {
+      "id": "physics_002",
+      "category": "stem",
+      "query": "According to the Born rule, what does the square of the wavefunction magnitude represent?",
+      "expected_answer": "probability density",
+      "generated_answer": "probability density",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.0,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0,
+        "entailment_score": 0.8825801439583302,
+        "factual_consistency": 0.8825801439583302,
+        "numeric_unit_consistency": 1.0,
+        "uncertainty_score": 0.8,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.4780000000000001
+      },
+      "option_scores": [
+        {
+          "option": "probability density",
+          "avg_logprob": -9.017803744063713
+        },
+        {
+          "option": "total energy density",
+          "avg_logprob": -9.017803744063713
+        },
+        {
+          "option": "particle momentum",
+          "avg_logprob": -9.017803744063713
+        },
+        {
+          "option": "electric field strength",
+          "avg_logprob": -9.017803744063713
+        }
+      ],
+      "context": "[1] source=moby_dick.txt\nthe whale at the base of the temple in this afric temple of the whale i leave you reader and if you be a nantucketer and a whaleman you will silently worship there chapter 105 does the whale s magnitude diminish will he perish inasmuch then as this leviathan comes floundering down upon us from the head waters of the eternities it may be fitly inquired whether in the long course of his generations he has not degenerated from the original bulk of his sires but upon investigation we find that not only are the whales of the present day superior in magnitude to those whose fossil remains are found in the tertiary system embracing a distinct geological period prior to man but of the whales found in that tertiary system those belonging to its latter formations exceed in size those of its earlier ones of all the pre adamite whales yet exhumed by far the largest is the alabama one mentioned in the last chapter and that was less than seventy feet in length in the skeleton whereas we have already seen that the tape measure gives seventy two feet for the skeleton of a large sized modern whale and i have heard on whalemen s authority that sperm whales have been captured near a hundred feet long at\n\n[2] source=moby_dick.txt\nto lay before you a particular plain statement touching the living bulk of this leviathan whose skeleton we are briefly to exhibit such a statement may prove useful here according to a careful calculation i have made and which i partly base upon captain scoresby s estimate of seventy tons for the largest sized greenland whale of sixty feet in length according to my careful calculation i say a sperm whale of the largest magnitude between eighty five and ninety feet in length and something less than forty feet in its fullest circumference such a whale will weigh at least ninety tons so that reckoning thirteen men to a ton he would considerably outweigh the combined population of a whole village of one thousand one hundred inhabitants think you not then that brains like yoked cattle should be put to this leviathan to make him at all budge to any landsman s imagination having already in various ways put before you his skull spout hole jaw teeth tail forehead fins and divers other parts i shall now simply point out what is most interesting in the general bulk of his unobstructed bones but as the colossal skull embraces so very large a proportion of the entire extent of the skeleton as it is by far the most complicated part and\n\n[3] source=sherlock.txt\nwalked away he is in my judgment the fourth smartest man in london and for daring i am not sure that he has not a claim to be third i have known something of him before evidently said i mr wilson s assistant counts for a good deal in this mystery of the red headed league i am sure that you inquired your way merely in order that you might see him not him what then the knees of his trousers and what did you see what i expected to see why did you beat the pavement my dear doctor this is a time for observation not for talk we are spies in an enemy s country we know something of saxe coburg square let us now explore the parts which lie behind it the road in which we found ourselves as we turned round the corner from the retired saxe coburg square presented as great a contrast to it as the front of a picture does to the back it was one of the main arteries which conveyed the traffic of the city to the north and west the roadway was blocked with the immense stream of commerce flowing in a double tide inward and outward while the footpaths were black with the hurrying swarm of pedestrians it was\n\n[4] source=moby_dick.txt\ndown to his side fins is of a deep sable yet a boundary line distinct as the mark in a ship s hull called the bright waist that line streaks him from stem to stern with two separate colours black above and white below the white comprises part of his head and the whole of his mouth which makes him look as if he had just escaped from a felonious visit to a meal bag a most mean and mealy aspect his oil is much like that of the common porpoise beyond the duodecimo this system does not proceed inasmuch as the porpoise is the smallest of the whales above you have all the leviathans of note but there are a rabble of uncertain fugitive half fabulous whales which as an american whaleman i know by reputation but not personally i shall enumerate them by their fore castle appellations for possibly such a list may be valuable to future investigators who may complete what i have here but begun if any of the following whales shall hereafter be caught and marked then he can readily be incorporated into this system according to his folio octavo or duodecimo magnitude the bottle nose whale the junk whale the pudding headed whale the cape whale the leading whale the cannon whale the scragg",
+      "iteration_count": 2,
+      "iterative_triggered": true,
+      "iteration_trace": [
+        {
+          "followup_query": "According to the Born rule, what does the square of the wavefunction magnitude represent? according born rule does square wavefunction supporting evidence",
+          "trigger_uncertainty": 0.8,
+          "retrieved_followup_docs": 6
+        }
+      ],
+      "retrieved_topk": [
+        {
+          "doc_id": 3499,
+          "rank": 1,
+          "score": 0.015151515151515152,
+          "rerank_score": 0.8453792452470651,
+          "rerank_components": {
+            "lexical": 5.0,
+            "semantic": 0.14630416435340995,
+            "cross_encoder": -10.979759216308594,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "the whale at the base of the temple in this afric temple of the whale i leave you reader and if you be a nantucketer and a whaleman you will silently worship there chapter 105 does the whale s magnitude diminish will he perish inasmuch then as this leviathan comes floundering down upon us from the head waters of the eternities it may be fitly inquired whether in the long course of his generations he has not degenerated from the original bulk of his sires but upon investigation we find that not only are the whales of the present day superior in magnitude to those whose fossil remains are found in the tertiary system embracing a distinct geological period prior to man but of the whales found in that tertiary system those belonging to its latter formations exceed in size those of its earlier ones of all the pre adamite whales yet exhumed by far the largest is the alabama one mentioned in the last chapter and that was less than seventy feet in length in the skeleton whereas we have already seen that the tape measure gives seventy two feet for the skeleton of a large sized modern whale and i have heard on whalemen s authority that sperm whales have been captured near a hundred feet long at"
+        },
+        {
+          "doc_id": 3486,
+          "rank": 2,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.5636719395815423,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.10575281593707633,
+            "cross_encoder": -11.145610809326172,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "to lay before you a particular plain statement touching the living bulk of this leviathan whose skeleton we are briefly to exhibit such a statement may prove useful here according to a careful calculation i have made and which i partly base upon captain scoresby s estimate of seventy tons for the largest sized greenland whale of sixty feet in length according to my careful calculation i say a sperm whale of the largest magnitude between eighty five and ninety feet in length and something less than forty feet in its fullest circumference such a whale will weigh at least ninety tons so that reckoning thirteen men to a ton he would considerably outweigh the combined population of a whole village of one thousand one hundred inhabitants think you not then that brains like yoked cattle should be put to this leviathan to make him at all budge to any landsman s imagination having already in various ways put before you his skull spout hole jaw teeth tail forehead fins and divers other parts i shall now simply point out what is most interesting in the general bulk of his unobstructed bones but as the colossal skull embraces so very large a proportion of the entire extent of the skeleton as it is by far the most complicated part and"
+        },
+        {
+          "doc_id": 1214,
+          "rank": 3,
+          "score": 0.015384615384615385,
+          "rerank_score": 0.4520046462634343,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.1480501751951605,
+            "cross_encoder": -11.294315338134766,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "walked away he is in my judgment the fourth smartest man in london and for daring i am not sure that he has not a claim to be third i have known something of him before evidently said i mr wilson s assistant counts for a good deal in this mystery of the red headed league i am sure that you inquired your way merely in order that you might see him not him what then the knees of his trousers and what did you see what i expected to see why did you beat the pavement my dear doctor this is a time for observation not for talk we are spies in an enemy s country we know something of saxe coburg square let us now explore the parts which lie behind it the road in which we found ourselves as we turned round the corner from the retired saxe coburg square presented as great a contrast to it as the front of a picture does to the back it was one of the main arteries which conveyed the traffic of the city to the north and west the roadway was blocked with the immense stream of commerce flowing in a double tide inward and outward while the footpaths were black with the hurrying swarm of pedestrians it was"
+        },
+        {
+          "doc_id": 2836,
+          "rank": 4,
+          "score": 0.016129032258064516,
+          "rerank_score": 0.41278284755997763,
+          "rerank_components": {
+            "lexical": 7.0,
+            "semantic": 0.13063521139652812,
+            "cross_encoder": -11.33962631225586,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "down to his side fins is of a deep sable yet a boundary line distinct as the mark in a ship s hull called the bright waist that line streaks him from stem to stern with two separate colours black above and white below the white comprises part of his head and the whole of his mouth which makes him look as if he had just escaped from a felonious visit to a meal bag a most mean and mealy aspect his oil is much like that of the common porpoise beyond the duodecimo this system does not proceed inasmuch as the porpoise is the smallest of the whales above you have all the leviathans of note but there are a rabble of uncertain fugitive half fabulous whales which as an american whaleman i know by reputation but not personally i shall enumerate them by their fore castle appellations for possibly such a list may be valuable to future investigators who may complete what i have here but begun if any of the following whales shall hereafter be caught and marked then he can readily be incorporated into this system according to his folio octavo or duodecimo magnitude the bottle nose whale the junk whale the pudding headed whale the cape whale the leading whale the cannon whale the scragg"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.4780000000000001,
+        "baseline_uncertainty": 0.8,
+        "adjustment": -0.32199999999999995,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 4,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.8825801439583302,
+            "factual_consistency": 0.8825801439583302,
+            "entailment_avg": 0.8825801439583302,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.0,
+            "threshold": 0.15,
+            "uncertainty": 0.75
+          }
+        },
+        "combined_uncertainty": 0.42000000000000004
+      }
+    },
+    {
+      "id": "physics_003",
+      "category": "stem",
+      "query": "Which commutator corresponds to position and momentum in one dimension?",
+      "expected_answer": "x and p commute to i hbar",
+      "generated_answer": "x and p commute to i hbar",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.42857142857142855,
+        "semantic_similarity": 1.0000001192092896,
+        "bertscore_f1": 1.0000001192092896,
+        "entailment_score": 0.8468687601387501,
+        "factual_consistency": 0.8468687601387501,
+        "numeric_unit_consistency": 1.0,
+        "uncertainty_score": 0.22857142857142856,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.3431182710025792
+      },
+      "option_scores": [
+        {
+          "option": "x and p commute to i hbar",
+          "avg_logprob": -11.46223497390747
+        },
+        {
+          "option": "x and p commute to zero",
+          "avg_logprob": -11.46223497390747
+        },
+        {
+          "option": "x and p commute to h squared",
+          "avg_logprob": -11.46223497390747
+        },
+        {
+          "option": "x and p commute to c",
+          "avg_logprob": -11.46223497390747
+        }
+      ],
+      "context": "[1] source=moby_dick.txt\ninvoluntarily yield the immense superiority to him in point of pervading dignity in the present instance too this dignity is heightened by the pepper and salt colour of his head at the summit giving token of advanced age and large experience in short he is what the fishermen technically call a grey headed whale let us now note what is least dissimilar in these heads namely the two most important organs the eye and the ear far back on the side of the head and low down near the angle of either whale s jaw if you narrowly search you will at last see a lashless eye which you would fancy to be a young colt s eye so out of all proportion is it to the magnitude of the head now from this peculiar sideway position of the whale s eyes it is plain that he can never see an object which is exactly ahead no more than he can one exactly astern in a word the position of the whale s eyes corresponds to that of a man s ears and you may fancy for yourself how it would fare with you did you sideways survey objects through your ears you would find that you could only command some thirty degrees of vision in advance of the straight\n\n[2] source=moby_dick.txt\ns ears and you may fancy for yourself how it would fare with you did you sideways survey objects through your ears you would find that you could only command some thirty degrees of vision in advance of the straight side line of sight and about thirty more behind it if your bitterest foe were walking straight towards you with dagger uplifted in broad day you would not be able to see him any more than if he were stealing upon you from behind in a word you would have two backs so to speak but at the same time also two fronts side fronts for what is it that makes the front of a man what indeed but his eyes moreover while in most other animals that i can now think of the eyes are so planted as imperceptibly to blend their visual power so as to produce one picture and not two to the brain the peculiar position of the whale s eyes effectually divided as they are by many cubic feet of solid head which towers between them like a great mountain separating two lakes in valleys this of course must wholly separate the impressions which each independent organ imparts the whale therefore must see one distinct picture on this side and another distinct picture on that\n\n[3] source=sherlock.txt\npowers to determine as to holmes i observed that he sat frequently for half an hour on end with knitted brows and an abstracted air but he swept the matter away with a wave of his hand when i mentioned it data data data he cried impatiently i can t make bricks without clay and yet he would always wind up by muttering that no sister of his should ever have accepted such a situation the telegram which we eventually received came late one night just as i was thinking of turning in and holmes was settling down to one of those all night chemical researches which he frequently indulged in when i would leave him stooping over a retort and a test tube at night and find him in the same position when i came down to breakfast in the morning he opened the yellow envelope and then glancing at the message threw it across to me just look up the trains in bradshaw said he and turned back to his chemical studies the summons was a brief and urgent one please be at the black swan hotel at winchester at midday to morrow it said do come i am at my wit s end hunter will you come with me asked holmes glancing up i should wish to\n\n[4] source=moby_dick.txt\nlife had departed killed and hoisted on deck for the sake of his skin one of these sharks almost took poor queequeg s hand off when he tried to shut down the dead lid of his murderous jaw the whaling spade used for cutting in is made of the very best steel is about the bigness of a man s spread hand and in general shape corresponds to the garden implement after which it is named only its sides are perfectly flat and its upper end considerably narrower than the lower this weapon is always kept as sharp as possible and when being used is occasionally honed just like a razor in its socket a stiff pole from twenty to thirty feet long is inserted for a handle queequeg no care what god made him shark said the savage agonizingly lifting his hand up and down wedder fejee god or nantucket god but de god wat made shark must be one dam ingin chapter 67 cutting in it was a saturday night and such a sabbath as followed ex officio professors of sabbath breaking are all whalemen the ivory pequod was turned into what seemed a shamble every sailor a butcher you would have thought we were offering up ten thousand red oxen to the sea gods in the first",
+      "iteration_count": 1,
+      "iterative_triggered": false,
+      "iteration_trace": [],
+      "retrieved_topk": [
+        {
+          "doc_id": 3228,
+          "rank": 1,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.981841164860268,
+          "rerank_components": {
+            "lexical": 7.0,
+            "semantic": 0.0528862115606496,
+            "cross_encoder": -11.092948913574219,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "involuntarily yield the immense superiority to him in point of pervading dignity in the present instance too this dignity is heightened by the pepper and salt colour of his head at the summit giving token of advanced age and large experience in short he is what the fishermen technically call a grey headed whale let us now note what is least dissimilar in these heads namely the two most important organs the eye and the ear far back on the side of the head and low down near the angle of either whale s jaw if you narrowly search you will at last see a lashless eye which you would fancy to be a young colt s eye so out of all proportion is it to the magnitude of the head now from this peculiar sideway position of the whale s eyes it is plain that he can never see an object which is exactly ahead no more than he can one exactly astern in a word the position of the whale s eyes corresponds to that of a man s ears and you may fancy for yourself how it would fare with you did you sideways survey objects through your ears you would find that you could only command some thirty degrees of vision in advance of the straight"
+        },
+        {
+          "doc_id": 3229,
+          "rank": 2,
+          "score": 0.014492753623188406,
+          "rerank_score": 0.4891379429035872,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.03868538977645032,
+            "cross_encoder": -11.208259582519531,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "s ears and you may fancy for yourself how it would fare with you did you sideways survey objects through your ears you would find that you could only command some thirty degrees of vision in advance of the straight side line of sight and about thirty more behind it if your bitterest foe were walking straight towards you with dagger uplifted in broad day you would not be able to see him any more than if he were stealing upon you from behind in a word you would have two backs so to speak but at the same time also two fronts side fronts for what is it that makes the front of a man what indeed but his eyes moreover while in most other animals that i can now think of the eyes are so planted as imperceptibly to blend their visual power so as to produce one picture and not two to the brain the peculiar position of the whale s eyes effectually divided as they are by many cubic feet of solid head which towers between them like a great mountain separating two lakes in valleys this of course must wholly separate the impressions which each independent organ imparts the whale therefore must see one distinct picture on this side and another distinct picture on that"
+        },
+        {
+          "doc_id": 1687,
+          "rank": 3,
+          "score": 0.014705882352941176,
+          "rerank_score": 0.375,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.05432378688118355,
+            "cross_encoder": -11.359060287475586,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "powers to determine as to holmes i observed that he sat frequently for half an hour on end with knitted brows and an abstracted air but he swept the matter away with a wave of his hand when i mentioned it data data data he cried impatiently i can t make bricks without clay and yet he would always wind up by muttering that no sister of his should ever have accepted such a situation the telegram which we eventually received came late one night just as i was thinking of turning in and holmes was settling down to one of those all night chemical researches which he frequently indulged in when i would leave him stooping over a retort and a test tube at night and find him in the same position when i came down to breakfast in the morning he opened the yellow envelope and then glancing at the message threw it across to me just look up the trains in bradshaw said he and turned back to his chemical studies the summons was a brief and urgent one please be at the black swan hotel at winchester at midday to morrow it said do come i am at my wit s end hunter will you come with me asked holmes glancing up i should wish to"
+        },
+        {
+          "doc_id": 3173,
+          "rank": 4,
+          "score": 0.016129032258064516,
+          "rerank_score": 0.32221083274560913,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.0454549507720662,
+            "cross_encoder": -11.330398559570312,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "life had departed killed and hoisted on deck for the sake of his skin one of these sharks almost took poor queequeg s hand off when he tried to shut down the dead lid of his murderous jaw the whaling spade used for cutting in is made of the very best steel is about the bigness of a man s spread hand and in general shape corresponds to the garden implement after which it is named only its sides are perfectly flat and its upper end considerably narrower than the lower this weapon is always kept as sharp as possible and when being used is occasionally honed just like a razor in its socket a stiff pole from twenty to thirty feet long is inserted for a handle queequeg no care what god made him shark said the savage agonizingly lifting his hand up and down wedder fejee god or nantucket god but de god wat made shark must be one dam ingin chapter 67 cutting in it was a saturday night and such a sabbath as followed ex officio professors of sabbath breaking are all whalemen the ivory pequod was turned into what seemed a shamble every sailor a butcher you would have thought we were offering up ten thousand red oxen to the sea gods in the first"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.3431182710025792,
+        "baseline_uncertainty": 0.22857142857142856,
+        "adjustment": 0.11454684243115063,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 4,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0000001192092896,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.8468687601387501,
+            "factual_consistency": 0.8468687601387501,
+            "entailment_avg": 0.8468687601387501,
+            "threshold": 0.85,
+            "uncertainty": 0.0005256489003517245
+          },
+          "faithfulness": {
+            "faithfulness": 0.42857142857142855,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.27013141222508796
+      }
+    },
+    {
+      "id": "physics_004",
+      "category": "stem",
+      "query": "What principle limits simultaneous precision of position and momentum?",
+      "expected_answer": "heisenberg uncertainty principle",
+      "generated_answer": "heisenberg uncertainty principle",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.3333333333333333,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0000001192092896,
+        "entailment_score": 0.9785322796553373,
+        "factual_consistency": 0.9785322796553373,
+        "numeric_unit_consistency": 1.0,
+        "uncertainty_score": 0.5333333333333334,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.343
+      },
+      "option_scores": [
+        {
+          "option": "heisenberg uncertainty principle",
+          "avg_logprob": -7.780450158956228
+        },
+        {
+          "option": "pauli exclusion principle",
+          "avg_logprob": -7.780450158956228
+        },
+        {
+          "option": "equivalence principle",
+          "avg_logprob": -7.780450158956228
+        },
+        {
+          "option": "least action principle",
+          "avg_logprob": -7.780450158956228
+        }
+      ],
+      "context": "[1] source=moby_dick.txt\nfurniture while aslope little flask bobbed up and down like an empty vial twitching his legs upwards to escape the dreaded jaws of sharks and stubb was lustily singing out for some one to ladle him up and while the old man s line now parting admitted of his pulling into the creamy pool to rescue whom he could in that wild simultaneousness of a thousand concreted perils ahab s yet unstricken boat seemed drawn up towards heaven by invisible wires as arrow like shooting perpendicularly from the sea the white whale dashed his broad forehead against its bottom and sent it turning over and over into the air till it fell again gunwale downwards and ahab and his men struggled out from under it like seals from a sea side cave the first uprising momentum of the whale modifying its direction as he struck the surface involuntarily launched him along it to a little distance from the centre of the destruction he had made and with his back to it he now lay for a moment slowly feeling with his flukes from side to side and whenever a stray oar bit of plank the least chip or crumb of the boats touched his skin his tail swiftly drew back and came sideways smiting the sea but soon as if\n\n[2] source=frankenstein.txt\nsometimes i have endeavoured to discover what quality it is which he possesses that elevates him so immeasurably above any other person i ever knew i believe it to be an intuitive discernment a quick but never failing power of judgment a penetration into the causes of things unequalled for clearness and precision add to this a facility of expression and a voice whose varied intonations are soul subduing music august 19th 17 yesterday the stranger said to me you may easily perceive captain walton that i have suffered great and unparalleled misfortunes i had determined at one time that the memory of these evils should die with me but you have won me to alter my determination you seek for knowledge and wisdom as i once did and i ardently hope that the gratification of your wishes may not be a serpent to sting you as mine has been i do not know that the relation of my disasters will be useful to you yet when i reflect that you are pursuing the same course exposing yourself to the same dangers which have rendered me what i am i imagine that you may deduce an apt moral from my tale one that may direct you if you succeed in your undertaking and console you in case of failure prepare\n\n[3] source=moby_dick.txt\ninvoluntarily yield the immense superiority to him in point of pervading dignity in the present instance too this dignity is heightened by the pepper and salt colour of his head at the summit giving token of advanced age and large experience in short he is what the fishermen technically call a grey headed whale let us now note what is least dissimilar in these heads namely the two most important organs the eye and the ear far back on the side of the head and low down near the angle of either whale s jaw if you narrowly search you will at last see a lashless eye which you would fancy to be a young colt s eye so out of all proportion is it to the magnitude of the head now from this peculiar sideway position of the whale s eyes it is plain that he can never see an object which is exactly ahead no more than he can one exactly astern in a word the position of the whale s eyes corresponds to that of a man s ears and you may fancy for yourself how it would fare with you did you sideways survey objects through your ears you would find that you could only command some thirty degrees of vision in advance of the straight\n\n[4] source=moby_dick.txt\njohn bull is poor ireland but a fast fish what to that apostolic lancer brother jonathan is texas but a fast fish and concerning all these is not possession the whole of the law but if the doctrine of fast fish be pretty generally applicable the kindred doctrine of loose fish is still more widely so that is internationally and universally applicable what was america in 1492 but a loose fish in which columbus struck the spanish standard by way of waifing it for his royal master and mistress what was poland to the czar what greece to the turk what india to england what at last will mexico be to the united states all loose fish what are the rights of man and the liberties of the world but loose fish what all men s minds and opinions but loose fish what is the principle of religious belief in them but a loose fish what to the ostentatious smuggling verbalists are the thoughts of thinkers but loose fish what is the great globe itself but a loose fish and what are you reader but a loose fish and a fast fish too chapter 90 heads or tails de balena vero sufficit si rex habeat caput et regina caudam _bracton l 3 c 3 _ latin from the books of",
+      "iteration_count": 1,
+      "iterative_triggered": false,
+      "iteration_trace": [],
+      "retrieved_topk": [
+        {
+          "doc_id": 3696,
+          "rank": 1,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.6792287192713019,
+          "rerank_components": {
+            "lexical": 3.0,
+            "semantic": 0.03724687772379276,
+            "cross_encoder": -10.59713363647461,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "furniture while aslope little flask bobbed up and down like an empty vial twitching his legs upwards to escape the dreaded jaws of sharks and stubb was lustily singing out for some one to ladle him up and while the old man s line now parting admitted of his pulling into the creamy pool to rescue whom he could in that wild simultaneousness of a thousand concreted perils ahab s yet unstricken boat seemed drawn up towards heaven by invisible wires as arrow like shooting perpendicularly from the sea the white whale dashed his broad forehead against its bottom and sent it turning over and over into the air till it fell again gunwale downwards and ahab and his men struggled out from under it like seals from a sea side cave the first uprising momentum of the whale modifying its direction as he struck the surface involuntarily launched him along it to a little distance from the centre of the destruction he had made and with his back to it he now lay for a moment slowly feeling with his flukes from side to side and whenever a stray oar bit of plank the least chip or crumb of the boats touched his skin his tail swiftly drew back and came sideways smiting the sea but soon as if"
+        },
+        {
+          "doc_id": 28,
+          "rank": 2,
+          "score": 0.015151515151515152,
+          "rerank_score": 0.5457984997050983,
+          "rerank_components": {
+            "lexical": 4.0,
+            "semantic": 0.03551633923353857,
+            "cross_encoder": -10.95159912109375,
+            "strategy": "hybrid"
+          },
+          "source": "frankenstein.txt",
+          "text": "sometimes i have endeavoured to discover what quality it is which he possesses that elevates him so immeasurably above any other person i ever knew i believe it to be an intuitive discernment a quick but never failing power of judgment a penetration into the causes of things unequalled for clearness and precision add to this a facility of expression and a voice whose varied intonations are soul subduing music august 19th 17 yesterday the stranger said to me you may easily perceive captain walton that i have suffered great and unparalleled misfortunes i had determined at one time that the memory of these evils should die with me but you have won me to alter my determination you seek for knowledge and wisdom as i once did and i ardently hope that the gratification of your wishes may not be a serpent to sting you as mine has been i do not know that the relation of my disasters will be useful to you yet when i reflect that you are pursuing the same course exposing yourself to the same dangers which have rendered me what i am i imagine that you may deduce an apt moral from my tale one that may direct you if you succeed in your undertaking and console you in case of failure prepare"
+        },
+        {
+          "doc_id": 3228,
+          "rank": 3,
+          "score": 0.014705882352941176,
+          "rerank_score": 0.5353018588656965,
+          "rerank_components": {
+            "lexical": 4.0,
+            "semantic": 0.05030516289153381,
+            "cross_encoder": -11.203133583068848,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "involuntarily yield the immense superiority to him in point of pervading dignity in the present instance too this dignity is heightened by the pepper and salt colour of his head at the summit giving token of advanced age and large experience in short he is what the fishermen technically call a grey headed whale let us now note what is least dissimilar in these heads namely the two most important organs the eye and the ear far back on the side of the head and low down near the angle of either whale s jaw if you narrowly search you will at last see a lashless eye which you would fancy to be a young colt s eye so out of all proportion is it to the magnitude of the head now from this peculiar sideway position of the whale s eyes it is plain that he can never see an object which is exactly ahead no more than he can one exactly astern in a word the position of the whale s eyes corresponds to that of a man s ears and you may fancy for yourself how it would fare with you did you sideways survey objects through your ears you would find that you could only command some thirty degrees of vision in advance of the straight"
+        },
+        {
+          "doc_id": 3374,
+          "rank": 4,
+          "score": 0.014285714285714285,
+          "rerank_score": 0.4690914374024464,
+          "rerank_components": {
+            "lexical": 4.0,
+            "semantic": 0.0515951753046276,
+            "cross_encoder": -11.313133239746094,
+            "strategy": "hybrid"
+          },
+          "source": "moby_dick.txt",
+          "text": "john bull is poor ireland but a fast fish what to that apostolic lancer brother jonathan is texas but a fast fish and concerning all these is not possession the whole of the law but if the doctrine of fast fish be pretty generally applicable the kindred doctrine of loose fish is still more widely so that is internationally and universally applicable what was america in 1492 but a loose fish in which columbus struck the spanish standard by way of waifing it for his royal master and mistress what was poland to the czar what greece to the turk what india to england what at last will mexico be to the united states all loose fish what are the rights of man and the liberties of the world but loose fish what all men s minds and opinions but loose fish what is the principle of religious belief in them but a loose fish what to the ostentatious smuggling verbalists are the thoughts of thinkers but loose fish what is the great globe itself but a loose fish and what are you reader but a loose fish and a fast fish too chapter 90 heads or tails de balena vero sufficit si rex habeat caput et regina caudam _bracton l 3 c 3 _ latin from the books of"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.343,
+        "baseline_uncertainty": 0.5333333333333334,
+        "adjustment": -0.1903333333333334,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 4,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.9785322796553373,
+            "factual_consistency": 0.9785322796553373,
+            "entailment_avg": 0.9785322796553373,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "faithfulness": {
+            "faithfulness": 0.3333333333333333,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.27
+      }
+    },
+    {
+      "id": "physics_005",
+      "category": "stem",
+      "query": "In special relativity, what happens to time for a fast-moving clock?",
+      "expected_answer": "time dilation",
+      "generated_answer": "time dilation",
+      "metrics": {
+        "token_f1": 1.0,
+        "contains_expected": 1.0,
+        "faithfulness": 0.5,
+        "semantic_similarity": 1.0,
+        "bertscore_f1": 1.0000004768371582,
+        "entailment_score": 0.7464372426271438,
+        "factual_consistency": 0.7464372426271438,
+        "numeric_unit_consistency": 1.0,
+        "uncertainty_score": 0.4,
+        "mc_exact": 1.0,
+        "mc_semantic_or_better": 1.0,
+        "expected_rank": 1,
+        "calibrated_uncertainty": 0.3654962008302679
+      },
+      "option_scores": [
+        {
+          "option": "time dilation",
+          "avg_logprob": -14.598085403442383
+        },
+        {
+          "option": "time acceleration",
+          "avg_logprob": -14.598085403442383
+        },
+        {
+          "option": "time reversal",
+          "avg_logprob": -14.598085403442383
+        },
+        {
+          "option": "time quantization",
+          "avg_logprob": -14.598085403442383
+        }
+      ],
+      "context": "[1] source=metamorphosis.txt\nsix years i suppose that s definitely what i ll do that s when i ll make the big change first of all though i ve got to get up my train leaves at five and he looked over at the alarm clock ticking on the chest of drawers god in heaven he thought it was half past six and the hands were quietly moving forwards it was even later than half past more like quarter to seven had the alarm clock not rung he could see from the bed that it had been set for four o clock as it should have been it certainly must have rung yes but was it possible to quietly sleep through that furniture rattling noise true he had not slept peacefully but probably all the more deeply because of that what should he do now the next train went at seven if he were to catch that he would have to rush like mad and the collection of samples was still not packed and he did not at all feel particularly fresh and lively and even if he did catch the train he would not avoid his boss s anger as the office assistant would have been there to see the five o clock train go he would have put in his report\n\n[2] source=shakespeare.txt\nnothing music do i hear ha ha keep time how sour sweet music is when time is broke and no proportion kept so is it in the music of men s lives and here have i the daintiness of ear to cheque time broke in a disorder d string but for the concord of my state and time had not an ear to hear my true time broke i wasted time and now doth time waste me for now hath time made me his numbering clock my thoughts are minutes and with sighs they jar their watches on unto mine eyes the outward watch whereto my finger like a dial s point is pointing still in cleansing them from tears now sir the sound that tells what hour it is are clamorous groans which strike upon my heart which is the bell so sighs and tears and groans show minutes times and hours but my time runs posting on in bolingbroke s proud joy while i stand fooling here his jack o the clock this music mads me let it sound no more for though it have holp madmen to their wits in me it seems it will make wise men mad yet blessing on his heart that gives it me for tis a sign of love and love to\n\n[3] source=sherlock.txt\nwould it be possible for us to see over these rooms without the knowledge of your stepfather as it happens he spoke of coming into town to day upon some most important business it is probable that he will be away all day and that there would be nothing to disturb you we have a housekeeper now but she is old and foolish and i could easily get her out of the way excellent you are not averse to this trip watson by no means then we shall both come what are you going to do yourself i have one or two things which i would wish to do now that i am in town but i shall return by the twelve o clock train so as to be there in time for your coming and you may expect us early in the afternoon i have myself some small business matters to attend to will you not wait and breakfast no i must go my heart is lightened already since i have confided my trouble to you i shall look forward to seeing you again this afternoon she dropped her thick black veil over her face and glided from the room and what do you think of it all watson asked sherlock holmes leaning back in his chair it seems\n\n[4] source=tale_two_cities.txt\nbetween the two towers no miss answered mr cruncher then like the best of men said miss pross go to the posting house straight and make that change i am doubtful said mr cruncher hesitating and shaking his head about leaving of you you see we don t know what may happen heaven knows we don t returned miss pross but have no fear for me take me in at the cathedral at three o clock or as near it as you can and i am sure it will be better than our going from here i feel certain of it there bless you mr cruncher think not of me but of the lives that may depend on both of us this exordium and miss pross s two hands in quite agonised entreaty clasping his decided mr cruncher with an encouraging nod or two he immediately went out to alter the arrangements and left her by herself to follow as she had proposed the having originated a precaution which was already in course of execution was a great relief to miss pross the necessity of composing her appearance so that it should attract no special notice in the streets was another relief she looked at her watch and it was twenty minutes past two she had no time to lose",
+      "iteration_count": 1,
+      "iterative_triggered": false,
+      "iteration_trace": [],
+      "retrieved_topk": [
+        {
+          "doc_id": 5309,
+          "rank": 1,
+          "score": 0.01639344262295082,
+          "rerank_score": 0.6754757882189024,
+          "rerank_components": {
+            "lexical": 6.0,
+            "semantic": 0.03623982629857861,
+            "cross_encoder": -10.342977523803711,
+            "strategy": "hybrid"
+          },
+          "source": "metamorphosis.txt",
+          "text": "six years i suppose that s definitely what i ll do that s when i ll make the big change first of all though i ve got to get up my train leaves at five and he looked over at the alarm clock ticking on the chest of drawers god in heaven he thought it was half past six and the hands were quietly moving forwards it was even later than half past more like quarter to seven had the alarm clock not rung he could see from the bed that it had been set for four o clock as it should have been it certainly must have rung yes but was it possible to quietly sleep through that furniture rattling noise true he had not slept peacefully but probably all the more deeply because of that what should he do now the next train went at seven if he were to catch that he would have to rush like mad and the collection of samples was still not packed and he did not at all feel particularly fresh and lively and even if he did catch the train he would not avoid his boss s anger as the office assistant would have been there to see the five o clock train go he would have put in his report"
+        },
+        {
+          "doc_id": 4596,
+          "rank": 2,
+          "score": 0.014925373134328358,
+          "rerank_score": 0.6623518648081373,
+          "rerank_components": {
+            "lexical": 7.0,
+            "semantic": 0.06719589998159227,
+            "cross_encoder": -10.89903450012207,
+            "strategy": "hybrid"
+          },
+          "source": "shakespeare.txt",
+          "text": "nothing music do i hear ha ha keep time how sour sweet music is when time is broke and no proportion kept so is it in the music of men s lives and here have i the daintiness of ear to cheque time broke in a disorder d string but for the concord of my state and time had not an ear to hear my true time broke i wasted time and now doth time waste me for now hath time made me his numbering clock my thoughts are minutes and with sighs they jar their watches on unto mine eyes the outward watch whereto my finger like a dial s point is pointing still in cleansing them from tears now sir the sound that tells what hour it is are clamorous groans which strike upon my heart which is the bell so sighs and tears and groans show minutes times and hours but my time runs posting on in bolingbroke s proud joy while i stand fooling here his jack o the clock this music mads me let it sound no more for though it have holp madmen to their wits in me it seems it will make wise men mad yet blessing on his heart that gives it me for tis a sign of love and love to"
+        },
+        {
+          "doc_id": 1488,
+          "rank": 3,
+          "score": 0.015873015873015872,
+          "rerank_score": 0.4463986266522003,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.06005820420137307,
+            "cross_encoder": -11.31307601928711,
+            "strategy": "hybrid"
+          },
+          "source": "sherlock.txt",
+          "text": "would it be possible for us to see over these rooms without the knowledge of your stepfather as it happens he spoke of coming into town to day upon some most important business it is probable that he will be away all day and that there would be nothing to disturb you we have a housekeeper now but she is old and foolish and i could easily get her out of the way excellent you are not averse to this trip watson by no means then we shall both come what are you going to do yourself i have one or two things which i would wish to do now that i am in town but i shall return by the twelve o clock train so as to be there in time for your coming and you may expect us early in the afternoon i have myself some small business matters to attend to will you not wait and breakfast no i must go my heart is lightened already since i have confided my trouble to you i shall look forward to seeing you again this afternoon she dropped her thick black veil over her face and glided from the room and what do you think of it all watson asked sherlock holmes leaning back in his chair it seems"
+        },
+        {
+          "doc_id": 2487,
+          "rank": 4,
+          "score": 0.015384615384615385,
+          "rerank_score": 0.29556460064726425,
+          "rerank_components": {
+            "lexical": 8.0,
+            "semantic": 0.03612727641085366,
+            "cross_encoder": -11.269123077392578,
+            "strategy": "hybrid"
+          },
+          "source": "tale_two_cities.txt",
+          "text": "between the two towers no miss answered mr cruncher then like the best of men said miss pross go to the posting house straight and make that change i am doubtful said mr cruncher hesitating and shaking his head about leaving of you you see we don t know what may happen heaven knows we don t returned miss pross but have no fear for me take me in at the cathedral at three o clock or as near it as you can and i am sure it will be better than our going from here i feel certain of it there bless you mr cruncher think not of me but of the lives that may depend on both of us this exordium and miss pross s two hands in quite agonised entreaty clasping his decided mr cruncher with an encouraging nod or two he immediately went out to alter the arrangements and left her by herself to follow as she had proposed the having originated a precaution which was already in course of execution was a great relief to miss pross the necessity of composing her appearance so that it should attract no special notice in the streets was another relief she looked at her watch and it was twenty minutes past two she had no time to lose"
+        }
+      ],
+      "calibration": {
+        "calibrated_uncertainty": 0.3654962008302679,
+        "baseline_uncertainty": 0.4,
+        "adjustment": -0.03450379916973212,
+        "components": {
+          "logprob_spread": {
+            "confidence": 0.1,
+            "uncertainty": 0.9,
+            "spread": 0.0,
+            "num_options": 4,
+            "logprob_range": 0.0
+          },
+          "context_relevance": {
+            "semantic_similarity": 1.0,
+            "threshold": 0.85,
+            "uncertainty": 0.0
+          },
+          "entailment_consistency": {
+            "entailment_score": 0.7464372426271438,
+            "factual_consistency": 0.7464372426271438,
+            "entailment_avg": 0.7464372426271438,
+            "threshold": 0.85,
+            "uncertainty": 0.09998311480119043
+          },
+          "faithfulness": {
+            "faithfulness": 0.5,
+            "threshold": 0.15,
+            "uncertainty": 0.0
+          }
+        },
+        "combined_uncertainty": 0.29499577870029764
+      }
+    }
+  ]
+}
