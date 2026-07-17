@@ -1,3 +1,8 @@
+#!/bin/bash
+cd /workspaces/subword_tokenizer/arxiv_submission_20260716_final
+cp project_reference_arxiv.tex project_reference_arxiv_backup.tex
+
+cat > project_reference_arxiv.tex << 'EOF'
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -72,3 +77,24 @@ We thank the open-source community for tools and datasets that enabled this work
 \end{thebibliography}
 
 \end{document}
+EOF
+
+pdflatex -interaction=nonstopmode project_reference_arxiv.tex >/dev/null 2>&1
+pdflatex -interaction=nonstopmode project_reference_arxiv.tex >/dev/null 2>&1
+
+echo "=== NEW PAPER CHECK ==="
+echo "Title:" && grep '\\title{' project_reference_arxiv.tex
+echo ""
+echo "Abstract lines:" && sed -n '/\\begin{abstract}/,/\\end{abstract}/p' project_reference_arxiv.tex | wc -l
+echo ""
+echo "Sections:" && grep -n '\\section{' project_reference_arxiv.tex
+echo ""
+echo "PDF size:" && ls -la project_reference_arxiv.pdf
+
+cd /workspaces/subword_tokenizer
+tar -czf arxiv_bundle_enterprise_final.tar.gz arxiv_submission_20260716_final/project_reference_arxiv.tex arxiv_submission_20260716_final/project_reference_arxiv.pdf
+
+echo ""
+echo "✅ ENTERPRISE PAPER READY"
+echo "Bundle: arxiv_bundle_enterprise_final.tar.gz"
+echo "PDF: arxiv_submission_20260716_final/project_reference_arxiv.pdf"
