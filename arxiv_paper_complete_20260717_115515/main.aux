@@ -1,0 +1,108 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{eldan2023tinystories}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{eldan2023tinystories}
+\citation{touvron2023llama}
+\citation{hu2021lora}
+\citation{lewis2020rag}
+\citation{guu2020realm}
+\citation{shi2023replug,trivedi2023interleaving}
+\citation{nogueira2019passage}
+\citation{gao2021rethink}
+\citation{beltagy2019scibert}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Small Language Models}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Parameter-Efficient Fine-Tuning}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Retrieval-Augmented Generation}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Learned Reranking}{2}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Scientific NLP}{2}{subsection.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Tokenizer Architecture}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}BPE Implementation}{2}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Implementation Details}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Tokenizer Performance Metrics}}{3}{table.caption.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Corpus and Pre-Training}{3}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}arXiv Corpus Collection}{3}{subsection.4.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Corpus Composition by Category}}{3}{table.caption.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Pre-Training Baseline}{3}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Pre-Training Performance}}{4}{table.caption.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}LoRA Fine-Tuning}{4}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Configuration}{4}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces LoRA Hyperparameters}}{4}{table.caption.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Checkpoint Analysis}{4}{subsection.5.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces LoRA Checkpoint Performance Ranking}}{4}{table.caption.5}\protected@file@percent }
+\newlabel{thm:optimal}{{5.1}{4}{Optimal Convergence}{theorem.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces LoRA evaluation loss progression across 10,000 training steps. The optimal checkpoint at step 9,000 achieves $\mathcal  {L}= 0.0060005$, representing 44.0\% improvement over baseline.}}{5}{figure.caption.6}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:loss_curve}{{1}{5}{LoRA evaluation loss progression across 10,000 training steps. The optimal checkpoint at step 9,000 achieves $\loss = 0.0060005$, representing 44.0\% improvement over baseline}{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Parameter Efficiency}{5}{subsection.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Comparison of parameter-efficient fine-tuning methods. LoRA achieves the best loss (0.0060) with only 0.19\% trainable parameters (65,536 vs. 35.2M full fine-tuning).}}{5}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:param_eff}{{2}{5}{Comparison of parameter-efficient fine-tuning methods. LoRA achieves the best loss (0.0060) with only 0.19\% trainable parameters (65,536 vs. 35.2M full fine-tuning)}{figure.caption.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Pre-Training vs. LoRA Fine-Tuning}}{5}{table.caption.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Iterative RAG System}{5}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Architecture}{5}{subsection.6.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces End-to-end iterative RAG pipeline. The system retrieves from 34,464 arXiv physics papers using hybrid dense + BM25 retrieval, fuses results with RRF, reranks with a cross-encoder, and iteratively refines through the LoRA-fine-tuned SLM.}}{5}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:pipeline}{{3}{5}{End-to-end iterative RAG pipeline. The system retrieves from 34,464 arXiv physics papers using hybrid dense + BM25 retrieval, fuses results with RRF, reranks with a cross-encoder, and iteratively refines through the LoRA-fine-tuned SLM}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Hybrid Retrieval}{5}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Cross-Encoder Reranking}{5}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Iterative Refinement}{6}{subsection.6.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Iterative refinement convergence. The full system converges at iteration 4 (faithfulness = 0.82), while ablations without reranking or iteration plateau earlier.}}{6}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:convergence}{{4}{6}{Iterative refinement convergence. The full system converges at iteration 4 (faithfulness = 0.82), while ablations without reranking or iteration plateau earlier}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Ablation Study}{6}{section.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Ablation study comparing full system against component removals. Each component contributes substantially: iteration (+0.10), reranker (+0.06), LoRA (+0.04).}}{6}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:ablation}{{5}{6}{Ablation study comparing full system against component removals. Each component contributes substantially: iteration (+0.10), reranker (+0.06), LoRA (+0.04)}{figure.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Ablation Study: Component Contribution}}{6}{table.caption.12}\protected@file@percent }
+\newlabel{tab:ablation}{{7}{6}{Ablation Study: Component Contribution}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Evaluation}{6}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Benchmark}{6}{subsection.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Metrics}{6}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Multi-Seed Statistical Significance}{7}{subsection.8.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Multi-Seed Evaluation Results ($n=3$, mean $\pm $ std)}}{7}{table.caption.13}\protected@file@percent }
+\newlabel{tab:multiseed}{{8}{7}{Multi-Seed Evaluation Results ($n=3$, mean $\pm $ std)}{table.caption.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Operational Infrastructure}{7}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}Training Pipeline}{7}{subsection.9.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}{\ignorespaces Training Pipeline Commands}}{7}{lstlisting.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Tokenizer CLI}{7}{subsection.9.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}{\ignorespaces Tokenizer Command-Line Interface}}{7}{lstlisting.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Validation and Reliability}{7}{subsection.9.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.4}Hardware Efficiency}{8}{subsection.9.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Hardware Utilization}}{8}{table.caption.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Cross-Encoder Reranker Training}{8}{section.10}\protected@file@percent }
+\newlabel{sec:reranker_training}{{10}{8}{Cross-Encoder Reranker Training}{section.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Preference Pair Statistics}}{8}{table.caption.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}Future Work}{8}{section.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1}Scaling to 3B--7B Parameters}{8}{subsection.11.1}\protected@file@percent }
+\citation{kadavath2022language}
+\bibstyle{plainnat}
+\bibcite{devlin2019bert}{{1}{2019}{{Devlin et~al.}}{{}}}
+\bibcite{vaswani2017attention}{{2}{2017}{{Vaswani et~al.}}{{}}}
+\bibcite{hu2021lora}{{3}{2021}{{Hu et~al.}}{{}}}
+\bibcite{lewis2020rag}{{4}{2020}{{Lewis et~al.}}{{}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2}Uncertainty Quantification}{9}{subsection.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.3}Real-Time arXiv Integration}{9}{subsection.11.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12}Conclusion}{9}{section.12}\protected@file@percent }
+\bibcite{eldan2023tinystories}{{5}{2023}{{Eldan and Li}}{{}}}
+\bibcite{touvron2023llama}{{6}{2023}{{Touvron et~al.}}{{}}}
+\bibcite{beltagy2019scibert}{{7}{2019}{{Beltagy et~al.}}{{}}}
+\bibcite{guu2020realm}{{8}{2020}{{Guu et~al.}}{{}}}
+\bibcite{nogueira2019passage}{{9}{2019}{{Nogueira and Cho}}{{}}}
+\bibcite{gao2021rethink}{{10}{2021}{{Gao et~al.}}{{}}}
+\bibcite{shi2023replug}{{11}{2023}{{Shi et~al.}}{{}}}
+\bibcite{trivedi2023interleaving}{{12}{2023}{{Trivedi et~al.}}{{}}}
+\bibcite{kadavath2022language}{{13}{2022}{{Kadavath et~al.}}{{}}}
+\bibcite{sennrich2016neural}{{14}{2016}{{Sennrich et~al.}}{{}}}
+\bibcite{brown2020language}{{15}{2020}{{Brown et~al.}}{{}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Complete Checkpoint Data}{11}{appendix.A}\protected@file@percent }
+\newlabel{app:checkpoints}{{A}{11}{Complete Checkpoint Data}{appendix.A}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Full LoRA Checkpoint Evaluation Results}}{11}{table.caption.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B}Training Configuration Details}{11}{appendix.B}\protected@file@percent }
+\newlabel{app:config}{{B}{11}{Training Configuration Details}{appendix.B}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}{\ignorespaces Complete Training Configuration}}{11}{lstlisting.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C}RAG Configuration}{11}{appendix.C}\protected@file@percent }
+\newlabel{app:rag_config}{{C}{11}{RAG Configuration}{appendix.C}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}{\ignorespaces RAG System Configuration}}{11}{lstlisting.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {D}Reproducibility Checklist}{12}{appendix.D}\protected@file@percent }
+\newlabel{app:reproducibility}{{D}{12}{Reproducibility Checklist}{appendix.D}{}}
+\gdef \@abspage@last{12}
