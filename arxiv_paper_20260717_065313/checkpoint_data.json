@@ -1,0 +1,32 @@
+{
+  "experiment": "phase2_lora",
+  "device": "mps",
+  "eval_split": "val",
+  "eval_steps": 200,
+  "best": {
+    "checkpoint": "/Users/jdsingh/slm_v0/checkpoints/phase2_lora/lora_adapter_step9000.pt",
+    "eval_loss": 0.006000515322666615,
+    "step": 9000
+  },
+  "ranking": [
+    {"step": 9000, "checkpoint": "lora_adapter_step9000.pt", "eval_loss": 0.006000515322666615},
+    {"step": 10000, "checkpoint": "lora_adapter_final.pt", "eval_loss": 0.006049152267514728},
+    {"step": 10000, "checkpoint": "lora_adapter_step10000.pt", "eval_loss": 0.0061343704804312435},
+    {"step": 8000, "checkpoint": "lora_adapter_step8000.pt", "eval_loss": 0.006208166624419391},
+    {"step": 5000, "checkpoint": "lora_adapter_step5000.pt", "eval_loss": 0.006401822345796972},
+    {"step": 7000, "checkpoint": "lora_adapter_step7000.pt", "eval_loss": 0.0064529103966197},
+    {"step": 4000, "checkpoint": "lora_adapter_step4000.pt", "eval_loss": 0.006557771838270127},
+    {"step": 6000, "checkpoint": "lora_adapter_step6000.pt", "eval_loss": 0.00660844512807671},
+    {"step": 3000, "checkpoint": "lora_adapter_step3000.pt", "eval_loss": 0.007912050943705253},
+    {"step": 1000, "checkpoint": "lora_adapter_step1000.pt", "eval_loss": 0.008194404063979165},
+    {"step": 2000, "checkpoint": "lora_adapter_step2000.pt", "eval_loss": 0.008277646944625303}
+  ],
+  "summary": {
+    "best_val_loss": 0.005970929260365665,
+    "best_adapter": "best_lora_adapter.pt",
+    "final_adapter": "lora_adapter_final.pt",
+    "max_steps": 10000,
+    "improvement": 43.9,
+    "parameter_efficiency": 99.81
+  }
+}
