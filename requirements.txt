@@ -1,0 +1,13 @@
+torch>=2.0
+transformers>=4.35
+datasets
+accelerate
+peft>=0.7.1
+pydantic
+loguru
+arxiv
+tiktoken
+numpy
+pandas
+sentence-transformers
+faiss-cpu

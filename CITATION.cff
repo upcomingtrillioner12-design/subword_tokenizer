@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software or paper, please cite it as below."
+title: "A Physics-Specialized Small Language Model: Tokenizer Design, LoRA Fine-Tuning, and Retrieval-Augmented Generation on Consumer Hardware"
+authors:
+  - family-names: Singh
+    given-names: Jaydip
+  - family-names: Kumbhar
+    given-names: Linkan
+date-released: 2026-07-15
+url: "https://github.com/upcomingtrillioner12-design/subword_tokenizer"
+repository-code: "https://github.com/upcomingtrillioner12-design/subword_tokenizer"
+license: MIT
+keywords:
+  - small language models
+  - LoRA
+  - retrieval-augmented generation
+  - BM25
+  - physics NLP
