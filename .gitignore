@@ -1,21 +1,12 @@
-/target
-.DS_Store
-.venv/
-.env
-.env.*
-
+venv/
 __pycache__/
 *.pyc
-backups/
-
-# Local fine-tuning artifacts (do not commit)
-best_cross_encoder_finetuned.pt
-checkpoints/cross_encoder_finetuned_task10.pt
-
-# Local intermediate eval runs (smoke/temporary)
-results/rag_generation_eval/rag_generation_eval_20260716_095714.json
-results/rag_generation_eval/rag_generation_eval_20260716_095714.md
-results/rag_generation_eval/rag_generation_eval_20260716_100346.json
-results/rag_generation_eval/rag_generation_eval_20260716_100346.md
-results/rag_generation_eval/rag_generation_eval_20260716_101242.json
-results/rag_generation_eval/rag_generation_eval_20260716_101242.md
+.DS_Store
+checkpoints/*.pt
+data/**/*.bin
+data/**/raw/
+*.faiss
+*.log
+paper/*.aux
+paper/*.log
+paper/*.out
