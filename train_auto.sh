@@ -5,7 +5,7 @@
 
 HOURS=${1:-1}  # default 1 hour
 VOCAB_SIZE=${2:-5000}
-CORPUS_FILE="auto_corpus.txt"
+CORPUS_FILE="data/corpora/raw/auto_corpus.txt"
 MODEL_FILE="model.json"
 
 echo "Starting auto-training for $HOURS hours with vocab size $VOCAB_SIZE"
@@ -13,6 +13,7 @@ echo "Starting auto-training for $HOURS hours with vocab size $VOCAB_SIZE"
 # Generate diverse training corpus
 python3 << 'PYEOF'
 import random
+from pathlib import Path
 
 words = [
     "hello", "world", "computer", "science", "artificial", "intelligence",
@@ -271,7 +272,10 @@ for _ in range(500):
     para = " ".join(random.choices(words, k=random.randint(20, 50)))
     paragraphs.append(para)
 
-with open("auto_corpus.txt", "w") as f:
+out = Path("data/corpora/raw/auto_corpus.txt")
+out.parent.mkdir(parents=True, exist_ok=True)
+
+with open(out, "w") as f:
     f.write("\n".join(paragraphs))
 
 print(f"Generated corpus with {len(paragraphs)} paragraphs, {sum(len(p.split()) for p in paragraphs)} words")
@@ -279,7 +283,7 @@ PYEOF
 
 # Train tokenizer
 echo "Training tokenizer..."
-cargo run -- --corpus auto_corpus.txt --save model.json --vocab-size $VOCAB_SIZE --text "hello world"
+cargo run -- --corpus "$CORPUS_FILE" --save "$MODEL_FILE" --vocab-size "$VOCAB_SIZE" --text "hello world"
 
 # Test with sample texts
 echo "Testing tokenization..."
@@ -289,7 +293,7 @@ cargo run -- --model model.json --text "neural networks can process complex patt
 
 # Push to GitHub
 echo "Pushing to GitHub..."
-git add auto_corpus.txt model.json
+git add "$CORPUS_FILE" "$MODEL_FILE"
 git commit -m "Auto-trained BPE tokenizer: vocab $VOCAB_SIZE, $(date)"
 git push origin main
 

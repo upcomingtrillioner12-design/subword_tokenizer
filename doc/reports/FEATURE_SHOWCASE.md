@@ -5,7 +5,7 @@
 ### 1. CLI Argument Parsing ✓
 Train on custom corpus files with configurable parameters:
 ```bash
-cargo run -- --corpus test_corpus.txt --vocab-size 300 --output model.json
+cargo run -- --corpus data/corpora/raw/test_corpus.txt --vocab-size 300 --output model.json
 cargo run -- --model model.json --tokenize "hello world"
 ```
 
@@ -46,7 +46,7 @@ Output: ["n", "at", "u", "r", "al ", "l", "anguage ", "p", "roc", "ess", "ing"]
 
 ## Example Workflow
 
-1. Train: `cargo run -- --corpus test_corpus.txt --vocab-size 350 --output trained.json`
+1. Train: `cargo run -- --corpus data/corpora/raw/test_corpus.txt --vocab-size 350 --output trained.json`
 2. Infer: `cargo run -- --model trained.json --tokenize "text to tokenize"`
 3. Test:  `cargo test`
 

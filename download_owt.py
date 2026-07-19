@@ -15,7 +15,8 @@ max_docs = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1] else None
 print(f"Loading OpenWebText (max_docs={max_docs})...")
 
 ds = load_dataset("Skylion007/openwebtext", split="train", streaming=True)
-out = Path("openwebtext.txt")
+out = Path("data/corpora/raw/openwebtext.txt")
+out.parent.mkdir(parents=True, exist_ok=True)
 buffer, count = [], 0
 
 with open(out, "w", encoding="utf-8") as f:

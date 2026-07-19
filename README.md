@@ -211,6 +211,9 @@ Phase 3 report: [doc/phases/PHASE_3_COMPLETION.md](doc/phases/PHASE_3_COMPLETION
 │       └── phase2_evaluation_report.json  ← Ranking report
 │
 ├── data/
+│   ├── corpora/
+│   │   ├── README.md                    ← Corpus storage guide
+│   │   └── raw/                         ← Large raw text corpora (moved from root)
 │   └── offline_physics/                   ← Phase 2 corpus
 │       ├── train.bin                      ← 27.5k docs, 7M tokens
 │       ├── val.bin                        ← 3.4k docs, 883k tokens

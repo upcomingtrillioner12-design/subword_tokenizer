@@ -4,7 +4,7 @@
 # Each run uses BIGGER vocab size on SAME corpus
 
 MODEL="model.json"
-CORPUS="massive_corpus.txt"
+CORPUS="data/corpora/raw/massive_corpus.txt"
 
 # Read current size from model if exists
 if [ -f "$MODEL" ]; then
