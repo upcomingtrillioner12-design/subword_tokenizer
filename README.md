@@ -46,11 +46,11 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
 - [x] End-to-end system implemented (tokenizer → LM → RAG → reranker → calibration → iteration)
 - [x] Core ablations completed (2×2 reranker × iteration)
 - [x] Reproducible configs and result artifacts available
-- [ ] Harder benchmark set (beyond 102Q ceiling)
-- [ ] Statistical significance across multiple seeds/runs
-- [ ] Strongly-labeled reranker dataset (target: 1000+ pairs)
-- [ ] Human evaluation protocol (faithfulness/helpfulness)
-- [ ] Final paper figures/tables + reproducibility appendix
+- [x] Harder benchmark set (beyond 102Q ceiling)
+- [x] Statistical significance across multiple seeds/runs
+- [x] Strongly-labeled reranker dataset (target: 1000+ pairs)
+- [x] Human evaluation protocol (faithfulness/helpfulness)
+- [x] Final paper figures/tables + reproducibility appendix
 
 ### B. 2-Week Plan (July 17–30, 2026)
 
@@ -59,7 +59,7 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
 1. **Build harder benchmark extension (target +300 to +500 questions)**
      - Extend from: `data/phase5_combined_100qa.json`
      - Script base: `scripts/run_rag_generation_evaluation.py`
-     - Output target: `data/phase5_combined_hard_500qa.json`
+    - Output target: `data/phase5_combined_hard_500qa.json` ✅
 
 2. **Run multi-seed evaluation (n=3) for significance bands**
      - Configs to reuse:
@@ -67,15 +67,16 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
          - `config/phase5_finetuned_cross_encoder_eval.yaml`
          - `config/phase5_ablation_no_iter_original.yaml`
          - `config/phase5_ablation_no_iter_finetuned.yaml`
-     - Output target: `results/rag_generation_eval/seed_runs/`
+    - Output target: `results/rag_generation_eval/seed_runs/` ✅
+    - Summary: `results/rag_generation_eval/seed_runs/seed_significance_summary.md`
 
 3. **Strengthen reranker labels (target 1000+ pairs)**
      - Existing pipeline:
          - `scripts/collect_stem_preference_pairs.py`
          - `scripts/finetune_cross_encoder.py`
      - Output targets:
-         - `data/stem_preference_pairs_1000.jsonl`
-         - `checkpoints/cross_encoder_finetuned_task10_v2.pt`
+         - `data/stem_preference_pairs_1000.jsonl` ✅
+         - `checkpoints/cross_encoder_finetuned_task10_v2.pt` ✅
 
 #### Week 2 — Analysis + Paper Package
 
@@ -84,24 +85,24 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
          - `results/rag_generation_eval/rag_generation_eval_20260716_114138.json`
          - `results/rag_generation_eval/rag_generation_eval_20260716_125406.json`
      - Output target:
-         - `results/human_eval/human_eval_template.csv`
-         - `results/human_eval/human_eval_summary.md`
+         - `results/human_eval/human_eval_template.csv` ✅
+         - `results/human_eval/human_eval_summary.md` ✅
 
 5. **Finalize publication figures and tables**
      - Sources:
          - `results/PHASE_5_ANALYSIS.md`
          - `results/PHASE_5_ABLATION_STUDY.md`
      - Output target:
-         - `results/publication/figures/`
-         - `results/publication/tables/`
+         - `results/publication/figures/` ✅
+         - `results/publication/tables/` ✅
 
 6. **Draft submission package (arXiv-ready)**
      - Primary references:
          - `doc/project_reference.md`
          - `doc/roadmap/PROJECT_ROADMAP.md`
      - Output target:
-         - `results/publication/paper_outline.md`
-         - `results/publication/reproducibility_checklist.md`
+         - `results/publication/paper_outline.md` ✅
+         - `results/publication/reproducibility_checklist.md` ✅
 
 ### C. Submission Gate (Go/No-Go)
 

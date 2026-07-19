@@ -1,0 +1,17 @@
+config,n,metric,mean,std,ci95_low,ci95_high
+phase5_full_integration_eval,1,mc_exact_rate,1.000000,0.000000,1.000000,1.000000
+phase5_full_integration_eval,1,avg_calibrated_uncertainty,0.423449,0.000000,0.423449,0.423449
+phase5_full_integration_eval,1,avg_entailment_score,0.886451,0.000000,0.886451,0.886451
+phase5_full_integration_eval,1,avg_iterations,1.617647,0.000000,1.617647,1.617647
+phase5_finetuned_cross_encoder_eval,3,mc_exact_rate,1.000000,0.000000,1.000000,1.000000
+phase5_finetuned_cross_encoder_eval,3,avg_calibrated_uncertainty,0.420327,0.008960,0.410187,0.430466
+phase5_finetuned_cross_encoder_eval,3,avg_entailment_score,0.878006,0.010769,0.865819,0.890192
+phase5_finetuned_cross_encoder_eval,3,avg_iterations,1.593464,0.046414,1.540941,1.645987
+phase5_ablation_no_iter_original,3,mc_exact_rate,1.000000,0.000000,1.000000,1.000000
+phase5_ablation_no_iter_original,3,avg_calibrated_uncertainty,0.141903,0.245784,-0.136227,0.420034
+phase5_ablation_no_iter_original,3,avg_entailment_score,0.295683,0.512137,-0.283855,0.875220
+phase5_ablation_no_iter_original,3,avg_iterations,0.333333,0.577350,-0.320000,0.986667
+phase5_ablation_no_iter_finetuned,3,mc_exact_rate,1.000000,0.000000,1.000000,1.000000
+phase5_ablation_no_iter_finetuned,3,avg_calibrated_uncertainty,0.430360,0.000691,0.429578,0.431142
+phase5_ablation_no_iter_finetuned,3,avg_entailment_score,0.872919,0.005456,0.866745,0.879094
+phase5_ablation_no_iter_finetuned,3,avg_iterations,1.000000,0.000000,1.000000,1.000000

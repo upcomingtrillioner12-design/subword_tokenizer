@@ -9,9 +9,9 @@ model:
   dtype: float32
 
 retrieval:
-  bm25_index: /Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/bm25_index.json
-  dense_index: /Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index.faiss
-  dense_metadata: /Users/jdsingh/slm_v0/subword_tokenizer/data/retrieval/dense_general/dense_index_metadata.jsonl
+  bm25_index: /Users/jdsingh/slm_v0/main_dev_workspace/data/retrieval/bm25_index.json
+  dense_index: /Users/jdsingh/slm_v0/main_dev_workspace/data/retrieval/dense_general/dense_index.faiss
+  dense_metadata: /Users/jdsingh/slm_v0/main_dev_workspace/data/retrieval/dense_general/dense_index_metadata.jsonl
   embedding_model: allenai/scibert_scivocab_uncased
   fusion_method: rrf
   alpha: 0.5
@@ -61,9 +61,9 @@ iterative_retrieval:
   followup_k_retrieve: 12
 
 evaluation:
-  dataset: /Users/jdsingh/slm_v0/subword_tokenizer/data/phase5_combined_100qa.json
+  dataset: /Users/jdsingh/slm_v0/main_dev_workspace/data/phase5_combined_100qa.json
   mode: mc_likelihood
   max_questions: 102
-  output_dir: /Users/jdsingh/slm_v0/subword_tokenizer/results/rag_generation_eval
+  output_dir: /Users/jdsingh/slm_v0/main_dev_workspace/results/rag_generation_eval
   enable_enhanced_metrics: true
   enable_semantic_metrics: true
