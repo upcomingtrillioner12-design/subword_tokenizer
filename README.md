@@ -98,7 +98,7 @@ Building a physics-specialized Small Language Model (SLM) using progressive fine
 6. **Draft submission package (arXiv-ready)**
      - Primary references:
          - `doc/project_reference.md`
-         - `PROJECT_ROADMAP.md`
+         - `doc/roadmap/PROJECT_ROADMAP.md`
      - Output target:
          - `results/publication/paper_outline.md`
          - `results/publication/reproducibility_checklist.md`
@@ -171,9 +171,9 @@ Rank  Checkpoint                   Eval Loss    Gain vs Phase 1
 11.   lora_adapter_step2000.pt     0.008278     ↓22.6%
 ```
 
-Full details: [PHASE_2_COMPLETION.md](PHASE_2_COMPLETION.md)
+Full details: [doc/phases/PHASE_2_COMPLETION.md](doc/phases/PHASE_2_COMPLETION.md)
 
-Phase 3 report: [PHASE_3_COMPLETION.md](PHASE_3_COMPLETION.md)
+Phase 3 report: [doc/phases/PHASE_3_COMPLETION.md](doc/phases/PHASE_3_COMPLETION.md)
 
 ---
 
@@ -182,11 +182,23 @@ Phase 3 report: [PHASE_3_COMPLETION.md](PHASE_3_COMPLETION.md)
 ```
 /Users/jdsingh/slm_v0/
 ├── README.md                              ← You are here
-├── PROJECT_ROADMAP.md                     ← 6-phase roadmap
-├── PHASE_2_COMPLETION.md                  ← Detailed Phase 2 report
-├── PHASE_2_GUIDE.md                       ← Phase 2 workflow
-├── PHASE_2_STATUS.md                      ← Phase 2 task tracking
-├── PHASE_1_STATUS.md                      ← Phase 1 completion notes
+├── doc/
+│   ├── README.md                          ← Documentation index
+│   ├── roadmap/
+│   │   └── PROJECT_ROADMAP.md             ← 6-phase roadmap
+│   ├── phases/
+│   │   ├── PHASE_1_STATUS.md              ← Phase 1 completion notes
+│   │   ├── PHASE_2_COMPLETION.md          ← Detailed Phase 2 report
+│   │   ├── PHASE_2_GUIDE.md               ← Phase 2 workflow
+│   │   ├── PHASE_2_STATUS.md              ← Phase 2 task tracking
+│   │   ├── PHASE_3_COMPLETION.md          ← Phase 3 completion notes
+│   │   ├── PHASE_3_PLAN.md                ← Phase 3 plan
+│   │   └── PHASE_3_UPDATE_SUMMARY.md      ← Phase 3 update summary
+│   └── reports/
+│       ├── BASE_MODEL_DIAGNOSTIC_REPORT.md
+│       ├── EXPERIMENTS.md
+│       ├── FEATURE_SHOWCASE.md
+│       └── GENERATION_TUNING_DIAGNOSTIC.md
 │
 ├── checkpoints/
 │   └── phase2_lora/                       ← Phase 2 artifacts
@@ -341,9 +353,9 @@ python scripts/inference_lora.py \
 ## Files Reference
 
 ### Key Documentation
-- **[PHASE_2_COMPLETION.md](PHASE_2_COMPLETION.md)** — Full Phase 2 report (45+ sections)
-- **[PHASE_2_GUIDE.md](PHASE_2_GUIDE.md)** — Workflow & reproducibility guide
-- **[PROJECT_ROADMAP.md](PROJECT_ROADMAP.md)** — Complete 6-phase roadmap
+- **[doc/phases/PHASE_2_COMPLETION.md](doc/phases/PHASE_2_COMPLETION.md)** — Full Phase 2 report (45+ sections)
+- **[doc/phases/PHASE_2_GUIDE.md](doc/phases/PHASE_2_GUIDE.md)** — Workflow & reproducibility guide
+- **[doc/roadmap/PROJECT_ROADMAP.md](doc/roadmap/PROJECT_ROADMAP.md)** — Complete 6-phase roadmap
 - **[config/phase2_lora_config.yaml](config/phase2_lora_config.yaml)** — Unified configuration
 
 ### Code
@@ -582,9 +594,9 @@ Status: Phase 2 Complete (July 13, 2026)
 ## Support & Questions
 
 For detailed Phase 2 information:
-- **Full Report:** [PHASE_2_COMPLETION.md](PHASE_2_COMPLETION.md)
-- **Training Guide:** [PHASE_2_GUIDE.md](PHASE_2_GUIDE.md)
-- **Roadmap:** [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md)
+- **Full Report:** [doc/phases/PHASE_2_COMPLETION.md](doc/phases/PHASE_2_COMPLETION.md)
+- **Training Guide:** [doc/phases/PHASE_2_GUIDE.md](doc/phases/PHASE_2_GUIDE.md)
+- **Roadmap:** [doc/roadmap/PROJECT_ROADMAP.md](doc/roadmap/PROJECT_ROADMAP.md)
 
 For code questions:
 - Check script docstrings: `head -50 scripts/phase2_lora_finetune.py`

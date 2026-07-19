@@ -86,7 +86,7 @@ Status: **Ready for Phase 4 (RAG integration + generation control tuning)**
 **July 13, 2026**: Phase 3 Completion
 - Implemented and validated Tasks 1-7 end-to-end
 - Added inference/benchmark/qualitative/test-set/language-metrics/QA scripts
-- Produced consolidated report: `PHASE_3_COMPLETION.md`
+- Produced consolidated report: `doc/phases/PHASE_3_COMPLETION.md`
 - Confirmed strong retained LoRA gains on held-out test split and QA scoring
 
 **July 8, 2026**: Big Prototype Training & Validation
@@ -261,7 +261,7 @@ From repository root:
 6. **Submission readiness package (arXiv-first)**
     - **Base docs**:
        - `doc/project_reference.md`
-       - `PROJECT_ROADMAP.md`
+      - `doc/roadmap/PROJECT_ROADMAP.md`
     - **Deliverables**:
        - `results/publication/paper_outline.md`
        - `results/publication/reproducibility_checklist.md`
